@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -12,6 +13,10 @@ import javax.persistence.TemporalType;
 @Table(name = "V_PROG_PROCESSAMENTO_FATURA_RECIBO")
 public class GuiaPagamentoCodigo {
 
+    public GuiaPagamentoCodigo(Integer codigo){
+        setId(codigo);
+    }
+    @Id
     private Integer id;
 
     private String numeroGuia;
