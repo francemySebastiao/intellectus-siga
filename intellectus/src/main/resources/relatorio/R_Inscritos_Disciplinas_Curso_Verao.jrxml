@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Inscritos_Disciplinas_Curso_Verao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39e9f448-ea72-494a-b727-42b4f6f5ab8f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NOVA_VIDA"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_disciplina" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pagamento" class="java.lang.String"/>
+	<parameter name="data1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="prova" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select *
+FROM V_LST_CURSO_DE_VERAO_DISCIPLINA
+WHERE
+CODIGO_DISCIPLINA =  $P{id_disciplina}  AND
+PAGAMENTO =  $P{pagamento}  AND
+DATA_INSCRICAO BETWEEN  $P{data1}   AND  $P{data2}
+AND PROVA =  $P{prova}
+ORDER BY 1]]>
+	</queryString>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="NUMERO_DE_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DE_ALUNO"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="DISCIPLINA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DISCIPLINA"/>
+	</field>
+	<field name="CODIGO_DISCIPLINA" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="CODIGO_DISCIPLINA"/>
+	</field>
+	<field name="ANO_CORRICULAR" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_CORRICULAR"/>
+	</field>
+	<field name="DATA_INSCRICAO" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_INSCRICAO"/>
+	</field>
+	<field name="GRUPO_OWNER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRUPO_OWNER"/>
+	</field>
+	<field name="GRAU" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRAU"/>
+	</field>
+	<field name="PROVA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVA"/>
+	</field>
+	<field name="PAGAMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PAGAMENTO"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2e42b543-a256-4a82-83f3-172bbb14ff10" x="151" y="41" width="402" height="19">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALUNOS INSCRITOS NO CURSO DE VERÃO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e6c8b1b3-f9e5-4bee-9891-3ada228db876" x="330" y="60" width="223" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["De "+new SimpleDateFormat("dd/MM/yyyy").format($P{data1})+" á "+new SimpleDateFormat("dd/MM/yyyy").format($P{data2})]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="120" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c4343103-5009-42f5-9744-f2da9eadfaa0" x="0" y="0" width="478" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CURSO: "+ $F{CURSO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="25836843-15eb-4dad-b6e4-41039a6961b7" x="0" y="118" width="555" height="1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement uuid="fae7a3ad-a516-43ac-a728-80114a4b5d7c" x="0" y="20" width="480" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DISCIPLINA: "+$F{DISCIPLINA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c23f3121-5079-4566-9ef3-ce55b70f7f51" x="323" y="100" width="76" height="20"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N.º ALUNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0bcf1c9f-1dce-4312-b96b-92d6e3b1df13" x="28" y="100" width="220" height="20"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME COMPLETO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3f4703ae-f2bc-48d6-bfd2-00daa6d73f48" x="440" y="100" width="114" height="20"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA DE INSCRIÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5293f609-ee03-41d3-8969-c6a95b38e478" x="0" y="100" width="24" height="18"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N/O]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="042cde52-8455-4caf-953d-a5b722b6af2c" x="0" y="40" width="480" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ANO CURRICULAR: "+$F{ANO_CORRICULAR}+"º"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="17a168c3-a7c7-4147-a90d-a25323c765c1" x="1" y="60" width="249" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROVA : ÉPOCA RECURSO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3b37f67f-a1d6-4427-ab3e-b7b574ff40c6" x="0" y="0" width="23" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="41cac372-1b9f-4d61-9272-a65c4d39dad7" x="28" y="0" width="295" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e2eeff16-cd1c-4c4d-a58b-61804baafc7c" x="330" y="0" width="94" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMERO_DE_ALUNO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yy">
+				<reportElement uuid="16708ebc-5198-4203-b67a-1263a57c40e6" x="467" y="0" width="68" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATA_INSCRICAO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="82609a4a-8873-453d-9b2e-60b509017043" x="530" y="3" width="24" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="16bced1d-b3f4-4e0b-813d-50cfc6125972" x="0" y="2" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="a0713942-7a11-4a41-99ac-cb68fa0f4193" x="478" y="3" width="51" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="31e8bd21-f548-4a01-a9dd-de680003ea42" x="1" y="1" width="552" height="22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{GRUPO_OWNER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

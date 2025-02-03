@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SigaApplication<intellectus>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "ao.co.intellectus.SigaApplication",
+            "projectName": "intellectus",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SmsSender<intellectus>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "ao.co.intellectus.sms.SmsSender",
+            "projectName": "intellectus",
+            "args": ""
+        }
+    ]
+}

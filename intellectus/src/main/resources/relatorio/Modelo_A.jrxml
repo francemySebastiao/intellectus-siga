@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_certificado_provisório" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c50a7745-ad10-499a-86a7-b72f48669b29">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Qualidade_UGS"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="ano_declaracao" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numero_matricula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numero_declaracao" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select * from V_MODELO_A_MODELO_B
+where numero_de_aluno=$P{numero_matricula} 
+ and ano_declaracao= $P{ano_declaracao} 
+ and  numero_declaracao=$P{numero_declaracao}]]>
+	</queryString>
+	<field name="NUMERO_DE_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DE_ALUNO"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="NOME_DO_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DO_PAI"/>
+	</field>
+	<field name="NOME_DA_MAE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DA_MAE"/>
+	</field>
+	<field name="NUMERO_DOCUMENTO_IDENTIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DOCUMENTO_IDENTIFICACAO"/>
+	</field>
+	<field name="EMITIDO_EM" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="EMITIDO_EM"/>
+	</field>
+	<field name="VALIDO" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="VALIDO"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="ESPECIALIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ESPECIALIDADE"/>
+	</field>
+	<field name="SEXO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEXO"/>
+	</field>
+	<field name="DATA_FIM_DO_CURSO" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_FIM_DO_CURSO"/>
+	</field>
+	<field name="CODIGO_TIPO_DECLARACAO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="CODIGO_TIPO_DECLARACAO"/>
+	</field>
+	<field name="RETIRADO" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="RETIRADO"/>
+	</field>
+	<field name="NUMERO_DECLARACAO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DECLARACAO"/>
+	</field>
+	<field name="ANO_DECLARACAO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_DECLARACAO"/>
+	</field>
+	<variable name="variable1" class="java.util.Date" calculation="System">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="171" splitType="Stretch">
+			<textField>
+				<reportElement x="44" y="137" width="482" height="33" uuid="8229e507-5f10-46f9-8c8d-87dc1a9685ce"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CERTIFICADO"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="509" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="44" y="2" width="482" height="298" uuid="2a5e305d-9aa4-4f27-8089-d56c955e1d07">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+					<font fontName="Serif" size="12" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Double" firstLineIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Eu, Cecília Francisco Franco, Responsável Administrativa dos Serviços Académicos, a requerimento do interessado que fica arquivado nestes Serviços, certifico que "+"<b>"+$F{NOME}+"</b>"+($F{SEXO}.equals("FEMININO")? " filha de ": $F{SEXO}.equals("MASCULINO")? " filho de ": "")+"<b>"+$F{NOME_DO_PAI}+"</b>"+" e de "+"<b>"+$F{NOME_DA_MAE}+"</b>"+($F{SEXO}.equals("FEMININO")? " , portadora do Bilhete de Identidade número ": $F{SEXO}.equals("MASCULINO")? " , portador do Bilhete de Identidade número ": "")+"<b>"+$F{NUMERO_DOCUMENTO_IDENTIFICACAO}+"</b>"+", emitido em "+"<b>"+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{EMITIDO_EM})+"</b>"+" e válido até "+"<b>"+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{VALIDO})+"</b>"+" está, à data de emissão deste certificado, a frequentar a parte lectiva do Curso de Mestrado em "+"<b>"+$F{CURSO}+"</b>"+"."+"<br>"+"O presente documento não certifica que a(o) cidadã(o) em nome de quem é emitido é titular do grau de Mestre."+"<br>"+"Este certificado é emitido sem emendas ou rasuras e leva aposto o selo a óleo em uso nesta Universidade."]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="44" y="381" width="482" height="50" uuid="31ff8c00-605c-45ba-b527-528322720fd4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Carla Sofia Dantas Magalhães"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="80" y="466" width="400" height="1" uuid="1356f5cd-af7c-4c12-bb6b-4e049ad4b45b"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement x="44" y="313" width="482" height="50" uuid="66fa118a-aa67-4b30-be72-9c5c93ba1ac7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Coord. Secretariado____________________________"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="50" y="459" width="482" height="50" uuid="9240be34-5490-454e-b8cd-0e099e740324"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Directora de Investigação Cientifica e Pós-Graduação"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="280" width="482" height="20" uuid="37f3ff5d-de70-4b64-a6a1-ac63a00425f5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Luanda, "+$P{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnFooter>
+		<band height="43"/>
+	</columnFooter>
+</jasperReport>

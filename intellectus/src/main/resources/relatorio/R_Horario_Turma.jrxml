@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="turma" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="08e99802-fb58-4a00-a21e-c4fc6ddaa087">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NOVA_VIDA"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Crosstab Data Text" hTextAlign="Center" hImageAlign="Center"/>
+	<parameter name="ano_lectivo" class="java.lang.Integer"/>
+	<parameter name="semestre" class="java.lang.String"/>
+	<parameter name="curso" class="java.lang.String"/>
+	<parameter name="ano" class="java.lang.Integer"/>
+	<parameter name="turma" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT *,lg.foto,
+CONCAT (DISCIPLINA,  '               |         ' , SALA, '      |           ', DOCENTE) DISCIPLINA_SALA
+FROM V_LISTA_HORARIO_DOCENTE, t_logo_marca lg
+WHERE
+ANO_LECTIVO =$P{ano_lectivo}  AND
+SEMESTRE =$P{semestre}  AND
+TURMA =$P{turma} AND
+CURSO =$P{curso}  AND
+ANO=$P{ano} 
+order by 3]]>
+	</queryString>
+	<field name="data_cadastro" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_cadastro"/>
+	</field>
+	<field name="SEMANA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMANA"/>
+	</field>
+	<field name="SEMANA_ORDEM" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="SEMANA_ORDEM"/>
+	</field>
+	<field name="INTERVALO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INTERVALO"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="DISCIPLINA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DISCIPLINA"/>
+	</field>
+	<field name="ANO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO"/>
+	</field>
+	<field name="TURMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TURMA"/>
+	</field>
+	<field name="SALA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SALA"/>
+	</field>
+	<field name="DOCENTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DOCENTE"/>
+	</field>
+	<field name="DOCENTE_ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="DOCENTE_ID"/>
+	</field>
+	<field name="SEMESTRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
+	</field>
+	<field name="ANO_LECTIVO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_LECTIVO"/>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="foto" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="foto"/>
+	</field>
+	<field name="COLUMN_17" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="foto"/>
+	</field>
+	<field name="DISCIPLINA_SALA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DISCIPLINA_SALA"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image>
+				<reportElement x="0" y="0" width="80" height="50" uuid="45d4907e-0973-4418-ad08-40c116fbea10"/>
+				<imageExpression><![CDATA[$F{foto}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="550" y="2" width="252" height="25" uuid="5fb6c66c-42bf-45db-bdea-156f0e160ca8"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["HORÁRIO TURMA - "+$F{TURMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="35" width="100" height="15" uuid="13f8ff08-1f4b-41aa-9789-c7118deb72d5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANO}+"º ANO"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="35" width="100" height="15" uuid="8f5b2426-dd08-4050-b916-5daf8a186fab"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SEMESTRE}.equals("PRIMEIRO")? "1º SEMESTRE": $F{SEMESTRE}.equals("SEGUNDO")? "2º SEMESTRE": " "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="35" width="117" height="15" uuid="6def2626-aa48-4ea6-b386-91331ad0db75"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ANO LECTIVO: "+$F{ANO_LECTIVO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="468" y="35" width="190" height="15" uuid="dfa120fb-527c-4e73-8e7a-2b01d82f1bc0"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CURSO: "+$F{CURSO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="110" y="49" width="485" height="1" uuid="7452b086-1725-4f2b-b875-cfd2a1be0726"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" uuid="e2f3f3e0-0fb4-4a26-b388-b25fab76747f"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="80" height="20" uuid="2ecc585f-7d1b-4f62-b3cb-cc3d073527da"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="20" uuid="075a26c8-b3a5-4e45-80cf-b73820d77122"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Intellectus - Formação e Gestão, Lda]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="741" y="0" width="61" height="20" uuid="40179f83-da70-41b7-822d-18ac0daf27e9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="202" splitType="Stretch">
+			<crosstab>
+				<reportElement x="40" y="0" width="762" height="202" uuid="b2a82eb3-b5e7-45a7-8117-f7df24f492f8"/>
+				<rowGroup name="INTERVALO" width="70">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{INTERVALO}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="50" uuid="76e4ebb2-542e-4681-802c-43d6412fdfcc"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{INTERVALO}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="SEMANA_ORDEM" height="20">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{SEMANA_ORDEM}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="110" height="20" uuid="e6a89835-5dbd-4296-8db7-18789c822f29"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{SEMANA_ORDEM}==1 ?
+"SEGUNDA-FEIRA" :
+$V{SEMANA_ORDEM}==2 ?
+"TERÇA-FEIRA" :
+$V{SEMANA_ORDEM}==3 ?
+"QUARTA-FEIRA" :
+$V{SEMANA_ORDEM}==4 ?
+"QUINTA-FEIRA" :
+$V{SEMANA_ORDEM}==5 ?
+"SEXTA-FEIRA" :
+$V{SEMANA_ORDEM}==6 ?
+"SABADO" : ""]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="DISCIPLINA_SALAMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{DISCIPLINA_SALA}]]></measureExpression>
+				</measure>
+				<crosstabCell width="110" height="50">
+					<cellContents>
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="110" height="50" uuid="6a24b7a9-1657-4344-b319-633a7f09d01e"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="6"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{DISCIPLINA_SALAMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="INTERVALO">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="b520ad61-05ed-4598-a788-0791b3e3f162"/>
+							<textFieldExpression><![CDATA[$V{DISCIPLINA_SALAMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="SEMANA_ORDEM">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="96dd94b0-bdbb-400c-b270-f17755712c04"/>
+							<textFieldExpression><![CDATA[$V{DISCIPLINA_SALAMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="INTERVALO" columnTotalGroup="SEMANA_ORDEM">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="83ee50fd-4695-45a0-bb3f-901f22ae998c"/>
+							<textFieldExpression><![CDATA[$V{DISCIPLINA_SALAMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

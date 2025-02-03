@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Lista_Contencioso_Turma" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9b0262b7-88ef-4f5c-93e3-8ad3fb68d4e1">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NOVA_VIDA"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="cod_ano" class="java.lang.Integer"/>
+	<parameter name="cod_curso" class="java.lang.String"/>
+	<parameter name="cod_turma" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     t_aluno."id" AS t_aluno_id,
+     t_aluno."nome" AS t_aluno_nome,
+     t_aluno."contencioso" AS t_aluno_contencioso,
+     t_aluno."codigo_curso" AS t_aluno_codigo_curso,
+     t_curso."descricao" AS t_curso_descricao,
+     t_matricula."codigo_ano_lectivo" AS t_matricula_codigo_ano_lectivo,
+     t_matricula."numero_de_aluno" AS t_matricula_numero_de_aluno,
+     t_matricula."semestre" AS t_matricula_semestre,
+     t_turma."turma" AS t_turma_turma,
+     t_matricula."ano_curricular" AS t_matricula_ano_curricular,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_ano_lectivo."id" AS t_ano_lectivo_id,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_curso."grau" AS t_curso_grau
+FROM
+     "dbo"."t_curso" t_curso INNER JOIN "dbo"."t_aluno" t_aluno ON t_curso."id" = t_aluno."codigo_curso"
+     INNER JOIN "dbo"."t_matricula" t_matricula ON t_aluno."id" = t_matricula."codigo_aluno"
+     AND t_curso."id" = t_matricula."codigo_curso"
+     INNER JOIN "dbo"."t_turma" t_turma ON t_matricula."codigo_turma_base" = t_turma."id"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_matricula."codigo_ano_lectivo" = t_ano_lectivo."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_aluno."codigo_instituicao" = t_instituicao."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     t_ano_lectivo."id" =  $P{cod_ano} 
+     and
+	  t_aluno."contencioso" = 1
+	  and t_aluno."codigo_curso"= $P{cod_curso} 
+	  and t_turma."turma"=  $P{cod_turma} 
+ORDER BY
+     t_curso."descricao" ASC]]>
+	</queryString>
+	<field name="t_aluno_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_id"/>
+	</field>
+	<field name="t_aluno_nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome"/>
+	</field>
+	<field name="t_aluno_contencioso" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_contencioso"/>
+	</field>
+	<field name="t_aluno_codigo_curso" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_curso"/>
+	</field>
+	<field name="t_curso_descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_curso_descricao"/>
+	</field>
+	<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_codigo_ano_lectivo"/>
+	</field>
+	<field name="t_matricula_numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_numero_de_aluno"/>
+	</field>
+	<field name="t_matricula_semestre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_semestre"/>
+	</field>
+	<field name="t_turma_turma" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_turma_turma"/>
+	</field>
+	<field name="t_matricula_ano_curricular" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_ano_curricular"/>
+	</field>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_grupo_owner"/>
+	</field>
+	<field name="t_ano_lectivo_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_id"/>
+	</field>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_ano_lectivo"/>
+	</field>
+	<field name="t_logo_marca_foto" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="t_logo_marca_foto"/>
+	</field>
+	<field name="t_curso_grau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_curso_grau"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="96" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="50" height="61" uuid="7c281be1-b767-4ebc-976a-1cbb9b70d031">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="230" y="41" width="317" height="20" uuid="260e422d-deee-40f3-be76-0ec5cd292769"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTAGEM DE ALUNOS EM CONTENCIOSO POR TURMA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="92" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="74" width="179" height="16" uuid="84ed8b58-48e4-4cc3-b68e-a9af9f3d33d2"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Turma: "+$F{t_turma_turma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="56" width="379" height="16" uuid="acaa0dc2-4054-4269-867e-dbd9cbff235a"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Curso:  "+$F{t_curso_descricao}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="476" y="12" width="71" height="1" uuid="1c14b431-cc83-4bc7-8841-73b8d81ecf96"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="435" y="12" width="1" height="20" uuid="eea3444b-44f6-492e-ba06-c592ecc364db"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="437" y="17" width="109" height="12" uuid="92459831-cfcb-41ec-aa19-bb12eb08e7c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_grau}.equals("LICENCIATURA") ? "Licenciatura" : "Mestrado"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="452" y="8" width="24" height="9" uuid="29245ba3-5298-466c-a6d2-d78f8d641ac0"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grau]]></text>
+			</staticText>
+			<line>
+				<reportElement x="435" y="12" width="17" height="1" uuid="194f73c8-796c-4408-8e0b-60ea863a6cb7"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="435" y="32" width="112" height="1" uuid="c39b6df9-49e7-4770-a8e8-cf96d029de83"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="546" y="12" width="1" height="20" uuid="787bf701-b60a-4094-8be4-fae8d76b5eac"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="2" y="12" width="1" height="20" uuid="5ac5d77c-07ab-4c55-b149-ac8c68a16813"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="74" y="12" width="1" height="20" uuid="d06f44df-d271-42ed-831d-9fd61bc4c1b5"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="64" y="12" width="11" height="1" uuid="397069b2-bae0-49e8-8a79-e61ea2d39343"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="2" y="12" width="15" height="1" uuid="afb7f263-7f69-4153-a376-8a04ef45c446"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="19" y="8" width="55" height="9" uuid="44600e1c-c9c9-4e02-b364-7af0e5839ecd"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ano Lectivo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="31" width="72" height="1" uuid="e02b5759-87c3-4f7f-a783-a48d20f8c59f"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="2" y="17" width="72" height="10" uuid="e4f31f12-0d97-487c-86b3-ea8d02b3ddc1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement x="-1" y="0" width="556" height="1" uuid="307a48dc-b6fe-4b46-8e17-e07358f8fdc6"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="23" height="17" uuid="54957aa8-e1cd-433f-af25-6d2a3d602ae9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N/O]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="270" height="17" uuid="bce61e93-60df-4e2d-a12c-8153383a8a79"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Completo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="137" height="17" uuid="31e323d8-f0c6-4c8d-b165-348a8536025b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número Aluno]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="16" width="557" height="1" uuid="dc0566fa-4e40-4d57-b002-f44e115e436e"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="0" width="270" height="20" uuid="6a2902c0-5059-457b-9329-8a54a5a9f36f"/>
+				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="1" width="70" height="19" uuid="90521e57-7191-4353-a5eb-52dd1cc6ef5e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{t_matricula_numero_de_aluno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="23" height="19" uuid="9d623fe8-5d9d-48c3-9cb1-4a7f59d63f81"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="41" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="f7bcd483-0ef3-4727-bd46-ed0b63d8a22b"/>
+			</line>
+			<textField>
+				<reportElement x="450" y="0" width="80" height="20" uuid="0a7325be-05e1-49ad-81cd-52b64b662e0a"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="0" width="24" height="20" uuid="4b9bde81-7a37-4b22-b107-9072310159b2"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="7" y="11" width="100" height="30" uuid="4ae3c530-bb75-4aaa-9ddf-c0eb1fbed760"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

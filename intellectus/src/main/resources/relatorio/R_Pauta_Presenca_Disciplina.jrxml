@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Pauta_Presenca_Disciplina" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d04cd625-61a4-45c0-81b9-92eb1889eab2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigo_ano_lectivo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_disciplina" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_curso" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_turma" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ano_curricular" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     t_aluno."nome" AS t_aluno_nome,
+     t_aluno."profissao_pai" AS t_aluno_profissao_pai,
+     t_aluno."referencia_diploma" AS t_aluno_referencia_diploma,
+     t_aluno."sexo" AS t_aluno_sexo,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_logo_marca."id" AS t_logo_marca_id,
+     t_logo_marca."descricao" AS t_logo_marca_descricao,
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_instituicao."id" AS t_instituicao_id,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_historico_aluno."extraordinaria" AS t_historico_aluno_extraordinaria,
+     t_historico_aluno."melhoria_nota" AS t_historico_aluno_melhoria_nota,
+     t_historico_aluno."nota_epoca_especial" AS t_historico_aluno_nota_epoca_especial,
+     t_historico_aluno."nota_epoca_especial_oral" AS t_historico_aluno_nota_epoca_especial_oral,
+     t_historico_aluno."nota_exame" AS t_historico_aluno_nota_exame,
+     t_historico_aluno."nota_exame_oral" AS t_historico_aluno_nota_exame_oral,
+     t_historico_aluno."nota_final" AS t_historico_aluno_nota_final,
+     t_historico_aluno."nota_final_continua" AS t_historico_aluno_nota_final_continua,
+     t_historico_aluno."nota_final_melhoria" AS t_historico_aluno_nota_final_melhoria,
+     t_historico_aluno."nota_final_recurso" AS t_historico_aluno_nota_final_recurso,
+     t_historico_aluno."nota_pratica" AS t_historico_aluno_nota_pratica,
+     t_historico_aluno."nota_recurso" AS t_historico_aluno_nota_recurso,
+     t_historico_aluno."nota_recurso_oral" AS t_historico_aluno_nota_recurso_oral,
+     t_historico_aluno."numero_de_aluno" AS t_historico_aluno_numero_de_aluno,
+     t_historico_aluno."nota_primeiro_trabalho" AS t_historico_aluno_nota_primeiro_trabalho,
+     t_historico_aluno."nota_segundo_trabalho" AS t_historico_aluno_nota_segundo_trabalho,
+     t_historico_aluno."codigo_ano_lectivo" AS t_historico_aluno_codigo_ano_lectivo,
+     t_historico_aluno."codigo_disciplina" AS t_historico_aluno_codigo_disciplina,
+     t_historico_aluno."codigo_matricula" AS t_historico_aluno_codigo_matricula,
+     t_historico_aluno."codigo_turma" AS t_historico_aluno_codigo_turma,
+     t_disciplina."id" AS t_disciplina_id,
+     t_disciplina."descricao" AS t_disciplina_descricao,
+     t_disciplina."codigo_curso" AS t_disciplina_codigo_curso,
+     t_curso."id" AS t_curso_id,
+     t_curso."descricao" AS t_curso_descricao,
+     t_turma."id" AS t_turma_id,
+     t_turma."turma" AS t_turma_turma,
+     t_historico_aluno."ano_curricular" AS t_historico_aluno_ano_curricular,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_disciplina."tipo" AS t_disciplina_tipo,
+     t_aluno."contencioso" AS t_aluno_contencioso,
+     t_disciplina."sigla" AS t_disciplina_sigla
+FROM
+     "dbo"."t_instituicao" t_instituicao INNER JOIN "dbo"."t_aluno" t_aluno ON t_instituicao."id" = t_aluno."codigo_instituicao"
+     INNER JOIN "dbo"."t_historico_aluno" t_historico_aluno ON t_aluno."id" = t_historico_aluno."codigo_aluno"
+     INNER JOIN "dbo"."t_disciplina" t_disciplina ON t_historico_aluno."codigo_disciplina" = t_disciplina."id"
+     INNER JOIN "dbo"."t_turma" t_turma ON t_historico_aluno."codigo_turma" = t_turma."id"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_historico_aluno."codigo_ano_lectivo" = t_ano_lectivo."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_disciplina."codigo_curso" = t_curso."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     t_historico_aluno."codigo_ano_lectivo" = $P{codigo_ano_lectivo}
+     and t_disciplina."id" = $P{codigo_disciplina}
+     and t_curso."id" = $P{codigo_curso}
+     and t_turma."id" = $P{codigo_turma}
+     and t_historico_aluno."ano_curricular" = $P{ano_curricular}
+ORDER BY
+     t_aluno."nome" ASC]]>
+	</queryString>
+	<field name="t_aluno_nome" class="java.lang.String"/>
+	<field name="t_aluno_profissao_pai" class="java.lang.String"/>
+	<field name="t_aluno_referencia_diploma" class="java.lang.String"/>
+	<field name="t_aluno_sexo" class="java.lang.String"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_logo_marca_id" class="java.lang.Integer"/>
+	<field name="t_logo_marca_descricao" class="java.lang.String"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<field name="t_instituicao_id" class="java.lang.Integer"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_historico_aluno_extraordinaria" class="java.lang.Boolean"/>
+	<field name="t_historico_aluno_melhoria_nota" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_epoca_especial" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_epoca_especial_oral" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_exame" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_exame_oral" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_final" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_final_continua" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_final_melhoria" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_final_recurso" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_pratica" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_recurso" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_recurso_oral" class="java.lang.Double"/>
+	<field name="t_historico_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_historico_aluno_nota_primeiro_trabalho" class="java.lang.Double"/>
+	<field name="t_historico_aluno_nota_segundo_trabalho" class="java.lang.Double"/>
+	<field name="t_historico_aluno_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_codigo_disciplina" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_codigo_matricula" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_codigo_turma" class="java.lang.Integer"/>
+	<field name="t_disciplina_id" class="java.lang.Integer"/>
+	<field name="t_disciplina_descricao" class="java.lang.String"/>
+	<field name="t_disciplina_codigo_curso" class="java.lang.Integer"/>
+	<field name="t_curso_id" class="java.lang.Integer"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_turma_id" class="java.lang.Integer"/>
+	<field name="t_turma_turma" class="java.lang.String"/>
+	<field name="t_historico_aluno_ano_curricular" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_disciplina_tipo" class="java.lang.String"/>
+	<field name="t_aluno_contencioso" class="java.lang.Boolean"/>
+	<field name="t_disciplina_sigla" class="java.lang.String"/>
+	<group name="disciplina">
+		<groupHeader>
+			<band height="20">
+				<rectangle>
+					<reportElement x="0" y="0" width="104" height="20" uuid="e95bd4a8-5384-4ccf-91a6-3a639a508065"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="0" width="104" height="20" uuid="5fcd276d-4fa0-4637-95e7-6623358c564e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[N.º Aluno]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="104" y="0" width="289" height="20" uuid="7e409093-8d11-4d98-a43d-f08cd74e2410"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="393" y="0" width="162" height="20" uuid="1a82ea13-d0b1-4e35-adb2-65eca437cec4"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="393" y="0" width="162" height="20" uuid="863b8ea4-c68e-44b4-bef2-cf57d6b00e67"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Assinatura]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="109" y="0" width="285" height="20" uuid="2724c668-f832-4867-b8f1-a8b236bc8d96"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="124">
+				<rectangle>
+					<reportElement x="0" y="0" width="555" height="124" backcolor="#FFFFFF" uuid="800551bf-dd82-4201-960b-32b45a2e94f4"/>
+				</rectangle>
+				<textField>
+					<reportElement x="220" y="73" width="100" height="20" uuid="69826d46-6cce-47e2-991e-07ab06d9f949"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Nº de Alunos: "+$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="355" y="52" width="173" height="1" uuid="c5f83b8b-3394-4ab3-9d53-6bd542fce819"/>
+				</line>
+				<staticText>
+					<reportElement x="382" y="54" width="121" height="18" uuid="52c7ea75-7544-47a7-9ddd-7ae1995f2b19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[O funcionário]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="18" y="3" width="152" height="20" uuid="a940f4ed-e4f0-4242-85f3-8e95dcdf9497"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Data:______/ ______/ ______]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="45" y="54" width="121" height="19" uuid="90661140-5b48-4e1d-8ddf-1e07d8b34350"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Docente]]></text>
+				</staticText>
+				<line>
+					<reportElement x="18" y="53" width="173" height="1" uuid="b9ed0687-bc75-401d-877e-d3c4bffdac7f"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="141" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="75" width="555" height="40" backcolor="#FFFFFF" uuid="05716ca3-b598-40d8-bc20-6043d9249119"/>
+			</rectangle>
+			<textField>
+				<reportElement x="2" y="75" width="305" height="20" uuid="32c17111-f51c-41fb-b2a0-d664d7f33166"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Curso: "+$F{t_curso_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="95" width="305" height="20" uuid="ddc7f1d8-3f29-47d8-b927-4662cdd58f11"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cadeira: "+$F{t_disciplina_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="367" y="95" width="67" height="20" uuid="59ad3ef1-0b30-4db8-b449-7eddd3aff274"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Turma: "+$F{t_turma_turma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="356" y="75" width="77" height="20" uuid="f384093d-530f-40bd-8257-8c7d2784fbdc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_historico_aluno_ano_curricular}+"º Ano"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="95" width="121" height="20" uuid="26f6f510-cb6b-444c-893c-87e1f42dbaf7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_disciplina_tipo}.equals("PROJECTO")
+? "Projecto"
+: $F{t_disciplina_tipo}.equals("SEGUNDO_SEMESTRE")
+? "2º Semestre"
+: $F{t_disciplina_tipo}.equals("ANUAL")
+?"Anual"
+: $F{t_disciplina_tipo}.equals("PRIMEIRO_SEMESTRE")
+?"1º Semestre"
+: "--"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="75" width="121" height="20" uuid="96fe00c3-e182-456d-bc3b-08a042ca2c40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ano Lectivo: "+$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="355" y="75" width="1" height="40" uuid="afe7a149-9f95-4f8d-9e7a-209118d9f5d9"/>
+			</line>
+			<line>
+				<reportElement x="433" y="75" width="1" height="40" uuid="780f4797-b796-4dd8-9bb3-b55758b7c8ad"/>
+			</line>
+			<line>
+				<reportElement x="0" y="94" width="555" height="1" uuid="3f2b8064-1c63-40fd-bb58-b87801e912cb"/>
+			</line>
+			<image>
+				<reportElement x="244" y="0" width="76" height="49" uuid="3c7b6ab8-2857-430b-8034-ba1358012caa"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="64" width="554" height="1" uuid="68cb5632-3afd-4b40-ad12-c088aa654008"/>
+			</line>
+			<staticText>
+				<reportElement x="206" y="49" width="161" height="15" uuid="31c82ac2-fcdd-4c42-86e1-bf5180a55149"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Folha De Presença - Por Disciplina]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="115" width="555" height="20" uuid="682d6256-fbd2-430e-8588-42b0539a2427"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="115" width="55" height="20" uuid="5817882e-d48e-46ef-aa1c-334f3af64b5f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Docente:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="104" height="20" uuid="ef92cc2e-f5c1-4c27-9112-1023b8039cbb"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="104" y="0" width="289" height="20" uuid="bbebfa87-1874-4efa-a4f3-acdfbeddc3dc"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="393" y="0" width="162" height="20" uuid="49e385a6-2e23-4a25-998f-e5197dc5d30e"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="108" y="0" width="285" height="20" isRemoveLineWhenBlank="true" uuid="06842d40-8693-4a26-af13-890f05394351"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="13" y="0" width="72" height="20" isRemoveLineWhenBlank="true" uuid="771a0e20-6fa0-477a-895e-68db0304b142"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_aluno_numero_de_aluno}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="30">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="1" y="3" width="100" height="20" uuid="1126f13f-e2e4-493e-84bf-6da4732e9948"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="3" width="61" height="20" uuid="38be50d4-10aa-400b-a295-b326fdeaf01e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="3" width="40" height="20" uuid="e97695f2-f9f9-409a-9f03-c701baed88a7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="2" width="554" height="1" uuid="00fbba7e-16be-4cba-8c90-56029d9ad0b3"/>
+			</line>
+			<textField>
+				<reportElement x="101" y="3" width="334" height="20" uuid="a42d8426-3eb6-4e9d-8f3f-81fe612a30f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="F_Cartao" pageWidth="239" pageHeight="150" orientation="Landscape" columnWidth="239" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="faa49e51-3f13-4bf2-8414-06222076e5bf">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numero_aluno" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_ano_lectivo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     t_aluno."nome" AS t_aluno_nome,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_matricula."ano_curricular" AS t_matricula_ano_curricular,
+     t_matricula."numero_de_aluno" AS t_matricula_numero_de_aluno,
+     t_matricula."codigo_ano_lectivo" AS t_matricula_codigo_ano_lectivo,
+     t_curso."descricao" AS t_curso_descricao,
+     t_ano_lectivo."id" AS t_ano_lectivo_id,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_curso."grau" AS t_curso_grau,
+     t_aluno_anexo."foto" AS t_aluno_anexo_foto,
+     t_instituicao."contribuinte" AS t_instituicao_contribuinte,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_instituicao."endereco" AS t_instituicao_endereco,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_imagens_sistema."foto" AS t_imagens_sistema_foto,
+     t_instituicao."email" AS t_instituicao_email,
+     t_instituicao."web_site" AS t_instituicao_web_site
+FROM
+     "dbo"."t_aluno" t_aluno INNER JOIN "dbo"."t_matricula" t_matricula ON t_aluno."id" = t_matricula."codigo_aluno"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_aluno."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_aluno_anexo" t_aluno_anexo ON t_aluno."id" = t_aluno_anexo."codigo_aluno"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_aluno."codigo_instituicao" = t_instituicao."id"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_matricula."codigo_ano_lectivo" = t_ano_lectivo."id",
+     "dbo"."t_imagens_sistema" t_imagens_sistema
+WHERE
+     t_aluno."numero_de_aluno" = $P{numero_aluno}
+     and t_ano_lectivo."id" = $P{codigo_ano_lectivo}
+     and t_imagens_sistema."id" = 1]]>
+	</queryString>
+	<field name="t_aluno_nome" class="java.lang.String"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_matricula_ano_curricular" class="java.lang.Integer"/>
+	<field name="t_matricula_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_ano_lectivo_id" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_curso_grau" class="java.lang.String"/>
+	<field name="t_aluno_anexo_foto" class="java.io.InputStream"/>
+	<field name="t_instituicao_contribuinte" class="java.lang.String"/>
+	<field name="t_instituicao_descricao" class="java.lang.String"/>
+	<field name="t_instituicao_endereco" class="java.lang.String"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_imagens_sistema_foto" class="java.io.InputStream"/>
+	<field name="t_instituicao_email" class="java.lang.String"/>
+	<field name="t_instituicao_web_site" class="java.lang.String"/>
+	<group name="frente">
+		<groupExpression><![CDATA[$F{t_aluno_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="150">
+				<image scaleImage="FillFrame">
+					<reportElement x="0" y="0" width="239" height="150" uuid="fa9851b2-c71b-4e1d-a82a-b241049c1e0e"/>
+					<imageExpression><![CDATA[$F{t_imagens_sistema_foto}]]></imageExpression>
+				</image>
+				<rectangle>
+					<reportElement mode="Opaque" x="5" y="62" width="161" height="11" forecolor="#CCCCFF" backcolor="#CCCCFF" uuid="a1eb0a83-dfe6-4ba1-8585-87998b7201f5"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="5" y="130" width="168" height="9" forecolor="#CCCCFF" backcolor="#CCCCFF" uuid="b6d1db0d-6695-4733-acc0-8bcc8dedfb03"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="19" y="94" width="35" height="9" forecolor="#CCCCFF" backcolor="#CCCCFF" uuid="67e88055-1076-41b4-8d91-53dae20e0480"/>
+				</rectangle>
+				<textField>
+					<reportElement x="19" y="93" width="35" height="11" uuid="e266f476-2cbb-476e-9244-7b0cc3363b58"/>
+					<textElement verticalAlignment="Middle" markup="html">
+						<font fontName="Verdana" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_aluno_numero_de_aluno}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="122" y="94" width="15" height="10" forecolor="#CCCCFF" backcolor="#CCCCFF" uuid="c7b9557c-44af-4aae-a5d4-2c18f0bb3e4b"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="4" y="52" width="32" height="10" uuid="35a0b2f7-a459-468a-9945-491b69c19fd1"/>
+					<textElement>
+						<font fontName="Verdana" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="62" y="93" width="60" height="11" uuid="df6dc607-3193-4890-93a0-005ef8dd9964"/>
+					<textElement>
+						<font fontName="Verdana" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ano Curricular:]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="5" y="117" width="168" height="9" forecolor="#CCCCFF" backcolor="#CCCCFF" uuid="66ff4737-0535-4caa-a649-949901d83379"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="6" y="93" width="14" height="11" uuid="9d82b5bd-5ea5-4317-ab66-54f5e7c1cbe6"/>
+					<textElement>
+						<font fontName="Verdana" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nº]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement x="5" y="75" width="161" height="11" forecolor="#CCCCFF" backcolor="#CCCCFF" uuid="e8c0c72a-40aa-4314-8a14-3335d501661d"/>
+				</rectangle>
+				<textField>
+					<reportElement x="6" y="107" width="133" height="10" uuid="cd004c26-685a-4ab7-b4a9-544809aadf0a"/>
+					<textElement markup="html">
+						<font fontName="Verdana" size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{t_curso_grau}.equals("MESTRADO") ? "Mestrado " :
+$F{t_curso_grau}.equals("LICENCIATURA") ? "Licenciatura ":
+"")]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="5" y="64" width="161" height="25" uuid="a92c7697-1c81-4f41-8e16-40910de817d6"/>
+					<textElement verticalAlignment="Top" markup="html">
+						<font fontName="Verdana" size="7"/>
+						<paragraph lineSpacing="1_1_2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="187" y="139" width="52" height="10" forecolor="#000000" backcolor="#000000" uuid="ebc147e4-82cd-4827-b7d5-73c965df418d"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Verdana" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="121" y="93" width="16" height="10" uuid="04ef5d87-eea1-4265-bfe6-401af3fdb69e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+						<font fontName="Verdana" size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_matricula_ano_curricular}+"º"]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Transparent" x="180" y="0" width="59" height="72" uuid="d9972339-c771-4bea-bff9-4f667838c115"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<image scaleImage="FillFrame">
+					<reportElement x="180" y="0" width="59" height="72" uuid="211e8278-fb1a-40c7-83de-96ae038b5f05"/>
+					<imageExpression><![CDATA[$F{t_aluno_anexo_foto}]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement x="6" y="117" width="167" height="22" uuid="f5ac8461-7f75-4f3c-b66e-67a09e236d58"/>
+					<textElement markup="none">
+						<font fontName="Verdana" size="7"/>
+						<paragraph lineSpacing="1_1_2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_curso_descricao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="verson" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{t_aluno_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="143">
+				<textField>
+					<reportElement x="11" y="4" width="220" height="20" uuid="5bb31d52-e9e1-4166-b2bb-2e98faf524bd"/>
+					<textElement textAlignment="Center">
+						<font fontName="Verdana" size="12" isBold="true" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_instituicao_descricao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="11" y="83" width="218" height="10" uuid="24b09cfa-3b87-4ac7-99f9-bf918b4ee4ab"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Verdana" size="8" isBold="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_instituicao_web_site}+" - Contribuinte:"+$F{t_instituicao_contribuinte}]]></textFieldExpression>
+				</textField>
+				<componentElement>
+					<reportElement x="0" y="93" width="239" height="26" uuid="ffe5f148-fdac-47a1-9572-0387dc6cf672"/>
+					<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128C" drawText="false" checksumRequired="false">
+						<jr:codeExpression><![CDATA[$F{t_matricula_numero_de_aluno}]]></jr:codeExpression>
+					</jr:barbecue>
+				</componentElement>
+				<staticText>
+					<reportElement x="11" y="24" width="220" height="12" uuid="6fe42451-1888-489d-976a-4d9515f6f84f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<text><![CDATA[RIGOR, QUALIDADE & MODERNIDADE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="11" y="52" width="220" height="12" uuid="2b09e413-b7fe-49dc-9136-94d2eefcc464"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Verdana" size="8"/>
+					</textElement>
+					<text><![CDATA[Rua Adjacente Av. 21 De Janeiro, Morro Bento S/N]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+</jasperReport>

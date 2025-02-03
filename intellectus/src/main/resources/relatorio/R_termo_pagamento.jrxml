@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_termo_pagamento" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ccb26de-1a2d-4026-84c7-fae8204f3896">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="542"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="517e15ef-73db-4e50-a940-19779b7110a2">
+		<parameter name="numero_aluno" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codigo_multa" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     g."numero_guia",
+     s."id",
+     v."valor_a_pagar",
+     g."valor" AS valor_guia,
+     g."numero_de_aluno" AS g_numero_de_aluno,
+     v."total_multa" AS v_total_multa,
+     g."data_vencimento" AS g_data_vencimento
+FROM
+     "t_guia_plano_multa" s INNER JOIN "t_guia_multa_valor" v ON s."codigo_guia_multa_valor" = v."id"
+     INNER JOIN "t_guia_pagamento" g ON s."codigo_guia" = g."id"
+WHERE
+     s.codigo_guia_multa_valor = $P{codigo_multa}
+     and g."numero_de_aluno" = $P{numero_aluno}]]>
+		</queryString>
+		<field name="numero_guia" class="java.lang.String"/>
+		<field name="id" class="java.lang.Integer"/>
+		<field name="valor_a_pagar" class="java.lang.Double"/>
+		<field name="valor_guia" class="java.lang.Double"/>
+		<field name="g_numero_de_aluno" class="java.lang.String"/>
+		<field name="v_total_multa" class="java.lang.Double"/>
+		<field name="g_data_vencimento" class="java.sql.Timestamp"/>
+		<variable name="soma2" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{valor_guia}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="numero_aluno" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_multa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     t_aluno."nome" AS t_aluno_nome,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_instituicao."sigla" AS t_instituicao_sigla,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_curso."sigla" AS t_curso_sigla,
+     t_guia_multa_negociacao."id" AS t_guia_multa_negociacao_id,
+     t_guia_multa_negociacao."anulado" AS t_guia_multa_negociacao_anulado,
+     t_guia_multa_negociacao."data_anulado" AS t_guia_multa_negociacao_data_anulado,
+     t_guia_multa_negociacao."data_emissao_guia" AS t_guia_multa_negociacao_data_emissao_guia,
+     t_guia_multa_negociacao."data_emissao_plano" AS t_guia_multa_negociacao_data_emissao_plano,
+     t_guia_multa_negociacao."data_insercao" AS t_guia_multa_negociacao_data_insercao,
+     t_guia_multa_negociacao."data_liquidada" AS t_guia_multa_negociacao_data_liquidada,
+     t_guia_multa_negociacao."liquidada" AS t_guia_multa_negociacao_liquidada,
+     t_guia_multa_negociacao."numero_de_aluno" AS t_guia_multa_negociacao_numero_de_aluno,
+     t_guia_multa_negociacao."processado_plano" AS t_guia_multa_negociacao_processado_plano,
+     t_guia_multa_negociacao."valor" AS t_guia_multa_negociacao_valor,
+     t_guia_multa_negociacao."codigo_ano_lectivo" AS t_guia_multa_negociacao_codigo_ano_lectivo,
+     t_guia_multa_negociacao."codigo_emolumento" AS t_guia_multa_negociacao_codigo_emolumento,
+     t_guia_multa_negociacao."codigo_guia_multa_valor" AS t_guia_multa_negociacao_codigo_guia_multa_valor,
+     t_guia_pagamento."acordo" AS t_guia_pagamento_acordo,
+     t_guia_pagamento."anulada" AS t_guia_pagamento_anulada,
+     t_guia_pagamento."numero_guia" AS t_guia_pagamento_numero_guia,
+     t_guia_pagamento."valor" AS t_guia_pagamento_valor,
+     t_guia_pagamento."data_anulada" AS t_guia_pagamento_data_anulada,
+     t_guia_multa_valor."id" AS t_guia_multa_valor_id,
+     t_guia_multa_valor."consolidado" AS t_guia_multa_valor_consolidado,
+     t_guia_multa_valor."data_proxima_prestacao" AS t_guia_multa_valor_data_proxima_prestacao,
+     t_guia_multa_valor."data_ultima_prestacao" AS t_guia_multa_valor_data_ultima_prestacao,
+     t_guia_multa_valor."n_prestacoes" AS t_guia_multa_valor_n_prestacoes,
+     t_guia_multa_valor."total_multa" AS t_guia_multa_valor_total_multa,
+     t_guia_multa_valor."total_selecionado" AS t_guia_multa_valor_total_selecionado,
+     t_guia_multa_valor."valor_amnistia" AS t_guia_multa_valor_valor_amnistia,
+     t_guia_multa_valor."valor_a_pagar" AS t_guia_multa_valor_valor_a_pagar,
+     t_guia_multa_valor."data1prestacao" AS t_guia_multa_valor_data1prestacao,
+     t_guia_pagamento_historico."obs" AS t_guia_pagamento_historico_obs,
+     t_guia_pagamento_historico."valor" AS t_guia_pagamento_historico_valor,
+     t_guia_pagamento_historico."codigo_guia_pagamento" AS t_guia_pagamento_historico_codigo_guia_pagamento,
+     t_logo_marca."id" AS t_logo_marca_id,
+     t_logo_marca."descricao" AS t_logo_marca_descricao,
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_usuario."name" AS t_usuario_name
+FROM
+     "dbo"."t_instituicao" t_instituicao INNER JOIN "dbo"."t_aluno" t_aluno ON t_instituicao."id" = t_aluno."codigo_instituicao"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_aluno."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_guia_multa_negociacao" t_guia_multa_negociacao ON t_aluno."id" = t_guia_multa_negociacao."codigo_aluno"
+     INNER JOIN "dbo"."t_guia_pagamento" t_guia_pagamento ON t_guia_multa_negociacao."codigo_guia" = t_guia_pagamento."id"
+     INNER JOIN "dbo"."t_guia_multa_valor" t_guia_multa_valor ON t_guia_multa_negociacao."codigo_guia_multa_valor" = t_guia_multa_valor."id"
+     INNER JOIN "dbo"."t_guia_pagamento_historico" t_guia_pagamento_historico ON t_guia_pagamento."id" = t_guia_pagamento_historico."codigo_guia_pagamento"
+     INNER JOIN "dbo"."t_usuario" t_usuario ON t_guia_pagamento."codigo_usuario_acordo" = t_usuario."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     t_aluno."numero_de_aluno" = $P{numero_aluno}
+     and t_guia_multa_valor."id" = $P{codigo_multa}]]>
+	</queryString>
+	<field name="t_aluno_nome" class="java.lang.String"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_instituicao_sigla" class="java.lang.String"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_curso_sigla" class="java.lang.String"/>
+	<field name="t_guia_multa_negociacao_id" class="java.lang.Integer"/>
+	<field name="t_guia_multa_negociacao_anulado" class="java.lang.Boolean"/>
+	<field name="t_guia_multa_negociacao_data_anulado" class="java.sql.Date"/>
+	<field name="t_guia_multa_negociacao_data_emissao_guia" class="java.sql.Date"/>
+	<field name="t_guia_multa_negociacao_data_emissao_plano" class="java.sql.Date"/>
+	<field name="t_guia_multa_negociacao_data_insercao" class="java.sql.Date"/>
+	<field name="t_guia_multa_negociacao_data_liquidada" class="java.sql.Date"/>
+	<field name="t_guia_multa_negociacao_liquidada" class="java.lang.Boolean"/>
+	<field name="t_guia_multa_negociacao_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_guia_multa_negociacao_processado_plano" class="java.lang.Boolean"/>
+	<field name="t_guia_multa_negociacao_valor" class="java.lang.Double"/>
+	<field name="t_guia_multa_negociacao_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_guia_multa_negociacao_codigo_emolumento" class="java.lang.Integer"/>
+	<field name="t_guia_multa_negociacao_codigo_guia_multa_valor" class="java.lang.Integer"/>
+	<field name="t_guia_pagamento_acordo" class="java.lang.Boolean"/>
+	<field name="t_guia_pagamento_anulada" class="java.lang.Boolean"/>
+	<field name="t_guia_pagamento_numero_guia" class="java.lang.String"/>
+	<field name="t_guia_pagamento_valor" class="java.lang.Double"/>
+	<field name="t_guia_pagamento_data_anulada" class="java.sql.Date"/>
+	<field name="t_guia_multa_valor_id" class="java.lang.Integer"/>
+	<field name="t_guia_multa_valor_consolidado" class="java.lang.Boolean"/>
+	<field name="t_guia_multa_valor_data_proxima_prestacao" class="java.sql.Date"/>
+	<field name="t_guia_multa_valor_data_ultima_prestacao" class="java.sql.Date"/>
+	<field name="t_guia_multa_valor_n_prestacoes" class="java.lang.Integer"/>
+	<field name="t_guia_multa_valor_total_multa" class="java.lang.Double"/>
+	<field name="t_guia_multa_valor_total_selecionado" class="java.lang.Double"/>
+	<field name="t_guia_multa_valor_valor_amnistia" class="java.lang.Double"/>
+	<field name="t_guia_multa_valor_valor_a_pagar" class="java.lang.Double"/>
+	<field name="t_guia_multa_valor_data1prestacao" class="java.sql.Date"/>
+	<field name="t_guia_pagamento_historico_obs" class="java.lang.String"/>
+	<field name="t_guia_pagamento_historico_valor" class="java.lang.Double"/>
+	<field name="t_guia_pagamento_historico_codigo_guia_pagamento" class="java.lang.Integer"/>
+	<field name="t_logo_marca_id" class="java.lang.Integer"/>
+	<field name="t_logo_marca_descricao" class="java.lang.String"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<field name="t_usuario_name" class="java.lang.String"/>
+	<variable name="soma" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></variableExpression>
+	</variable>
+	<group name="termo1">
+		<groupExpression><![CDATA[$F{t_aluno_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="475">
+				<textField>
+					<reportElement x="14" y="98" width="530" height="60" uuid="b330cc0f-ce76-43f1-9877-0a8e7fbef494"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Para efeitos de regularização da minha situação financeira junto da Universidade Gregório Semedo eu, "+$F{t_aluno_nome}+", aluno n.º "+$F{t_aluno_numero_de_aluno}+" do Curso de "+$F{t_curso_sigla}+" 1, reconheço, pela presente, ser devedor de : "+new java.text.DecimalFormat("#,##0.00 Akz").format(Double.valueOf($F{t_guia_multa_valor_valor_a_pagar}))+" , correspondente às Multas acumuladas"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="14" y="308" width="530" height="59" uuid="df1211d3-6ab0-41db-a4f8-8b0545f11494"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[Ao assinar este termo de compromisso reconheço ter tomado conhecimento de que o não cumprimento das condições aqui expressas implica não só a aplicação de juro de mora como também o impedimento à inscrição, acesso às provas, exames, classificações e outras medidas sancionatórias, julgadas convenientes.
+]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="12" y="195" width="530" height="71" uuid="3d95543e-f03f-43c7-aec2-7bd03eb3f425"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Comprometo-me a regularizar a dívida acima referida em "+$F{t_guia_multa_valor_n_prestacoes}+" prestações mensais e consecutivas, com inicio em "+new SimpleDateFormat("dd/MM/yyyy").format($F{t_guia_multa_valor_data1prestacao})+" e fim em  "+new SimpleDateFormat("dd/MM/yyyy").format($F{t_guia_multa_valor_data_ultima_prestacao})+", conforme o plano de pagamento abaixo."]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="91">
+				<staticText>
+					<reportElement x="12" y="20" width="530" height="17" uuid="9cb8e2bd-9bf6-476b-8a57-6d99d6532bd4"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Lista de Guias emitidas referentes a este acordo de pagamento de dívida]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="239" y="37" width="100" height="22" uuid="413fe7ba-7345-48f8-927b-b56943746b8a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Data]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="35" y="37" width="100" height="22" uuid="361f74c5-6322-4174-9d48-aa9c371db9ca"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[N.º Guia Acordo]]></text>
+				</staticText>
+				<line>
+					<reportElement x="15" y="36" width="530" height="1" uuid="fddb8dab-84c3-4e90-b452-4114641e6e45"/>
+				</line>
+				<staticText>
+					<reportElement x="455" y="36" width="36" height="23" uuid="2591972e-ffb8-4b49-837b-640575f73608"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="table" mode="Transparent" x="20" y="59" width="505" height="32" backcolor="#FFFFFF" uuid="7327267f-fa4d-4880-903c-cd2a3edce0d7"/>
+					<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="Table Dataset 1" uuid="ff72d0e7-4716-431a-8e53-dcca959c0a10">
+							<datasetParameter name="numero_aluno">
+								<datasetParameterExpression><![CDATA[$F{t_aluno_numero_de_aluno}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="codigo_multa">
+								<datasetParameterExpression><![CDATA[$F{t_guia_multa_valor_id}]]></datasetParameterExpression>
+							</datasetParameter>
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:column width="175" uuid="e31d2208-25b8-4cc7-a69f-8c57e50e3d97">
+							<jr:detailCell height="19" rowSpan="1">
+								<textField>
+									<reportElement x="13" y="0" width="148" height="18" uuid="3c35e4d3-20e4-4816-8337-b7af73034e10"/>
+									<textElement verticalAlignment="Top">
+										<font fontName="Times New Roman"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{numero_guia}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="164" uuid="3aca9a25-8cb8-4327-8c46-dba235b2562e">
+							<jr:detailCell height="19" rowSpan="1">
+								<textField pattern="dd/MM/yyyy">
+									<reportElement x="0" y="0" width="164" height="19" uuid="6ba9be4b-a98e-4055-bc35-9d5add6ebf6c"/>
+									<textElement textAlignment="Center">
+										<font fontName="Times New Roman"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{g_data_vencimento}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:columnGroup width="170" uuid="6788876e-541b-40cf-af9d-6dca6959687d">
+							<jr:column width="170" uuid="a8a5db07-8f64-487f-8cdf-62d8a6a39f80">
+								<jr:columnFooter height="30" rowSpan="1">
+									<textField>
+										<reportElement x="10" y="0" width="149" height="30" uuid="7473fb44-a6d1-43db-af7e-ed82826997fe"/>
+										<textElement textAlignment="Right" verticalAlignment="Top"/>
+										<textFieldExpression><![CDATA["Total: "+(new java.text.DecimalFormat("#,##0.00 Akz").format(Double.valueOf($V{soma2})))]]></textFieldExpression>
+									</textField>
+								</jr:columnFooter>
+								<jr:detailCell height="19" rowSpan="1">
+									<textField pattern="#,##0.00 Akz">
+										<reportElement x="10" y="0" width="149" height="19" uuid="7ead7618-927e-4e75-86ef-4eb9c69b1c8d"/>
+										<textElement textAlignment="Right" verticalAlignment="Top">
+											<font fontName="Times New Roman"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{valor_guia}]]></textFieldExpression>
+									</textField>
+								</jr:detailCell>
+							</jr:column>
+						</jr:columnGroup>
+					</jr:table>
+				</componentElement>
+				<textField>
+					<reportElement x="433" y="0" width="120" height="20" uuid="ad1df086-3202-4bd6-88cd-6d2d1f253a83"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total: "+(new java.text.DecimalFormat("#,##0.00 Akz").format(Double.valueOf($V{soma})))]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="termo2">
+		<groupExpression><![CDATA[$F{t_aluno_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="233">
+				<staticText>
+					<reportElement x="14" y="0" width="530" height="30" uuid="dac2c0ad-89ab-416f-b324-72d79fc9d06c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Plano de Pagamento]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="40" y="52" width="191" height="20" uuid="d582e9db-bccd-4530-8a94-026c5a64e1dc"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Número: "+$F{t_aluno_numero_de_aluno}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="14" y="30" width="530" height="1" uuid="fd38e26f-9633-49e3-b98c-e73f89d708dc"/>
+				</line>
+				<textField>
+					<reportElement x="17" y="32" width="383" height="20" uuid="40217ac3-5d51-4937-b0d1-223ff6af180b"/>
+					<textElement>
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Aluno: "+$F{t_aluno_nome}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="40" y="72" width="186" height="20" uuid="bf1468f5-ce97-47c7-93ad-e829082ea87b"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[Total em D ívida (AKz): ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="77" y="132" width="149" height="20" uuid="47fad128-3d4f-4da7-bfef-2b7c0b60b465"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[Valor a Liquidar :
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="72" y="152" width="152" height="20" uuid="a4cd42a8-749d-4330-bcc3-49151e574130"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[N.º de Prestações:
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="72" y="112" width="154" height="20" uuid="d08d368d-b0ed-4fc9-b9ce-0534c47e10d6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[Valor Amnistiado: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="48" y="92" width="178" height="20" uuid="c9eba85d-781d-4fae-949c-d9c2479d8e94"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[Total Acordado(AKz):]]></text>
+				</staticText>
+				<line>
+					<reportElement x="14" y="210" width="530" height="1" uuid="2d9cba9b-8639-4541-838f-03a03604e005"/>
+				</line>
+				<staticText>
+					<reportElement x="40" y="211" width="100" height="22" uuid="4df8aeed-c797-4694-92d5-ebab4d8235af"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[N.º Guia Anulada ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="14" y="194" width="530" height="17" uuid="63d88d66-baf4-4e0e-99b4-982d0fb46a9a"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Lista de Guias Seleccionadas (já anuladas) ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="457" y="211" width="36" height="22" uuid="b9f30ad4-fedd-4505-aa3a-9c0f182fe90e"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="239" y="211" width="100" height="22" uuid="774f7596-0d04-4e5c-ba16-1cfababd6245"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Data]]></text>
+				</staticText>
+				<textField pattern="#,##0.00 Akz" isBlankWhenNull="true">
+					<reportElement x="428" y="72" width="85" height="20" uuid="b16d7c30-58c8-45fa-8d5d-76a41d0752ab"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_guia_multa_valor_total_multa}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00 Akz">
+					<reportElement x="428" y="132" width="85" height="20" uuid="e2db351d-9e11-4aba-98c0-2308012a6ab7"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_guia_multa_valor_valor_a_pagar}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00 Akz">
+					<reportElement x="428" y="112" width="85" height="20" uuid="b524922b-d13f-40ed-8b47-d01b9c6212b1"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_guia_multa_valor_valor_amnistia}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00 Akz">
+					<reportElement x="428" y="92" width="85" height="20" uuid="d7767a47-47b5-4096-963e-8bcadc0fe136"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_guia_multa_valor_total_selecionado}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="428" y="152" width="85" height="20" uuid="502f892f-acd9-4800-9dcd-a13ae59c382a"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_guia_multa_valor_n_prestacoes}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="72" y="172" width="152" height="20" uuid="e33cc24c-b44d-415e-8f11-8b00640fc349"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[Data Emissão:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="428" y="172" width="85" height="20" uuid="f391253c-1f43-47a0-a0ca-b3c71958f51f"/>
+					<textElement textAlignment="Right">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_guia_multa_negociacao_data_emissao_plano}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<line>
+				<reportElement x="14" y="99" width="530" height="1" uuid="aaa971db-d316-4e9a-88d4-5f411347e80e"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="64" width="555" height="35" uuid="a98c6209-cba6-40e1-9680-795deec0ab42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TERMO DE COMPROMISSO
+]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement x="260" y="0" width="61" height="64" uuid="5d7c5580-a3b0-4295-b896-5f2658fbe97d"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="0" width="186" height="20" uuid="b1e086e7-e53e-4898-8dad-92d245662edf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_guia_pagamento_numero_guia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 Akz">
+				<reportElement x="457" y="0" width="99" height="20" uuid="f32b0880-b758-450b-a3de-40c58a8dd805"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="239" y="0" width="100" height="20" uuid="06e26ddf-7439-4a11-91d5-e3ff6ce3a71b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_guia_pagamento_data_anulada}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="433" y="3" width="80" height="20" uuid="08685d7f-e647-4e52-8d02-09f356fc9ee8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="3" width="40" height="20" uuid="7f03f073-4fee-4efd-9cca-09357f79f276"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="12" y="2" width="535" height="1" uuid="cb4ebc27-d0f1-4ced-afd1-e0d4331fc683"/>
+			</line>
+			<textField>
+				<reportElement x="12" y="3" width="421" height="20" uuid="c0484d50-b89a-4ff1-9f0c-b3dc0e408b95"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="68">
+			<line>
+				<reportElement x="13" y="46" width="202" height="1" uuid="d32692d0-fa80-4816-b242-8a6463dca569"/>
+			</line>
+			<line>
+				<reportElement x="321" y="46" width="202" height="1" uuid="eb543988-dfbb-4628-b5a7-bae78a0c1f59"/>
+			</line>
+			<textField>
+				<reportElement x="321" y="47" width="202" height="20" uuid="7aca3562-096b-444b-8b7d-3e262a4041fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="323" y="5" width="202" height="20" uuid="ff32b3e0-3225-4f4a-819d-6b7392b63a55"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[O Aluno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="5" width="202" height="20" uuid="ecfb2211-ce36-4509-b083-6b5789716250"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Os Serviços]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="14" y="48" width="201" height="20" uuid="3eff877a-89bf-41b4-a651-ad13b48aebc8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{t_usuario_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

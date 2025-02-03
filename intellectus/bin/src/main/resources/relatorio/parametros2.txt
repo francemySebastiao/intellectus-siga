@@ -1,0 +1,5 @@
+cod_lectivo: int
+cod_disciplina: int
+cod_curso: int
+cod_turma:int
+tipo_prova: string

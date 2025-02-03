@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Assiduidade_Docente" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bdacf13-7dd7-4dc4-a1d1-22dd1e2cb0d2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Qualidade_UGS"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="data1" class="java.util.Date"/>
+	<parameter name="data2" class="java.util.Date"/>
+	<parameter name="id_curso" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select * , LM.FOTO from V_LT_ASSIDUIDADE_DOCENTE, t_logo_marca LM
+WHERE  DIA_AULA BETWEEN  $P{data1} AND  $P{data2} 
+AND  CURSO_ID=$P{id_curso} 
+ORDER BY 1]]>
+	</queryString>
+	<field name="DIA_AULA" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DIA_AULA"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="PREVISTAS_Hr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PREVISTAS_Hr"/>
+	</field>
+	<field name="FALTAS_Hr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FALTAS_Hr"/>
+	</field>
+	<field name="LECIONADAS_Hr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LECIONADAS_Hr"/>
+	</field>
+	<field name="ATRASOS_Min" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ATRASOS_Min"/>
+	</field>
+	<field name="DISCIPLINA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DISCIPLINA"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="CURSO_ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO_ID"/>
+	</field>
+	<field name="FACULDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="FACULDADE"/>
+	</field>
+	<field name="ID_DOCENTE" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ID_DOCENTE"/>
+	</field>
+	<field name="TURMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TURMA"/>
+	</field>
+	<field name="TURNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TURNO"/>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="foto" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="foto"/>
+	</field>
+	<field name="FOTO" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="FOTO"/>
+	</field>
+	<group name="curso">
+		<groupExpression><![CDATA[$F{CURSO}]]></groupExpression>
+		<groupHeader>
+			<band height="56">
+				<textField>
+					<reportElement x="0" y="0" width="554" height="30" uuid="faf308ee-96ab-400a-8f1a-11fb43bfa5c1"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Curso: "+$F{CURSO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="412" y="41" width="97" height="14" uuid="ad77123f-43c3-4498-814f-c8b3fd6929f8">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="10"/>
+					</textElement>
+					<text><![CDATA[Total Carga Horaria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="509" y="41" width="116" height="14" uuid="32bd4c05-7eaf-4ffe-a935-800e2f2965fa">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="10"/>
+					</textElement>
+					<text><![CDATA[Horas Leccionadas / Dia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="626" y="41" width="89" height="14" uuid="18dc6643-0563-4c59-844d-111ebfa0b742">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="10"/>
+					</textElement>
+					<text><![CDATA[Horas em Falta]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="714" y="41" width="84" height="14" uuid="0e4180a7-a8a8-41c2-b56c-8b2bb556a37d"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="10"/>
+					</textElement>
+					<text><![CDATA[Min em Atraso]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="55" width="801" height="1" uuid="097c9736-c772-4e6c-a50f-e9409f293e0b">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</line>
+				<staticText>
+					<reportElement x="5" y="40" width="175" height="14" uuid="b2ece7a6-6354-41e2-a1da-5ab3153c0be6">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Serif" size="10"/>
+					</textElement>
+					<text><![CDATA[Nome do Docente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="182" y="39" width="190" height="14" uuid="f93d2ea8-28cc-4c8a-a4b0-780927b945df"/>
+					<textElement textAlignment="Left">
+						<font fontName="Serif" size="10"/>
+					</textElement>
+					<text><![CDATA[Disciplinas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="328" y="40" width="89" height="14" uuid="eaed3bbd-0d0e-41c8-9f2f-003cabc177f6">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="10"/>
+					</textElement>
+					<text><![CDATA[Turma]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<line>
+				<reportElement x="666" y="44" width="15" height="1" uuid="d5164b95-1fb7-4245-b66a-eb211bb91301"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="684" y="40" width="30" height="9" uuid="64e70088-6fa5-4e87-9869-187dabc090a0"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Periodo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="666" y="44" width="1" height="24" uuid="80e1541c-c830-4b9c-8122-fe8b6125595e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="678" y="50" width="119" height="14" uuid="70bef814-4727-4766-9911-c8c96d4d6502"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["De "+new SimpleDateFormat("dd-MM-yyyy").format($P{data1})+" á "+new SimpleDateFormat("dd-MM-yyyy").format($P{data2})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="797" y="45" width="1" height="23" uuid="cb1fa5a5-b88e-4deb-8eb5-bf0aae821855">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="707" y="44" width="90" height="1" uuid="1d6c2f0e-fecf-42fe-9125-663bfe9c9f31"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="180" y="5" width="620" height="20" uuid="31058468-0dfa-4082-b6f6-441a951d2626"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE ASSIDUIDADE DOS DOCENTES POR CURSO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="666" y="68" width="132" height="1" uuid="167b3f28-bb10-4219-bb23-dcd8c268c8f6">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="0" y="4" width="80" height="69" uuid="622c0ee4-f104-46c0-a0f9-9cd30eac1ba7"/>
+				<imageExpression><![CDATA[$F{foto}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="412" y="0" width="96" height="15" uuid="edd12ebb-df56-4d8b-b59f-ab57443504c9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{PREVISTAS_Hr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="509" y="0" width="116" height="15" uuid="229ffed9-c099-4133-907a-55e6a974ed81">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{LECIONADAS_Hr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="626" y="0" width="88" height="15" uuid="1646566e-1c74-4718-9539-6f38fe879c4b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{FALTAS_Hr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="715" y="0" width="81" height="15" uuid="058ad73d-2e70-45a0-b740-ce292514c623">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{ATRASOS_Min}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="-1" width="178" height="15" uuid="4f96271c-b9fd-46f6-8e6c-361077441643">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="-1" width="191" height="15" uuid="91240180-8d54-42f4-b36f-8cbb14c8130b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISCIPLINA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="328" y="-1" width="87" height="15" uuid="f2f8eea3-b3cd-4268-acd4-226dd6713590">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TURMA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="800" height="1" uuid="a4cb2b62-25cb-4f2b-98d0-8801636ed7e9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="678" y="0" width="88" height="20" uuid="d57ad6bc-7862-47f0-bf2c-95d65adacd9b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="766" y="0" width="33" height="20" uuid="f376ca8a-7ce3-4ecf-b9df-7e226b967c04"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="2" y="0" width="150" height="20" uuid="97c34706-fd70-40a9-8b4c-fbebd2e65314"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="1" width="799" height="20" uuid="fceafa4a-f180-4990-ad29-7e45c0988377">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Intellectus - Formação e Gestão, Lda]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

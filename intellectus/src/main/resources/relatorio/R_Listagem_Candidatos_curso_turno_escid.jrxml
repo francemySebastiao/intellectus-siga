@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Listagem_Candidatos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="46c2baf9-d5cc-4a81-b5b3-24ea6652a005">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigo_ano" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     t_curso."descricao" AS t_curso_descricao,
+
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+
+     t_curso."id" AS t_curso_id,
+     t_candidato."data_candidatura" AS t_candidato_data_candidatura,
+     t_candidato."numero_candidato" AS t_candidato_numero_candidato,
+     t_candidato."turno" AS t_candidato_turno,
+
+     t_candidato."tipo_de_candidatura" AS t_candidato_tipo_de_candidatura,
+     t_candidato."nome" AS t_candidato_nome,
+     t_ano_lectivo."id" AS t_ano_lectivo_id
+FROM
+     "dbo"."t_ano_lectivo" t_ano_lectivo INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_ano_lectivo."codigo_instituicao" = t_instituicao."id"
+     INNER JOIN "dbo"."t_candidato" t_candidato ON t_ano_lectivo."id" = t_candidato."codigo_ano_lectivo"
+     AND t_instituicao."id" = t_candidato."codigo_instituicao"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_candidato."codigo_curso" = t_curso."id"
+
+WHERE
+     t_ano_lectivo."id" = $P{codigo_ano}
+     and t_candidato."data_candidatura" BETWEEN $P{data1} and $P{data2}
+ORDER BY
+     t_curso."descricao" ASC]]>
+	</queryString>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_curso_id" class="java.lang.Integer"/>
+	<field name="t_candidato_data_candidatura" class="java.sql.Date"/>
+	<field name="t_candidato_numero_candidato" class="java.lang.Integer"/>
+	<field name="t_candidato_turno" class="java.lang.String"/>
+	<field name="t_candidato_tipo_de_candidatura" class="java.lang.Boolean"/>
+	<field name="t_candidato_nome" class="java.lang.String"/>
+	<field name="t_ano_lectivo_id" class="java.lang.Integer"/>
+	<variable name="soma" class="java.lang.String" calculation="Count">
+		<variableExpression><![CDATA[$F{t_candidato_nome}]]></variableExpression>
+	</variable>
+	<variable name="soma_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{t_candidato_nome}]]></variableExpression>
+	</variable>
+	<variable name="soma2" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{t_candidato_nome}]]></variableExpression>
+	</variable>
+	<variable name="soma2_1" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{t_candidato_data_candidatura}]]></variableExpression>
+	</variable>
+	<group name="Primeiro" isStartNewPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{t_curso_descricao}]]></groupExpression>
+		<groupHeader>
+			<band height="43">
+				<staticText>
+					<reportElement x="55" y="22" width="346" height="20" uuid="6de5b0ec-c407-4aab-aa44-4ead5e5d6a72"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="469" y="22" width="68" height="20" uuid="39913551-6495-44da-8e28-8f7dd52f8c86"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Turno]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="3" y="2" width="423" height="16" uuid="aa3eaf5f-2eb5-41d9-821c-b4ae7606f0be"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Curso: "+$F{t_curso_descricao}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="42" width="555" height="1" uuid="5ebfed0d-6fa0-4c8b-a390-4ced6c9d4185"/>
+				</line>
+				<staticText>
+					<reportElement x="3" y="22" width="52" height="20" uuid="06581659-a48e-4955-a002-f9dbed3a7654"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[#]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="401" y="22" width="68" height="20" uuid="a6c011d1-29cb-4cfc-9b6f-54b1151ae481"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data Candidatura]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="22" width="555" height="1" uuid="0d22b4ab-b1c9-4d0c-a7a6-2b6f38c07d96"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement x="401" y="0" width="136" height="20" uuid="9945bfca-8e5a-43c6-82a2-c85b4678dc78"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total de Candidatos: "+$V{Primeiro_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="146" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="78" width="274" height="55" uuid="d90f9189-ed80-42df-9fab-d3ca0f351d2d"/>
+			</rectangle>
+			<textField>
+				<reportElement x="13" y="84" width="235" height="20" uuid="0c016a57-7710-40ed-b35f-daf77951c300"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Ano Lectivo: "+$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="13" y="106" width="235" height="20" uuid="a3375da1-f5f0-440f-993f-a22454e3a0ab"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Periodo: "+new SimpleDateFormat("dd/MM/yyyy").format($P{data1})+" á "+new SimpleDateFormat("dd/MM/yyyy").format($P{data2})]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="55" y="0" width="346" height="14" uuid="97ddffbb-ca33-4f55-95da-39e853be44d3"/>
+				<textFieldExpression><![CDATA[$F{t_candidato_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="0" width="68" height="14" uuid="174c818b-f8e0-45bb-9b3a-059b939445a5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{t_candidato_turno}.equals("MANHA") ? "Manha" : $F{t_candidato_turno}.equals("POSLABORAL") ? "Pós-laboral": $F{t_candidato_turno}.equals("TARDE") ? "Tarde":"sem turno"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="0" width="52" height="14" uuid="3199ce79-d792-473f-a182-0983a5839d26"/>
+				<textFieldExpression><![CDATA[$F{t_candidato_numero_candidato}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="401" y="0" width="68" height="14" uuid="e34406ac-f1f2-428c-999e-75344be1af11"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{t_candidato_data_candidatura}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="3" y="15" width="552" height="1" forecolor="#CCCCCC" uuid="4b8f73fe-1b32-4791-b466-e7167ee2dc21"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="434" y="2" width="80" height="20" uuid="dc2fb19c-0f6b-4389-b17b-c96f5d053100"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="2" width="554" height="1" uuid="c2ae566a-452e-4df6-ba82-432353a10b40"/>
+			</line>
+			<textField evaluationTime="Report">
+				<reportElement x="514" y="2" width="40" height="20" uuid="1c72dcda-af8a-4a51-87b6-d650c323ddf2"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="24">
+			<textField>
+				<reportElement x="248" y="3" width="306" height="20" uuid="1b231774-7f44-4e9a-a376-127ab09a3a95"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Geral: "+$V{soma_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

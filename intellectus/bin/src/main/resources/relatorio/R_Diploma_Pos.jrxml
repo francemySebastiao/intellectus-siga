@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Diploma_Pos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6c38986b-5c2e-485b-90a6-1fd86b892f01">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NOVA_VIDA"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="data" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numero_aluno" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	A.nome,
+	A.numero_de_aluno,
+	CONCAT (M.concordancia, ' ', M.descricao) AS municipio,
+	CONCAT (P.concordancia, ' ', P.provincia) AS provincia,
+	CONCAT (DAY(A.data_nascimento), ' de ', MONTH(A.data_nascimento), ' de ', YEAR(A.data_nascimento)) as data,
+	A.numero_documento_identificacao,
+	A.data_fim_do_curso,
+	C.grau,
+	C.descricao AS curso,
+
+	CASE
+		WHEN C.grau = 'LICENCIATURA' THEN 'Licenciado'
+		WHEN C.grau = 'MESTRADO' THEN 'Mestre'
+		WHEN C.grau = 'POSGRADUACAO' THEN 'Especialista'
+	END AS titulo,
+	RD.ano_declaracao,
+	RD.numero_declaracao,
+	DD.id,
+	DD.descricao,
+	L.foto
+
+FROM
+	t_logo_marca L,
+	t_aluno A
+	LEFT JOIN t_municipio M ON (A.codigo_municipio_nascimento = M.id)
+	LEFT JOIN t_provincia P ON (A.codigo_provincia_nascimento = P.id)
+	LEFT JOIN t_curso C ON (A.codigo_curso = C.id)
+	LEFT JOIN t_registro_documentos RD ON (A.id = RD.codigo_aluno)
+	LEFT JOIN t_declaracao_destino DD ON (RD.codigo_declaracao_destino = DD.id)
+
+WHERE
+	A.fim_curso = 1
+	AND
+	C.grau = 'POSGRADUACAO'
+	AND
+	A.numero_de_aluno=$P{numero_aluno}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+	</field>
+	<field name="numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_de_aluno"/>
+	</field>
+	<field name="municipio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="municipio"/>
+	</field>
+	<field name="provincia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="provincia"/>
+	</field>
+	<field name="data" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="data"/>
+	</field>
+	<field name="numero_documento_identificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_documento_identificacao"/>
+	</field>
+	<field name="data_fim_do_curso" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_fim_do_curso"/>
+	</field>
+	<field name="grau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="grau"/>
+	</field>
+	<field name="curso" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="curso"/>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
+	</field>
+	<field name="ano_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_declaracao"/>
+	</field>
+	<field name="numero_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="numero_declaracao"/>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="foto" class="java.io.InputStream">
+		<property name="com.jaspersoft.studio.field.label" value="foto"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="427" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="96842d1d-a45a-4410-9f76-0824890ca9f5" x="167" y="134" width="210" height="30"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="22"/>
+				</textElement>
+				<text><![CDATA[DIPLOMA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1f4941e8-b401-4219-bb4a-20b1347b3aff" x="25" y="212" width="490" height="37"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Eu, Prof. Dr Luís Esgalhado Rocha, Reitor da Universidade Gregório Semedo, faço saber que]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7dd8b7de-8a55-4419-ac77-ee3783fa47d3" x="77" y="283" width="400" height="30"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c7e64a06-c00c-411c-b8d6-754b997b154a" x="30" y="351" width="490" height="37">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Natural d"+$F{municipio}+",provincia d"+$F{provincia}+", nascido a "+$F{data}+" e titular do Bilhete de Identidade nº"+$F{numero_documento_identificacao}+", concluiu a "+$F{data_fim_do_curso}+" o curso de "]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="e90bc9a8-72b9-4db2-9e58-77e8b8dd55ef" x="229" y="20" width="100" height="90"/>
+				<imageExpression><![CDATA[$F{foto}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<summary>
+		<band height="306" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1f45d6c7-361e-4af7-a05f-3ccbd73fb887" x="80" y="0" width="400" height="30"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pós-Graduação Profissional em "+$F{curso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e88fc494-4d92-4a33-9c76-db571fb20f43" x="30" y="60" width="490" height="30"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[a qual lhe confere o título de Especialista.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d775bbfb-633a-41bd-9041-a958a361ac4d" x="30" y="90" width="490" height="59"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[E para que conste, mandei passar o presente Diploma, que outorga os direitos e as prerrogativas daquele título, em conformidade com a lei vigente, e que vai devidamente assinado e autenticado com o selo branco desta Universidade.]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement uuid="1974d7fb-3d53-4f69-bac5-feae7a26b7fc" x="30" y="176" width="481" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Gabinete do Reitor, em Luanda, a "+$P{data}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="0667c0a8-12bd-4b65-9811-d204bdc10e0f" x="167" y="240" width="210" height="1">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement uuid="b8b77eb9-5006-4ae2-a13c-55eb1aba64ed" x="27" y="240" width="490" height="30"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[O Magnífico Reitor]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

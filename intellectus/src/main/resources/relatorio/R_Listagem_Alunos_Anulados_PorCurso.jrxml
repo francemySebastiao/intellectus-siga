@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Listagem_Alunos_Anulados_PorCurso" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2247c002-cda4-4213-aace-a7284c9d770a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MeuPC"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="cod_ano" class="java.lang.Integer"/>
+	<parameter name="curso" class="java.lang.String"/>
+	<parameter name="grau" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM V_LT_ANULADOS
+WHERE 
+    ANO_LECTIVO_ID =  $P{cod_ano}  AND
+    GRAU = $P{grau}  AND
+    SIGLA =  $P{curso} 
+ORDER BY 2]]>
+	</queryString>
+	<field name="NUMERO_DE_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DE_ALUNO"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="SIGLA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SIGLA"/>
+	</field>
+	<field name="GRAU" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRAU"/>
+	</field>
+	<field name="ANO_LECTIVO_ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_LECTIVO_ID"/>
+	</field>
+	<field name="ANO_LECTIVO_DESCRICAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_LECTIVO_DESCRICAO"/>
+	</field>
+	<field name="LOGO_MARCA" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="LOGO_MARCA"/>
+	</field>
+	<field name="GRUPO_OWNER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRUPO_OWNER"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="153" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="80" height="80" uuid="7033e08d-14dd-47d0-ba54-285a25a96d40"/>
+				<imageExpression><![CDATA[$F{LOGO_MARCA}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="306" y="30" width="248" height="20" uuid="a2a4c52a-e882-499e-bbf1-5f6985b3695b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTAGEM DE ALUNOS ANULADOS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="479" y="93" width="71" height="1" uuid="0163d29f-9a3e-49a4-b782-ac6ddfe67942"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="438" y="93" width="1" height="20" uuid="be8d9c91-01bb-4a46-88f2-e20b40ebf412"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="440" y="98" width="109" height="12" uuid="1975e50d-594a-49e5-83c3-74094975c0b1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA") ? "Licenciatura" : "Mestrado"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="455" y="89" width="24" height="9" uuid="6fff6645-e9da-4ddd-825a-718b2bdbf472"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grau]]></text>
+			</staticText>
+			<line>
+				<reportElement x="438" y="93" width="17" height="1" uuid="80518cb9-7365-4cc9-8c89-e264b30a8772"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="438" y="113" width="112" height="1" uuid="72fc51bc-9b80-4781-bc93-fdbd0b5bc46b"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="549" y="93" width="1" height="20" uuid="1ad89850-4710-446c-87b0-c70a7f9b2946"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="5" y="93" width="1" height="20" uuid="2759c641-3d59-4019-9009-8f47a65a4ecd"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="77" y="93" width="1" height="20" uuid="20fa3947-be59-4f16-9b98-67fa784d77a4"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="67" y="93" width="11" height="1" uuid="5f824e90-c7ca-401d-acb9-c7f2697c72f3"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="5" y="93" width="15" height="1" uuid="b4f28348-4c8c-48b4-a026-3f2cf2874096"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="22" y="89" width="55" height="9" uuid="3dbff5ed-b249-4f79-90ee-273259a893b8"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ano Lectivo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="5" y="112" width="72" height="1" uuid="8306ba27-8a34-4a2f-b546-e3ec0580c679"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="5" y="98" width="72" height="10" uuid="25a67c3b-c187-45fd-94c3-2df4dae5b7b7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANO_LECTIVO_DESCRICAO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="137" width="379" height="16" uuid="7207f485-de1c-4720-944f-6cfdce1cadb6"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Curso:  "+$F{CURSO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<line>
+				<reportElement x="-1" y="13" width="556" height="1" uuid="1186b4bb-7bc3-4cbb-931e-f6eec8e28ade"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="13" width="23" height="17" uuid="f4e254b6-2785-47c2-8a3f-93cd9d4742cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N/O]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="13" width="270" height="17" uuid="3bbababf-eacb-4e98-8f0f-80a1b6ad499d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Completo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="13" width="137" height="17" uuid="656977d9-26ac-4cd7-acdb-72d3236c1ea9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número Aluno]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="29" width="557" height="1" uuid="adc4495d-374b-4b04-bb6a-aeaf4d922874"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="1" width="23" height="19" uuid="ccfa6eb5-ac41-4563-ab0d-e7452ed8eeab"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="270" height="20" uuid="5379d523-cc5e-4d62-8d0e-8c500715e048"/>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="1" width="70" height="19" uuid="bbb21d37-1dfc-42df-bd88-a737f302bd57"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NUMERO_DE_ALUNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="b5fc608b-b796-4a30-8907-bba4b6f239d6"/>
+			</line>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="-1" y="1" width="100" height="19" uuid="b248c34b-41db-453b-b2c4-5ada450e4092"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="80" height="20" uuid="96a88821-e4b4-42a3-afb0-f04d880356d1"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="0" width="24" height="20" uuid="a22adb82-4a2d-48e0-bc65-fb1ce1cef3dd"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="2" width="554" height="19" uuid="300e2962-8d88-43cc-847d-72bc3c27755c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{GRUPO_OWNER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

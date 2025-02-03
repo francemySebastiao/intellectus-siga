@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Controle_Confirmacao_Turno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f700b32d-d346-471b-811f-691350bf8ee5">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="695"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="codigo_ano" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="grau" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     t_matricula."anulado",
+     t_matricula."codigo_ano_lectivo",
+     t_instituicao."grupo_owner",
+     t_curso."descricao",
+     t_turma."turno",
+     t_ano_lectivo."ano_lectivo",
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_curso."grau" AS t_curso_grau
+FROM
+     "dbo"."t_matricula" t_matricula LEFT OUTER JOIN "dbo"."t_curso" t_curso ON t_matricula."codigo_curso" = t_curso."id"
+     LEFT OUTER JOIN "dbo"."t_instituicao" t_instituicao ON t_matricula."id" = t_instituicao."id"
+     LEFT OUTER JOIN "dbo"."t_turma" t_turma ON t_matricula."codigo_turma_base" = t_turma."id"
+     LEFT OUTER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_matricula."codigo_ano_lectivo" = t_ano_lectivo."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     (t_matricula."anulado" = 0)
+ AND (t_matricula."codigo_ano_lectivo" = $P{codigo_ano})
+ AND (t_curso."grau" = $P{grau})]]>
+	</queryString>
+	<field name="anulado" class="java.lang.Boolean"/>
+	<field name="codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="grupo_owner" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="turno" class="java.lang.String"/>
+	<field name="ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<field name="t_curso_grau" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="346" y="41" width="201" height="20" uuid="cab148d5-d948-4fe2-a8d0-5ee5f4cd34ed"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE ALUNOS POR TURNO]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="5" y="0" width="58" height="61" uuid="4a05fb3f-350c-4dde-940c-32ae5933aa26"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="65" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="60" width="547" height="1" uuid="1518c884-6aad-4520-be9d-bcd46379adad"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="476" y="12" width="71" height="1" uuid="40f9878b-4b1d-4887-8f89-ccf5ba70e638"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="435" y="12" width="1" height="20" uuid="15725025-155b-40eb-88d2-f03a5063a422"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="437" y="19" width="109" height="10" uuid="a9e3c8ac-0d5d-4625-9e23-77500bcb46a4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_grau}.equals("LICENCIATURA") ? "Licenciatura" : "Mestrado"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="452" y="8" width="24" height="9" uuid="cde182d5-1ddb-4a74-926f-e028c4560469"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grau]]></text>
+			</staticText>
+			<line>
+				<reportElement x="435" y="12" width="17" height="1" uuid="0b773cba-dfb9-499d-b431-a896e7dc0752"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="435" y="32" width="112" height="1" uuid="ffe56559-78d1-42b4-afee-4d4a9a1493c3"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="546" y="12" width="1" height="20" uuid="0a1a4d79-903f-4dd3-a83a-148db83d3738"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="2" y="12" width="1" height="20" uuid="faeee68c-902a-4ea7-bb64-207e57139480"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="74" y="12" width="1" height="20" uuid="3d7d8040-bdb2-4bea-983f-1f84d183c95d"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="64" y="12" width="11" height="1" uuid="3eabbee8-791f-446a-a42e-4fc6c5da8ae9"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="2" y="12" width="15" height="1" uuid="2fd8469f-3dba-42ea-a0f3-675d75dd5b89"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="19" y="8" width="55" height="9" uuid="a72366ae-37ef-454a-8c9f-f5be2f62acb0"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ano Lectivo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="31" width="72" height="1" uuid="f54523f1-3502-4921-b7b4-789a9a5e890e"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="8" y="17" width="66" height="10" uuid="2e72bf35-e9ff-408d-b0d3-78c0c45ac401"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ano_lectivo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="3" width="39" height="20" uuid="42772228-27fc-4d29-be92-f98cacc1ffe1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="e6726d4f-f880-4a96-88a1-d37c437ef355"/>
+			</line>
+			<textField>
+				<reportElement x="465" y="3" width="51" height="20" uuid="9e3a469c-1930-4178-8fa5-b6cedf00c2a7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="116" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="0" width="555" height="116" uuid="a13f3b3a-8901-419b-a726-bd24083c6e95"/>
+				<rowGroup name="descricao" width="310" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{descricao}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="5" y="0" width="300" height="25" uuid="8066d72d-dd4e-45f7-8388-38cb18770488"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{descricao}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="5" y="0" width="300" height="25" uuid="97834716-0596-48cc-a78f-20a5e43a813f"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL DE ALUNOS MATRICULADOS POR TURNOS]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="turno" height="25" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{turno}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="62" height="25" uuid="06883021-3e78-4a9f-a4c7-71e4af61da2d"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{turno}.equals("MANHA") ? "Manhã" :
+$V{turno}.equals("TARDE") ? "Tarde" :
+$V{turno}.equals("POSLABORAL") ? "Noite" : ""]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFE1FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="25" uuid="08d38b1b-33aa-40e7-9f78-329fd4c070c8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[SubTotal]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="anuladoMeasure" class="java.lang.Integer" calculation="Count">
+					<measureExpression><![CDATA[$F{anulado}]]></measureExpression>
+				</measure>
+				<crosstabCell width="62" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="62" height="25" uuid="de9280f6-7acd-464f-bde7-f98d70dc1f9a"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{anuladoMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="62" height="25" rowTotalGroup="descricao">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="62" height="25" uuid="4cc03dfe-4fe6-4d6c-9071-015604ed5826"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{anuladoMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="turno">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="2b9d0076-741d-418d-9dd3-45528151304d"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{anuladoMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="descricao" columnTotalGroup="turno">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="b41bec68-0a2f-483b-a683-b7770391f0b2"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{anuladoMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_CI_1Ano_Mestrado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="1a9393c7-bfd7-45c4-8a08-a36bcde105ba">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="20"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="QUALIDADE"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="numero_matricula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data" class="java.lang.String"/>
+	<parameter name="numero_pedido" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT I.CHEFE_SERVICOS_ACADEMICOS, A.NOME, A.SEXO, A.NUMERO_DE_ALUNO, A.NOME_DO_PAI,
+A.NOME_DA_MAE, C.DESCRICAO AS CURSO, C.GRAU, RD.NUMERO_DECLARACAO,
+A.NUMERO_DOCUMENTO_IDENTIFICACAO, format (DATA_EMISSAO_IDENTIDADE, 'dd-MM-yyy')AS DATA_EMISSAO_IDENTIDADE,
+HA.CODIGO_ANO_LECTIVO, M.ANO_CURRICULAR, format (DATEADD(YEAR, 10, A.DATA_EMISSAO_IDENTIDADE), 'dd-MM-yyyy') DATA_VALIDADE_DOCUMENTO,
+D.DESCRICAO AS DISCIPLINA, format (HA.DATA_VALIDACAO, 'dd-MM-yyyy')AS DATA_VALIDACAO, HA.NOTA_FINAL
+FROM T_INSTITUICAO I INNER JOIN T_ALUNO A ON (A.CODIGO_INSTITUICAO = I.ID)
+INNER JOIN T_REGISTRO_DOCUMENTOS RD ON (RD.CODIGO_ALUNO = A.ID) --AND RETIRADO = 1
+INNER JOIN T_CURSO C ON (A.CODIGO_CURSO = C.ID)
+INNER JOIN T_HISTORICO_ALUNO HA ON (HA.NUMERO_DE_ALUNO = A.NUMERO_DE_ALUNO)
+INNER JOIN T_DISCIPLINA D ON (HA.codigo_disciplina = D.ID)
+INNER JOIN T_MATRICULA M ON (A.NUMERO_DE_ALUNO = M.NUMERO_DE_ALUNO)
+WHERE C.GRAU = 'MESTRADO' AND HA.VALIDADA= 1 and M.ANO_CURRICULAR=1 AND HA.APROVADO = 1 
+AND A.numero_de_aluno= $P{numero_matricula} 
+AND RD.NUMERO_DECLARACAO= $P{numero_pedido} 
+ORDER BY 13]]>
+	</queryString>
+	<field name="CHEFE_SERVICOS_ACADEMICOS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CHEFE_SERVICOS_ACADEMICOS"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="SEXO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEXO"/>
+	</field>
+	<field name="NUMERO_DE_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DE_ALUNO"/>
+	</field>
+	<field name="NOME_DO_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DO_PAI"/>
+	</field>
+	<field name="NOME_DA_MAE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DA_MAE"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="GRAU" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRAU"/>
+	</field>
+	<field name="NUMERO_DECLARACAO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DECLARACAO"/>
+	</field>
+	<field name="NUMERO_DOCUMENTO_IDENTIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DOCUMENTO_IDENTIFICACAO"/>
+	</field>
+	<field name="DATA_EMISSAO_IDENTIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_EMISSAO_IDENTIDADE"/>
+	</field>
+	<field name="CODIGO_ANO_LECTIVO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="CODIGO_ANO_LECTIVO"/>
+	</field>
+	<field name="ANO_CURRICULAR" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_CURRICULAR"/>
+	</field>
+	<field name="DATA_VALIDADE_DOCUMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_VALIDADE_DOCUMENTO"/>
+	</field>
+	<field name="DISCIPLINA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DISCIPLINA"/>
+	</field>
+	<field name="DATA_VALIDACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_VALIDACAO"/>
+	</field>
+	<field name="NOTA_FINAL" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="NOTA_FINAL"/>
+	</field>
+	<variable name="Total" class="java.lang.String" resetType="Group" resetGroup="Historico" calculation="Sum"/>
+	<variable name="contador" class="java.lang.String" calculation="Count"/>
+	<variable name="contador_1" class="java.lang.Integer" calculation="Count"/>
+	<group name="Historico" keepTogether="true"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="350">
+			<textField>
+				<reportElement x="34" y="157" width="487" height="193" uuid="eb6897ca-8c66-4631-8d8d-ef2e468c69ae">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font fontName="Serif" size="12"/>
+					<paragraph lineSpacing="Single" firstLineIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<font color='white'>"+"MMM"+"</font>"+"Eu, "+"<b>"+$F{CHEFE_SERVICOS_ACADEMICOS}+"</b>"+", a requerimento do interessado que fica arquivado nestes Serviços, certifico que  "+"<b>"+$F{NOME}+"</b>"+($F{SEXO}.equals("F")? ", filha de ": $F{SEXO}.equals("M")? ", filho de ": ", filha de ")+"<b>"+$F{NOME_DO_PAI}+"</b>"+" e de "+"<b>"+$F{NOME_DA_MAE}+"</b>"+($F{SEXO}.equals("F")? ", portadora do Bilhete de Identidade número ": $F{SEXO}.equals("M")? ", portador do Bilhete de Identidade número ": $F{SEXO}.equals("null")?"--": "--")+"<b>"+$F{NUMERO_DOCUMENTO_IDENTIFICACAO}+"</b>"+" emitido em "+"<b>"+$F{DATA_EMISSAO_IDENTIDADE}+"</b>"+" e válido até "+"<b>"+$F{DATA_VALIDADE_DOCUMENTO}+"</b>"+", obteve aprovação em todas as unidades curriculares da parte lectiva do Curso de Mestrado de "+"<b>"+$F{CURSO}+"</b>"+", nas datas e com as classificações que se indicam na escala de zero a vinte valores."+"<br>"+"<font color='white'>"+"MMM"+"</font>"+"Este documento não certifica que o cidadão em nome de quem é emitido é titular do grau de mestre."+"<br>"+"<font color='white'>"+"MMM"+"</font>"+"Este certificado é emitido sem emendas ou rasuras e leva aposto o selo a óleo em uso nesta Universidade."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="133" width="487" height="24" uuid="a9d4aa5a-f68c-47a7-a38d-177cac34cdd1"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CERTIFICADO"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="18" splitType="Prevent">
+			<textField>
+				<reportElement x="34" y="0" width="286" height="18" uuid="27b8d369-544e-4a12-943e-9d32a3e199e5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISCIPLINA}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<textField pattern="##" isBlankWhenNull="true">
+					<reportElement x="340" y="0" width="70" height="18" uuid="565afd4a-5247-4092-b497-73b9b33e9284"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Serif" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DATA_VALIDACAO}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<textField pattern="##" isBlankWhenNull="true">
+				<reportElement x="410" y="0" width="111" height="18" uuid="c5ec154d-8ca9-4ae5-859d-1e0cb887c0f7"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    $F{NOTA_FINAL} == 1  ?
+    "Um valor" :
+    $F{NOTA_FINAL}== 2 ?
+    "Dois valores" :
+    $F{NOTA_FINAL} == 3 ?
+    "Tres valores" :
+    $F{NOTA_FINAL} == 4 ?
+    "Quatro valores" :
+    $F{NOTA_FINAL} == 5 ?
+    "Cinco valores" :
+    $F{NOTA_FINAL} == 6 ?
+    "Seis valores" :
+    $F{NOTA_FINAL} == 7 ?
+    "Sete valores" :
+    $F{NOTA_FINAL} == 8 ?
+    "(Oito valores)" :
+    $F{NOTA_FINAL} == 9 ?
+    "Nove valores" :
+    $F{NOTA_FINAL} == 10 ?
+    "Dez valores" :
+    $F{NOTA_FINAL} == 11 ?
+    "Onze valores" :
+    $F{NOTA_FINAL} == 12 ?
+    "Doze valores" :
+    $F{NOTA_FINAL} == 13 ?
+    "Treze valores" :
+    $F{NOTA_FINAL} == 14 ?
+    "Catorze valores" :
+   $F{NOTA_FINAL} == 15 ?
+    "Quinze valores" :
+    $F{NOTA_FINAL} == 16 ?
+    "Dezasseis valores" :
+    $F{NOTA_FINAL} == 17 ?
+    "Dezassete valores" :
+    $F{NOTA_FINAL} == 18 ?
+    "Dezoito valores" :
+    $F{NOTA_FINAL} == 19?
+    "Dezanove valores" :
+    $F{NOTA_FINAL} == 20 ?
+    "Vinte valores" :
+    "Sem Nota")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="231">
+			<textField>
+				<reportElement x="65" y="16" width="449" height="20" uuid="662b9b2c-31ab-4ddf-a28a-1931a7245c26">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="false"/>
+					<paragraph firstLineIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Luanda, "+$P{data}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="44" y="102" width="206" height="50" uuid="c1f33bac-f7cb-404f-aa51-cdd458f3c15b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["O Director de Investigação Cientifica e Pós-Graduação"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="320" y="188" width="180" height="1" uuid="44442f17-2d00-450c-ac9b-b5239c435bf8"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="60" y="187" width="180" height="1" uuid="37b8328d-51cc-4ff4-9c21-a90227f119a7"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement x="280" y="98" width="236" height="50" uuid="56a30129-6e49-436d-afbf-74eb02adcbf8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["O Secretário-Geral"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

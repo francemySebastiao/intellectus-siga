@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Declaracao_Mestrado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c50a7745-ad10-499a-86a7-b72f48669b29">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numero_matricula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_dec" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="condicao" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT TOP 1
+     t_matricula."codigo_ano_lectivo" AS t_matricula_codigo_ano_lectivo,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_matricula."ano_curricular" AS t_matricula_ano_curricular,
+     t_matricula."numero_de_aluno" AS t_matricula_numero_de_aluno,
+     t_aluno."id" AS t_aluno_id,
+     t_aluno."arquivo_identificacao" AS t_aluno_arquivo_identificacao,
+     t_aluno."data_nascimento" AS t_aluno_data_nascimento,
+     t_aluno."documento_indentificacao" AS t_aluno_documento_indentificacao,
+     t_aluno."nome_da_mae" AS t_aluno_nome_da_mae,
+     t_aluno."nome_do_pai" AS t_aluno_nome_do_pai,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_aluno."numero_documento_identificacao" AS t_aluno_numero_documento_identificacao,
+     t_aluno."sexo" AS t_aluno_sexo,
+     t_provincia."provincia" AS t_provincia_provincia,
+     t_aluno."data_emissao_identidade" AS t_aluno_data_emissao_identidade,
+     t_aluno."nome" AS t_aluno_nome,
+     t_curso."descricao" AS t_curso_descricao,
+     t_ano_lectivo."status" AS t_ano_lectivo_status,
+     t_faculdade."cargo" AS t_faculdade_cargo,
+     t_faculdade."faculdade" AS t_faculdade_faculdade,
+     t_faculdade."responsavel" AS t_faculdade_responsavel,
+     t_curso."grau" AS t_curso_grau,
+     t_faculdade."cargo2" AS t_faculdade_cargo2,
+     t_faculdade."responsavel2" AS t_faculdade_responsavel2,
+     t_matricula."anulado" AS t_matricula_anulado,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_faculdade."coordenador_mestrado" AS t_faculdade_coordenador_mestrado,
+     t_faculdade."cargo_mestrado" AS t_faculdade_cargo_mestrado,
+     t_faculdade."titulo" AS t_faculdade_titulo,
+	 CAST(AL.ANO_LECTIVO AS VARCHAR)+'/'+CAST(AL.ANO_LECTIVO+1 AS VARCHAR) ANO_LECTIVO_FREQUENCIA,
+	 'frequenta' FREQUENCIA
+FROM
+     "dbo"."t_ano_lectivo" t_ano_lectivo INNER JOIN "dbo"."t_matricula" t_matricula ON t_ano_lectivo."id" = t_matricula."codigo_ano_lectivo"
+     INNER JOIN "dbo"."t_aluno" t_aluno ON t_matricula."codigo_aluno" = t_aluno."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_matricula."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_faculdade" t_faculdade ON t_curso."codigo_faculdade" = t_faculdade."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_faculdade."codigo_instituicao" = t_instituicao."id"
+     INNER JOIN "dbo"."t_provincia" t_provincia ON t_aluno."codigo_provincia_nascimento" = t_provincia."id",
+	 T_ANO_LECTIVO AL
+WHERE
+     t_matricula."numero_de_aluno" = $P{numero_matricula}
+     and t_matricula."codigo_ano_lectivo" = (select max(codigo_ano_lectivo) from t_matricula m where m.numero_de_aluno=$P{numero_matricula})
+	 and AL.ID= (select max(codigo_ano_lectivo) from t_matricula m where m.numero_de_aluno=$P{numero_matricula})]]>
+	</queryString>
+	<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_matricula_ano_curricular" class="java.lang.Integer"/>
+	<field name="t_matricula_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_aluno_id" class="java.lang.Integer"/>
+	<field name="t_aluno_arquivo_identificacao" class="java.lang.String"/>
+	<field name="t_aluno_data_nascimento" class="java.sql.Date"/>
+	<field name="t_aluno_documento_indentificacao" class="java.lang.String"/>
+	<field name="t_aluno_nome_da_mae" class="java.lang.String"/>
+	<field name="t_aluno_nome_do_pai" class="java.lang.String"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_aluno_numero_documento_identificacao" class="java.lang.String"/>
+	<field name="t_aluno_sexo" class="java.lang.String"/>
+	<field name="t_provincia_provincia" class="java.lang.String"/>
+	<field name="t_aluno_data_emissao_identidade" class="java.sql.Date"/>
+	<field name="t_aluno_nome" class="java.lang.String"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_ano_lectivo_status" class="java.lang.Boolean"/>
+	<field name="t_faculdade_cargo" class="java.lang.String"/>
+	<field name="t_faculdade_faculdade" class="java.lang.String"/>
+	<field name="t_faculdade_responsavel" class="java.lang.String"/>
+	<field name="t_curso_grau" class="java.lang.String"/>
+	<field name="t_faculdade_cargo2" class="java.lang.String"/>
+	<field name="t_faculdade_responsavel2" class="java.lang.String"/>
+	<field name="t_matricula_anulado" class="java.lang.Boolean"/>
+	<field name="t_instituicao_descricao" class="java.lang.String"/>
+	<field name="t_faculdade_coordenador_mestrado" class="java.lang.String"/>
+	<field name="t_faculdade_cargo_mestrado" class="java.lang.String"/>
+	<field name="t_faculdade_titulo" class="java.lang.String"/>
+	<field name="ANO_LECTIVO_FREQUENCIA" class="java.lang.String"/>
+	<field name="FREQUENCIA" class="java.lang.String"/>
+	<variable name="variable1" class="java.util.Date" calculation="System">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="171" splitType="Stretch">
+			<textField>
+				<reportElement x="44" y="137" width="482" height="33" uuid="4622b724-bfa4-47d7-a955-f8f8416f7848"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{condicao}.equals("1") ? "DECLARAÇÃO" : "ESTE DOCUMENTO NÃO TEM QUALQUER USO LEGAL"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="397" y="57" width="139" height="1" uuid="e2cb8e66-a40f-44b7-a4a7-ef57048077e3">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="397" y="18" width="139" height="20" uuid="bf4601f3-b357-4f1d-9931-c6492d20054c">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Serif"/>
+				</textElement>
+				<text><![CDATA[O Secretário Geral]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="411" y="57" width="110" height="20" uuid="34754f4a-07c5-47ef-955b-b2fde5e4d603"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Dr. Vladmir Semedo"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="493" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="44" y="451" width="482" height="19" uuid="0b21ba1d-7d58-4d9f-998a-b862b81da7ff"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_faculdade_responsavel}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="44" y="365" width="482" height="50" uuid="f4a2dfbe-d8da-4347-9647-0934f7ffd9a6">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["O Decano "+" da "+($F{t_faculdade_faculdade}.equals("Faculdade de Ciências Sociais e Desenvolvimento Humano") ? "Faculdade de Ciências Sociais e Desenvolvimento Human":$F{t_faculdade_faculdade}.equals("Faculdade de Engenharias e Novas Tecnologias") ? "Faculdade de Engenharias e Novas Tecnologias":$F{t_faculdade_faculdade}.equals("Faculdade de Ciências Económicas e Empresariais") ? "Faculdade de Ciências Económicas e Empresariais":$F{t_faculdade_faculdade}.equals("Faculdade de Ciências Jurídicas e Políticas") ? "Faculdade de Ciências Jurídicas e Políticas":"sem SIGLA")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="44" y="16" width="482" height="219" uuid="2a5e305d-9aa4-4f27-8089-d56c955e1d07"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font fontName="Serif" size="12" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Eu, "+"<b>"+"Dr. Jacques Matos Gala Chefe dos Serviços Académicos, "+"</b>"+"a pedido do interessado, declaro que "+"<b>"+$F{t_aluno_nome}+"</b>"+($F{t_aluno_sexo}.equals("F")? "Filha de ": $F{t_aluno_sexo}.equals("M")? "Filho de ": "Filha de ")+$F{t_aluno_nome_do_pai}+" e de "+$F{t_aluno_nome_da_mae}+($F{t_aluno_sexo}.equals("F")? ", Portadora do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("M")? ", Portador do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("null")?"--": "--")+$F{t_aluno_numero_documento_identificacao}+" emitido em "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_emissao_identidade})+" está, à data de emissão desta declaração, a frequentar a parte lectiva do Curso de Mestrado de "+$F{t_curso_descricao}+"<br>"+"O cidadão em nome de quem se emite esta declaração não é titular do grau de mestre."+"<br>"+"Esta declaração é emitida sem emendas ou rasuras e leva aposto o selo a óleo em uso nesta Universidade."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="44" y="271" width="482" height="20" uuid="ee17963f-270b-4452-bf72-9ead4a5c7a50">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("2")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="12"/>
+				</textElement>
+				<text><![CDATA[USO INTERNO - SEM VALOR LEGAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="44" y="294" width="482" height="52" uuid="d3041d66-330d-4491-a22c-a40dc9909db0">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font fontName="Serif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Luanda, "+$P{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnFooter>
+		<band height="43"/>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pauta_global" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bd7c092f-3c1b-4b90-8f61-68546210e53c">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MeuPC"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="id_curso" class="java.lang.Integer"/>
+	<parameter name="id_ano" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     SUM (EE.CLASSIFICACAO) NOTAFINAL,
+     C.NUMERO_CANDIDATO,
+     C.NOME,
+     CR.DESCRICAO CURSO,
+     C.TURNO,
+     EE.CODIGO_CANDIDATO,
+     (SELECT GRUPO_OWNER FROM T_INSTITUICAO WHERE ID = 2) GRUPO_OWNER,
+     (SELECT FOTO FROM T_LOGO_MARCA) FOTO,
+     (SELECT ANO_LECTIVO_DESCRICAO FROM t_ano_lectivo WHERE ID = EE.CODIGO_ANO_LECTIVO) ANO_LECTIVO_DESCRICAO
+FROM T_CANDIDATO C
+     INNER JOIN T_EXAME_ELETRONICO EE ON (EE.CODIGO_CANDIDATO = C.ID)
+     INNER JOIN T_CURSO CR ON (CR.ID = C.CODIGO_CURSO)
+WHERE
+     C.CODIGO_CURSO =  $P{id_curso}  AND
+     EE.CODIGO_ANO_LECTIVO =  $P{id_ano} 
+GROUP BY
+     C.NUMERO_CANDIDATO,
+     C.NOME,
+     CR.DESCRICAO,
+     C.TURNO,
+     EE.CODIGO_CANDIDATO,
+     EE.CODIGO_ANO_LECTIVO
+ORDER BY 5,3]]>
+	</queryString>
+	<field name="NOTAFINAL" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NOTAFINAL"/>
+	</field>
+	<field name="NUMERO_CANDIDATO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_CANDIDATO"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="TURNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TURNO"/>
+	</field>
+	<field name="CODIGO_CANDIDATO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="CODIGO_CANDIDATO"/>
+	</field>
+	<field name="GRUPO_OWNER" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRUPO_OWNER"/>
+	</field>
+	<field name="FOTO" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="FOTO"/>
+	</field>
+	<field name="ANO_LECTIVO_DESCRICAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_LECTIVO_DESCRICAO"/>
+	</field>
+	<variable name="ordem" class="java.lang.String" incrementType="Column" calculation="Count"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="179" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="1" y="0" width="78" height="80" uuid="01b89854-bab0-4292-99e4-f695c48cfa9b"/>
+				<imageExpression><![CDATA[$F{FOTO}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="305" y="41" width="245" height="20" uuid="97c5b822-b1c4-4b64-90a9-585bcf37b54a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAUTA EXAME ELECTRÔNICO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="318" y="92" width="177" height="13" uuid="3c16564c-7f52-4e24-8102-a9adc9d42b83"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CURSO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="316" y="87" width="15" height="1" uuid="b06df35f-5680-4f09-bb01-56d3bae96564"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="551" y="87" width="4" height="1" uuid="d6a94df0-37cf-44a3-bb4e-5556a5846e9a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="497" y="92" width="1" height="14" forecolor="#9999FF" uuid="361e31f7-b87e-4f78-9424-bdfb3eaa5b88"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="315" y="111" width="240" height="1" uuid="c778f42e-b59f-443a-84cc-c41e83a733d7"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="332" y="80" width="42" height="13" uuid="a5784ff0-8394-4ba0-aee4-54a8274fe78a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Curso]]></text>
+			</staticText>
+			<line>
+				<reportElement x="315" y="87" width="1" height="24" uuid="db681133-c2a9-4e04-a11b-f0d17c1fef3c"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="495" y="81" width="55" height="12" uuid="c15953f3-45f2-4b45-8e03-40de8ede2c85">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Ano Lectivo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="374" y="87" width="121" height="1" uuid="b01a2bad-c607-4b09-b4b1-2c31cd244d7a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="555" y="87" width="1" height="24" uuid="ff416519-7daf-44ed-9fa2-934a40a69c60"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<rectangle>
+				<reportElement x="0" y="146" width="27" height="32" backcolor="#FFFF00" uuid="46a68f45-a70c-4018-b12b-a8f3d27a2675"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="80" y="146" width="260" height="32" backcolor="#FFFF00" uuid="c9da2b75-4e60-4db5-8cd2-049308df213e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="146" width="26" height="31" uuid="8182e2e9-da33-4114-9f02-51194b1b8aba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[N/0]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="444" y="146" width="85" height="32" backcolor="#FFFF00" uuid="2ae3bfe5-78dd-4e74-a6c2-3b56bcac1983"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="444" y="150" width="85" height="27" uuid="63c6b798-266a-4bb1-8319-f633080901fa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Extenso]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="529" y="146" width="26" height="32" backcolor="#FFFF00" uuid="01828064-6bb5-4c4b-a1a9-31c6d31ff3b7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="532" y="163" width="23" height="14" uuid="daf98e5f-3b8d-434e-a5ab-f2f0c5641f5c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[b)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="529" y="162" width="26" height="1" uuid="c33943a8-e5f3-4f24-80dd-1dac03abe553"/>
+			</line>
+			<staticText>
+				<reportElement x="532" y="147" width="23" height="14" uuid="caf5f06b-c3a7-42d6-a206-b33d2ec0cb7e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[A/R]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="400" y="146" width="44" height="32" backcolor="#FFFF00" uuid="987faf37-4f43-45b0-8ff2-7f577102f75e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="400" y="150" width="43" height="27" uuid="35fcb6b4-4e98-4864-b9ef-7d11d5925d24"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Nota Final]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="340" y="146" width="60" height="32" backcolor="#FFFF00" uuid="d0e6f295-3351-4080-be4d-5871bc3f6d10"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="80" y="148" width="199" height="31" uuid="1ab12984-bc94-47b4-9669-fdb32fd54e42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Nome do Candidato]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="27" y="146" width="53" height="32" backcolor="#FFFF00" uuid="62476bc8-c769-4b81-b574-421bc9832ec6"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="28" y="146" width="52" height="31" uuid="2d3c15ec-f412-4ca3-83ca-ca5ea5a57a80"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Nº Cand]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="149" width="58" height="27" uuid="78a0d32d-6336-4593-b67e-6bb69f0b10fa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<text><![CDATA[Turno]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="498" y="92" width="57" height="13" uuid="f5be6459-da06-44fd-a6a2-a11625d80787">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANO_LECTIVO_DESCRICAO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="1" height="20" uuid="c724d6bc-6778-42c7-9ebb-9b9ee3151d17"/>
+			</line>
+			<textField>
+				<reportElement x="27" y="0" width="52" height="20" uuid="03a967ba-2853-4c96-aad6-0da3caa84d75">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMERO_CANDIDATO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="401" y="0" width="42" height="20" uuid="ebc2e0f3-5c59-44f4-bbfd-81c47ed6a477"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOTAFINAL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="c20c73b3-3aa1-4f70-922d-1da331dfe28a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="27" y="0" width="1" height="20" uuid="fba18fde-2e8c-4255-a40f-853c97fe0504"/>
+			</line>
+			<line>
+				<reportElement x="80" y="0" width="1" height="20" uuid="2da3a5b8-1343-4976-82b8-fe1a3b4da669"/>
+			</line>
+			<line>
+				<reportElement x="444" y="0" width="1" height="20" uuid="05ec94ab-4965-46fe-8e4f-22bad7cb8f8d"/>
+			</line>
+			<line>
+				<reportElement x="528" y="0" width="1" height="20" uuid="ce57c7fd-cd94-4fbd-9624-9837c1a83570"/>
+			</line>
+			<line>
+				<reportElement x="555" y="-1" width="1" height="21" uuid="b9897e1f-be09-4a5e-bd97-98f639ca52b9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="1" y="0" width="25" height="20" uuid="23238171-990c-4a54-b819-61467692ebc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="0" width="190" height="20" uuid="0a7f3533-302a-434d-a34e-675163b04800"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="340" y="-1" width="58" height="20" uuid="52b3fe29-b2e1-4c72-bdbc-d084d02450a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TURNO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##" isBlankWhenNull="true">
+				<reportElement x="529" y="-1" width="26" height="20" uuid="493172fe-3ca3-4f9d-b5c4-882153e508c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    $F{NOTAFINAL}  >= 10 ?
+    "A" :
+    $F{NOTAFINAL}  <= 9 ?
+    "R" :
+    ""
+)]]></textFieldExpression>
+			</textField>
+			<textField pattern="##" isBlankWhenNull="true">
+				<reportElement x="445" y="-1" width="83" height="20" uuid="901f4aff-4308-4fcf-9b53-bdcbf82ced0b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+	 $F{NOTAFINAL} == 0 ?
+    "Zero" :
+    $F{NOTAFINAL} == 1 ?
+    "Um Valor" :
+    $F{NOTAFINAL} == 2 ?
+    "Dois Valores" :
+    $F{NOTAFINAL} == 3 ?
+    "Três Valores" :
+    $F{NOTAFINAL} == 4 ?
+    "Quatro Valores" :
+   $F{NOTAFINAL} == 5 ?
+    "Cinco Valores" :
+   $F{NOTAFINAL} == 6 ?
+    "Seis Valores" :
+    $F{NOTAFINAL} == 7 ?
+    "Sete Valores" :
+    $F{NOTAFINAL} == 8 ?
+    "Oito Valores" :
+    $F{NOTAFINAL} == 9 ?
+    "Nove Valores" :
+    $F{NOTAFINAL} == 10 ?
+    "Dez Valores" :
+    $F{NOTAFINAL} == 11 ?
+    "Onze Valores" :
+    $F{NOTAFINAL} == 12 ?
+    "Doze Valores" :
+    $F{NOTAFINAL} == 13 ?
+    "Treze Valores" :
+    $F{NOTAFINAL} == 14 ?
+    "Catorze Valores" :
+    $F{NOTAFINAL} == 15 ?
+    "Quinze Valores" :
+    $F{NOTAFINAL} == 16 ?
+    "Dezasseis Valores" :
+    $F{NOTAFINAL} == 17 ?
+    "Dezassete Valores" :
+    $F{NOTAFINAL} == 18 ?
+    "Dezoito Valores" :
+    $F{NOTAFINAL} == 19 ?
+    "Dezanove Valores" :
+    $F{NOTAFINAL} == 20 ?
+    "Vinte Valores" :
+    ""
+)]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="400" y="0" width="1" height="20" uuid="50eb2086-63bf-4600-9e09-59f84fcad724"/>
+			</line>
+			<line>
+				<reportElement x="1" y="-1" width="554" height="1" uuid="084158f1-df04-40ff-a992-c5d35155b881">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="340" y="0" width="1" height="20" uuid="b442569e-4dbf-49db-859d-93dc64bc44b2"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="a73e8aeb-2db8-487c-94ad-7b1628db4a54"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="100" height="20" uuid="ab9a04bc-e19d-4449-9c99-32f182a7ff1b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="310" height="21" uuid="6f5d7150-e1c6-43f5-ad5d-cc7cfe3f8306"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRUPO_OWNER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="1" width="80" height="20" uuid="7b4f606f-f7e8-4bc5-93ff-f934569d2a7d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="512" y="1" width="40" height="20" uuid="58cb5261-0747-439e-9445-b72ebe8686c8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="233" splitType="Stretch"/>
+	</summary>
+</jasperReport>

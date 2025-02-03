@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Ficha_inscricao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a4bc6d5c-636e-488e-8c8b-7823fe43b013">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="a6c40db7-12bf-486d-b713-edef4f74ffbf">
+		<parameter name="numero_matricula" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codigo_ano_lectivo" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT D.ANO_CORRICULAR,D.DESCRICAO,
+    CASE
+		 WHEN D.TIPO='PRIMEIRO_SEMESTRE'THEN '1º Semestre'
+		 WHEN D.TIPO='SEGUNDO_SEMESTRE' THEN '2º Semestre'
+		 WHEN D.TIPO='ANUAL'            THEN 'Anual'
+		 WHEN D.TIPO='PROJECTO'         THEN 'Projecto'
+	END TIPO,T.TURMA
+FROM T_HISTORICO_ALUNO S,T_DISCIPLINA D,T_TURMA T,T_MATRICULA M
+WHERE S.CODIGO_DISCIPLINA = D.ID   AND
+      S.CODIGO_TURMA      = T.ID   AND
+	  S.CODIGO_MATRICULA  = M.ID   AND
+	  S.NUMERO_DE_ALUNO   = $P{numero_matricula} AND
+	  S.CODIGO_ANO_LECTIVO= $P{codigo_ano_lectivo}    AND
+	  M.CODIGO_ANO_LECTIVO= $P{codigo_ano_lectivo}   AND
+	  M.CODIGO_PLANO_PAGAMENTO<>9
+ORDER BY 1,3]]>
+		</queryString>
+		<field name="ANO_CORRICULAR" class="java.lang.Integer"/>
+		<field name="DESCRICAO" class="java.lang.String"/>
+		<field name="TIPO" class="java.lang.String"/>
+		<field name="TURMA" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="numero_matricula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_ano_lectivo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     t_matricula."id"                         AS t_matricula_id,
+     t_matricula."ano_curricular"             AS t_matricula_ano_curricular,
+     t_matricula."ano_lectivo"                AS t_matricula_ano_lectivo,
+     t_matricula."codigo_curso"               AS t_matricula_codigo_curso,
+     t_matricula."codigo_plano_pagamento"     AS t_matricula_codigo_plano_pagamento,
+     t_matricula."codigo_turma_base"          AS t_matricula_codigo_turma_base,
+     t_matricula."numero_de_aluno"            AS t_matricula_numero_de_aluno,
+     t_matricula."codigo_aluno"               AS t_matricula_codigo_aluno,
+     t_turma."id"                             AS t_turma_id,
+     t_turma."turma"                          AS t_turma_turma,
+     t_ano_lectivo."id"                       AS t_ano_lectivo_id,
+     t_ano_lectivo."ano_lectivo"              AS t_ano_lectivo_ano_lectivo,
+     t_ano_lectivo."codigo_instituicao"		  AS t_ano_lectivo_codigo_instituicao,
+     t_disciplina."id"					      AS t_disciplina_id,
+     t_disciplina."ano_corricular"		      AS t_disciplina_ano_corricular,
+     t_disciplina."descricao"		          AS t_disciplina_descricao,
+     t_disciplina."codigo_curso"			  AS t_disciplina_codigo_curso,
+     t_historico_aluno."id"				      AS t_historico_aluno_id,
+     t_historico_aluno."ano_curricular"		  AS t_historico_aluno_ano_curricular,
+     t_historico_aluno."codigo_matricula"     AS t_historico_aluno_codigo_matricula,
+     t_historico_aluno."codigo_turma"		  AS t_historico_aluno_codigo_turma,
+     t_historico_aluno."codigo_aluno"		  AS t_historico_aluno_codigo_aluno,
+     t_instituicao."id"					      AS t_instituicao_id,
+     t_instituicao."descricao"				  AS t_instituicao_descricao,
+     t_disciplina."tipo"				      AS t_disciplina_tipo,
+     t_aluno."id"							  AS t_aluno_id,
+     t_aluno."nome"                           AS t_aluno_nome,
+     t_aluno."numero_de_aluno"                AS t_aluno_numero_de_aluno,
+     t_aluno."sexo"                           AS t_aluno_sexo,
+     t_aluno."telefone"                       AS t_aluno_telefone,
+     t_aluno."codigo_instituicao"             AS t_aluno_codigo_instituicao,
+     t_aluno."codigo_municipio_nascimento"    AS t_aluno_codigo_municipio_nascimento,
+     t_aluno."codigo_municio_residencia"      AS t_aluno_codigo_municio_residencia,
+     t_aluno."codigo_pais_nacionalidade"      AS t_aluno_codigo_pais_nacionalidade,
+     t_aluno."codigo_pais_residencia"         AS t_aluno_codigo_pais_residencia,
+     t_aluno."codigo_provincia_nascimento"    AS t_aluno_codigo_provincia_nascimento,
+     t_aluno."codigo_provincia_residencia"	  AS t_aluno_codigo_provincia_residencia,
+     t_aluno."codigo_tipo_bolsa"			  AS t_aluno_codigo_tipo_bolsa,
+     t_curso."id"							  AS t_curso_id,
+     t_curso."codigo"						  AS t_curso_codigo,
+     t_curso."descricao"					  AS t_curso_descricao,
+     t_curso."duracao"						  AS t_curso_duracao,
+     t_curso."grau"							  AS t_curso_grau,
+     t_curso."inicio"						  AS t_curso_inicio,
+     t_curso."plano"						  AS t_curso_plano,
+     t_curso."quantidade_cadeiras"			  AS t_curso_quantidade_cadeiras,
+     t_curso."sigla"						  AS t_curso_sigla,
+     t_curso."status"						  AS t_curso_status,
+     t_curso."codigo_faculdade"				  AS t_curso_codigo_faculdade,
+     t_aluno."email"						  AS t_aluno_email,
+     t_aluno."morada"						  AS t_aluno_morada,
+     t_aluno."numero_documento_identificacao" AS t_aluno_numero_documento_identificacao,
+     t_faculdade."id"						  AS t_faculdade_id,
+     t_faculdade."faculdade"				  AS t_faculdade_faculdade,
+     t_aluno."arquivo_identificacao"		  AS t_aluno_arquivo_identificacao,
+     t_aluno."bairro"						  AS t_aluno_bairro,
+     t_aluno."data_nascimento"				  AS t_aluno_data_nascimento,
+     t_aluno."data_emissao_identidade"		  AS t_aluno_data_emissao_identidade,
+     t_plano_pagamento."id"					  AS t_plano_pagamento_id,
+     t_plano_pagamento."descricao"			  AS t_plano_pagamento_descricao,
+     t_matricula."data_matricula"			  AS t_matricula_data_matricula,
+     t_instituicao."grupo_owner"			  AS t_instituicao_grupo_owner,
+     t_matricula."anulado"					  AS t_matricula_anulado,
+     t_matricula."data_anulamento"			  AS t_matricula_data_anulamento,
+     t_aluno_anexo."id"						  AS t_aluno_anexo_id,
+     t_aluno_anexo."foto"                     AS t_aluno_anexo_foto,
+     t_aluno_anexo."numero_de_aluno"          AS t_aluno_anexo_numero_de_aluno,
+     t_aluno_anexo."codigo_aluno"             AS t_aluno_anexo_codigo_aluno,
+     t_logo_marca."id"                        AS t_logo_marca_id,
+     t_logo_marca."foto"                      AS t_logo_marca_foto,
+     t_tipo_inscricao."descricao"             AS t_tipo_inscricao_descricao,
+     t_usuario."name"                         AS t_usuario_name,
+     t_matricula."codigo_usuario_inscreveu"   AS t_matricula_codigo_usuario_inscreveu,
+     t_matricula."codigo_ano_lectivo"         AS t_matricula_codigo_ano_lectivo,
+     t_historico_aluno."codigo_disciplina"    AS t_historico_aluno_codigo_disciplina
+FROM
+     "dbo"."t_matricula" t_matricula
+	 LEFT OUTER JOIN "dbo"."t_historico_aluno" t_historico_aluno ON t_matricula."id"                      = t_historico_aluno."codigo_matricula"
+     LEFT OUTER JOIN "dbo"."t_aluno" t_aluno                     ON t_matricula."codigo_aluno"            = t_aluno."id"
+     LEFT OUTER JOIN "dbo"."t_curso" t_curso                     ON t_matricula."codigo_curso"            = t_curso."id"
+     LEFT OUTER JOIN "dbo"."t_plano_pagamento" t_plano_pagamento ON t_matricula."codigo_plano_pagamento"  = t_plano_pagamento."id"
+     LEFT OUTER JOIN "dbo"."t_tipo_inscricao" t_tipo_inscricao   ON t_matricula."codigo_tipo_inscricao"   = t_tipo_inscricao."id"
+     LEFT OUTER JOIN "dbo"."t_usuario" t_usuario                 ON t_matricula."codigo_usuario_inscreveu"= t_usuario."id"
+     LEFT OUTER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo         ON t_matricula."codigo_ano_lectivo"      = t_ano_lectivo."id"
+     LEFT OUTER JOIN "dbo"."t_disciplina" t_disciplina           ON t_disciplina."id"                     =t_historico_aluno."codigo_disciplina"
+     LEFT OUTER JOIN "dbo"."t_faculdade" t_faculdade             ON t_curso."codigo_faculdade" = t_faculdade."id"
+     LEFT OUTER JOIN "dbo"."t_turma" t_turma                     ON t_historico_aluno."codigo_turma" = t_turma."id"
+     LEFT OUTER JOIN "dbo"."t_instituicao" t_instituicao         ON t_turma."codigo_instituicao" = t_instituicao."id"
+     LEFT OUTER JOIN "dbo"."t_aluno_anexo" t_aluno_anexo         ON t_aluno."id" = t_aluno_anexo."codigo_aluno",
+     "dbo"."t_logo_marca" t_logo_marca
+
+WHERE
+     t_matricula."codigo_ano_lectivo" = $P{codigo_ano_lectivo}  and
+	 t_matricula."numero_de_aluno" = $P{numero_matricula} and
+	 t_instituicao."id"=2                   and
+     t_matricula."anulado" = 0
+ORDER BY
+     t_disciplina."tipo" ASC]]>
+	</queryString>
+	<field name="t_matricula_id" class="java.lang.Integer"/>
+	<field name="t_matricula_ano_curricular" class="java.lang.Integer"/>
+	<field name="t_matricula_ano_lectivo" class="java.lang.String"/>
+	<field name="t_matricula_codigo_curso" class="java.lang.Integer"/>
+	<field name="t_matricula_codigo_plano_pagamento" class="java.lang.Integer"/>
+	<field name="t_matricula_codigo_turma_base" class="java.lang.Integer"/>
+	<field name="t_matricula_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_matricula_codigo_aluno" class="java.lang.Integer"/>
+	<field name="t_turma_id" class="java.lang.Integer"/>
+	<field name="t_turma_turma" class="java.lang.String"/>
+	<field name="t_ano_lectivo_id" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_codigo_instituicao" class="java.lang.Integer"/>
+	<field name="t_disciplina_id" class="java.lang.Integer"/>
+	<field name="t_disciplina_ano_corricular" class="java.lang.Integer"/>
+	<field name="t_disciplina_descricao" class="java.lang.String"/>
+	<field name="t_disciplina_codigo_curso" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_id" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_ano_curricular" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_codigo_matricula" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_codigo_turma" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_codigo_aluno" class="java.lang.Integer"/>
+	<field name="t_instituicao_id" class="java.lang.Integer"/>
+	<field name="t_instituicao_descricao" class="java.lang.String"/>
+	<field name="t_disciplina_tipo" class="java.lang.String"/>
+	<field name="t_aluno_id" class="java.lang.Integer"/>
+	<field name="t_aluno_nome" class="java.lang.String"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_aluno_sexo" class="java.lang.String"/>
+	<field name="t_aluno_telefone" class="java.lang.String"/>
+	<field name="t_aluno_codigo_instituicao" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_municipio_nascimento" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_municio_residencia" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_pais_nacionalidade" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_pais_residencia" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_provincia_nascimento" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_provincia_residencia" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_tipo_bolsa" class="java.lang.Integer"/>
+	<field name="t_curso_id" class="java.lang.Integer"/>
+	<field name="t_curso_codigo" class="java.lang.String"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_curso_duracao" class="java.lang.Integer"/>
+	<field name="t_curso_grau" class="java.lang.String"/>
+	<field name="t_curso_inicio" class="java.lang.Integer"/>
+	<field name="t_curso_plano" class="java.lang.String"/>
+	<field name="t_curso_quantidade_cadeiras" class="java.lang.Integer"/>
+	<field name="t_curso_sigla" class="java.lang.String"/>
+	<field name="t_curso_status" class="java.lang.Boolean"/>
+	<field name="t_curso_codigo_faculdade" class="java.lang.Integer"/>
+	<field name="t_aluno_email" class="java.lang.String"/>
+	<field name="t_aluno_morada" class="java.lang.String"/>
+	<field name="t_aluno_numero_documento_identificacao" class="java.lang.String"/>
+	<field name="t_faculdade_id" class="java.lang.Integer"/>
+	<field name="t_faculdade_faculdade" class="java.lang.String"/>
+	<field name="t_aluno_arquivo_identificacao" class="java.lang.String"/>
+	<field name="t_aluno_bairro" class="java.lang.String"/>
+	<field name="t_aluno_data_nascimento" class="java.sql.Date"/>
+	<field name="t_aluno_data_emissao_identidade" class="java.sql.Date"/>
+	<field name="t_plano_pagamento_id" class="java.lang.Integer"/>
+	<field name="t_plano_pagamento_descricao" class="java.lang.String"/>
+	<field name="t_matricula_data_matricula" class="java.sql.Date"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_matricula_anulado" class="java.lang.Boolean"/>
+	<field name="t_matricula_data_anulamento" class="java.sql.Date"/>
+	<field name="t_aluno_anexo_id" class="java.lang.Integer"/>
+	<field name="t_aluno_anexo_foto" class="java.io.InputStream"/>
+	<field name="t_aluno_anexo_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_aluno_anexo_codigo_aluno" class="java.lang.Integer"/>
+	<field name="t_logo_marca_id" class="java.lang.Integer"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<field name="t_tipo_inscricao_descricao" class="java.lang.String"/>
+	<field name="t_usuario_name" class="java.lang.String"/>
+	<field name="t_matricula_codigo_usuario_inscreveu" class="java.lang.Integer"/>
+	<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_historico_aluno_codigo_disciplina" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="318" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="906f2044-d329-4319-b2be-0489802deceb" x="433" y="0" width="80" height="72"/>
+			</rectangle>
+			<line>
+				<reportElement uuid="7645a2f0-9170-4c80-82b7-b39b895d7c10" x="202" y="19" width="150" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="91a82b4e-714d-4d39-9e57-75ba38f4bce8" x="202" y="38" width="150" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="7c622cb4-c582-4cf1-9aff-552085264c3e" x="202" y="0" width="150" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ficha de Inscrição]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="244e5d07-d68d-47df-b262-c8a3ac5de6a1" x="202" y="19" width="150" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_matricula_ano_lectivo}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="f01a8e91-bbb7-4923-914c-6986292c4870" x="0" y="181" width="269" height="42"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="d81e2b03-2db5-4976-8ca4-666c2342031f" x="0" y="163" width="100" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contactos]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="49d6fd29-a65b-4327-85b0-d6ef34631488" x="280" y="181" width="253" height="42"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="4c637813-de0f-4ad6-83ee-2f291de56ed9" x="280" y="163" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Outros dados]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="683659f9-acad-4e0c-b66b-3cb0a8d26841" mode="Opaque" x="0" y="90" width="533" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d1750eda-1d77-4676-a5b8-24a316121360" x="280" y="203" width="189" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Sexo: "+$F{t_aluno_sexo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###-###-###">
+				<reportElement uuid="47d77ffc-147a-48ac-972f-ef0818cc49b8" x="13" y="183" width="256" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Telefone: (+244) "+$F{t_aluno_telefone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d3b1d154-77a6-45c6-92b1-8a26551ff920" x="2" y="223" width="379" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_descricao}.equals("Agregação Pedagógica") ? "":$F{t_faculdade_faculdade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cec0b348-001e-44ad-add4-532eaed82029" x="2" y="243" width="352" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="602afaa8-493f-45fc-bece-03a6c5fd03d8" x="381" y="243" width="153" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Matriculado no "+$F{t_matricula_ano_curricular}+"º Ano"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9954ddf4-f128-4ac5-9387-f0d581a8cfbc" x="0" y="110" width="534" height="53"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Titular do Bilhete de Identidade n.º "+($F{t_aluno_numero_documento_identificacao}== null ? "(BºI em falta)":$F{t_aluno_numero_documento_identificacao})+", emitido pelo Arquivo de "+($F{t_aluno_arquivo_identificacao}== null ? "(..)":$F{t_aluno_arquivo_identificacao})+" em "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_nascimento})+", com morada em "+($F{t_aluno_morada}==null ? "(..)":$F{t_aluno_morada})+", "+($F{t_aluno_bairro}==null ? "..":$F{t_aluno_bairro})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a88fd27e-83dd-4204-b9cb-ad3510714d61" x="2" y="277" width="352" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Plano de Pagamento: "+$F{t_plano_pagamento_descricao}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="e4c42096-6701-4620-9be7-1c3d09252dbf" key="table 1" style="table 1" x="0" y="297" width="512" height="20"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="76bff0de-d896-425b-bccd-1110127a959a">
+						<datasetParameter name="numero_matricula">
+							<datasetParameterExpression><![CDATA[$F{t_matricula_numero_de_aluno}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="codigo_ano_lectivo">
+							<datasetParameterExpression><![CDATA[$F{t_ano_lectivo_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="42" uuid="fcae0fda-68a3-4e9f-a0e1-a618cde8ea3a">
+						<jr:tableHeader style="table 1_TH" height="23" rowSpan="1">
+							<staticText>
+								<reportElement uuid="d9a9398a-1bc2-4f42-8ec7-53757d570493" x="1" y="0" width="41" height="23"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Ano]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 1_TD" height="19" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="bfdbf3ab-764b-4084-8557-b45f9f66d725" x="1" y="0" width="41" height="19"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{ANO_CORRICULAR}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="282" uuid="0df81726-057e-4100-9618-47fbd6b753f5">
+						<jr:tableHeader style="table 1_TH" height="23" rowSpan="1">
+							<staticText>
+								<reportElement uuid="9dc73744-b136-4542-b2af-130afa5dd234" x="0" y="0" width="282" height="23"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Disciplina]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 1_TD" height="19" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="a8c5c520-4530-4bb9-bf11-b6bbe995965b" x="8" y="0" width="274" height="19"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="162" uuid="0d38edf5-ffca-4223-8e88-0d110cc9b427">
+						<jr:tableHeader style="table 1_TH" height="23" rowSpan="1">
+							<staticText>
+								<reportElement uuid="b97e5702-453e-42a9-b021-5a9454e21ae9" x="0" y="0" width="162" height="23"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Tipo]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 1_TD" height="19" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="25399ae5-48d8-456a-9d7f-40e52494f708" x="0" y="0" width="162" height="19"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="53" uuid="b273c4f6-9434-4ef7-afaf-178650bd067e">
+						<jr:tableHeader style="table 1_TH" height="23" rowSpan="1">
+							<staticText>
+								<reportElement uuid="efda6462-0b36-4006-a198-aab7b4d3ca0a" x="0" y="0" width="53" height="23"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Turma]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 1_TD" height="19" rowSpan="1">
+							<textField isBlankWhenNull="true">
+								<reportElement uuid="a4d0cc7b-e20d-499b-9590-65e799cdd6e6" x="14" y="0" width="39" height="19"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{TURMA}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement uuid="c3ce049b-8cd1-41f5-be14-acc53c87ae5c" x="400" y="223" width="134" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Turma Base: "+$F{t_turma_turma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ee92afff-1a5f-46ca-9972-160d64c7f609" x="434" y="71" width="79" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_matricula_numero_de_aluno}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5c5a8094-d5bb-4df0-94c5-5f3a0875677a" x="13" y="203" width="256" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Email: "+$F{t_aluno_email}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="851166ce-5111-4bb6-82f6-c64659fdf88f" x="202" y="51" width="150" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{t_matricula_anulado}.valueOf("True")
+?"Anulado a "+ new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_matricula_data_anulamento})
+: $F{t_matricula_anulado}.valueOf("False")
+? "nada"
+: "nada"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="2d018afe-3839-43a3-9a44-171fe7aaf170" x="434" y="1" width="79" height="70"/>
+				<imageExpression><![CDATA[$F{t_aluno_anexo_foto}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="0d60313c-6b82-4e1a-a47f-b7be98261b95" x="13" y="1" width="74" height="70"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="56961364-01e8-4960-b67d-b8be7e25f4a2" x="2" y="263" width="352" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Tipo de Inscrição: "+$F{t_tipo_inscricao_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="397f27d7-263e-43e0-9dd5-417ccb3402f4" x="381" y="263" width="153" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Data matricula: "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_matricula_data_matricula})]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="114">
+			<staticText>
+				<reportElement uuid="01aab1fe-5579-481e-9632-3bc0c262e448" x="13" y="0" width="108" height="20"/>
+				<textElement verticalAlignment="Top"/>
+				<text><![CDATA[(c/f) - Com Frequência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="358e4477-5682-4946-a3c3-6c5268e8dc7b" x="144" y="0" width="108" height="20"/>
+				<textElement verticalAlignment="Top"/>
+				<text><![CDATA[(s/f) - Sem Frequência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="332c044c-5221-4ce4-a84d-3854686c2b64" x="13" y="14" width="320" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsabilizo-me pela veracidade das minhas declarações]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="21c5f96e-5bfb-4636-8834-c05d92658457" x="13" y="36" width="108" height="13"/>
+				<textElement verticalAlignment="Top"/>
+				<text><![CDATA[Luanda]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="87e6586a-36e7-46f1-8a77-a7e5a965a00e" x="317" y="95" width="219" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="da491937-6f74-4fd2-9e85-2a746431c536" x="376" y="94" width="108" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[O aluno]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="df714e90-2d87-475d-b943-df0262db61ba" x="13" y="53" width="304" height="17"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Data: "+$P{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<columnFooter>
+		<band height="23" splitType="Stretch">
+			<line>
+				<reportElement uuid="aff598c2-6a37-453c-99dc-e128b8f35e09" x="21" y="3" width="181" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="9b960790-8597-4e1c-886e-b1e07d51b761" x="21" y="3" width="181" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{t_usuario_name}.equals("proxypay") ? "" : $F{t_usuario_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement uuid="bc8683a5-ea53-44b6-8865-96a44fef10d9" x="0" y="3" width="552" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3a29c533-744a-42d8-87de-0ab0391c71e9" x="432" y="3" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="79befc31-ffd5-44ac-8ed0-3511710bebf9" x="512" y="3" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="68139e21-dd85-4a68-b399-4d004a6946a6" x="0" y="2" width="553" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

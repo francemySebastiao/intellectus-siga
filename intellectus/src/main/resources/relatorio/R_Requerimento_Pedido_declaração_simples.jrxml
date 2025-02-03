@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Requerimento_Pedido_declaração simples" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f033b157-3424-4793-8a50-d3d9c467c21d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="QUALIDADE"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="id_guia" class="java.lang.Integer"/>
+	<parameter name="data" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM  V_REQUERIMENTO_MESTRADO
+ where ID_GUIA=$P{id_guia} 
+ORDER BY 1]]>
+	</queryString>
+	<field name="NOME_COMPLETO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_COMPLETO"/>
+	</field>
+	<field name="SEXO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEXO"/>
+	</field>
+	<field name="numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_de_aluno"/>
+	</field>
+	<field name="NOME_DO_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DO_PAI"/>
+	</field>
+	<field name="NOME_DA_MAE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DA_MAE"/>
+	</field>
+	<field name="NUMERO_DOCUMENTO_IDENTIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DOCUMENTO_IDENTIFICACAO"/>
+	</field>
+	<field name="DATA_EMISSAO_IDENTIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_EMISSAO_IDENTIDADE"/>
+	</field>
+	<field name="NUMERO_GUIA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_GUIA"/>
+	</field>
+	<field name="ID_GUIA" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ID_GUIA"/>
+	</field>
+	<field name="DECLARACAO_DESCRICAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DECLARACAO_DESCRICAO"/>
+	</field>
+	<field name="E_PESQUISA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="E_PESQUISA"/>
+	</field>
+	<field name="codigo_declaracao_dest" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_declaracao_dest"/>
+	</field>
+	<field name="DATA_VALIDADE_DOCUMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_VALIDADE_DOCUMENTO"/>
+	</field>
+	<field name="PROVINCIA_NASCIMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVINCIA_NASCIMENTO"/>
+	</field>
+	<field name="MUNICIPIO_NASCIMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MUNICIPIO_NASCIMENTO"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="Nº_Edição" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Nº_Edição"/>
+	</field>
+	<field name="EMOLUMENTO_ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="EMOLUMENTO_ID"/>
+	</field>
+	<field name="EMOLUMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EMOLUMENTO"/>
+	</field>
+	<field name="VALOR" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="VALOR"/>
+	</field>
+	<field name="TIPO_SOLICITACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TIPO_SOLICITACAO"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="330" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="34" y="101" width="486" height="40" uuid="9ff5a8c6-cc4c-4bd3-b241-086ee76c592f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+					<paragraph firstLineIndent="25"/>
+				</textElement>
+				<text><![CDATA[Exmo Senhor
+Chefe dos Serviços Académicos da Universidade Gregório Semedo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="188" width="486" height="142" uuid="780a1341-e68a-4fd8-a1c5-287ce4cca4f6">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+					<property name="com.jaspersoft.studio.unit.tabStopWidth" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" markup="html">
+					<font fontName="Serif" size="14"/>
+					<paragraph lineSpacing="Single" firstLineIndent="0" leftIndent="0" spacingBefore="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<font color='white'>"+"MMM"+"</font>"+"<b>"+$F{NOME_COMPLETO}+"</b>"+($F{SEXO}.equals("F")? ", filha de ": $F{SEXO}.equals("M")? ", filho de ": $F{SEXO}.equals("ANUAL")?"Anual": "-sem informação-")+"<b>"+$F{NOME_DO_PAI}+"</b>"+" e de "+"<b>"+$F{NOME_DA_MAE}+"</b>"+($F{SEXO}.equals("F")? ", portadora do Bilhete de Identidade número ": $F{SEXO}.equals("M")? ", portador do Bilhete de Identidade número ": $F{SEXO}.equals("null")?"--": "--")+"<b>"+$F{NUMERO_DOCUMENTO_IDENTIFICACAO}+"</b>"+", emitido em "+"<b>"+$F{DATA_EMISSAO_IDENTIDADE}+"</b>"+" e válido até "+"<b>"+$F{DATA_VALIDADE_DOCUMENTO}+"</b>"+", natural de "+"<b>"+$F{PROVINCIA_NASCIMENTO}+"</b>"+", estudante do Curso de Mestrado de "+"<b>"+$F{CURSO}+"</b>"+" edição de "+"<b>"+$F{Nº_Edição}+"</b>"+", vem solicitar que lhe seja passada uma declaração de que está a frequentar a parte lectiva do referido curso de mestrado, para efeitos "+"<b>"+$F{DECLARACAO_DESCRICAO}+"</b>"+"."]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<summary>
+		<band height="153" splitType="Stretch">
+			<staticText>
+				<reportElement x="34" y="7" width="486" height="20" uuid="3c135a5e-374a-400e-873f-9e5f88cd4247">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+					<paragraph firstLineIndent="25"/>
+				</textElement>
+				<text><![CDATA[Melhores cumprimentos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="94" width="496" height="19" uuid="acd76c6e-96af-4a04-a8b9-8d6166494aa2">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+					<paragraph firstLineIndent="25"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Luanda, "+$P{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="114" width="496" height="19" uuid="0bfc8983-fdec-4fb7-a04c-85b16015c8fa">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" size="14" isBold="true"/>
+					<paragraph firstLineIndent="25"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME_COMPLETO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="60" width="496" height="19" uuid="ea015bbe-b04b-4d08-80a6-e8aa0ff632f9">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement markup="html">
+					<font fontName="Serif" size="14" isBold="true"/>
+					<paragraph firstLineIndent="25"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<font color='white'>"+$F{NOME_COMPLETO}+"</font>"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

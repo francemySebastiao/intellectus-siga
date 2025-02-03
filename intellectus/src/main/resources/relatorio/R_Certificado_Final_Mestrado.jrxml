@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Mestrado_2023" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c022ac40-0b39-4731-be65-4d1ebf5b28f1">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CopyOfIntellectus"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="numero_matricula" class="java.lang.Integer"/>
+	<parameter name="data" class="java.lang.String"/>
+	<parameter name="numero_pedido" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT *
+FROM "V_CERTIFICADO_MESTRADO"
+WHERE 
+	 NUMERO_DE_ALUNO = $P{numero_matricula}
+	 and N_DECLARACAO= $P{numero_pedido}]]>
+	</queryString>
+	<field name="N_DECLARACAO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="N_DECLARACAO"/>
+	</field>
+	<field name="NUMERO_DE_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DE_ALUNO"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="SEXO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEXO"/>
+	</field>
+	<field name="PROVINCIA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVINCIA"/>
+	</field>
+	<field name="PROVINCIA_CONCORDANCIA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVINCIA_CONCORDANCIA"/>
+	</field>
+	<field name="MUNICIPIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MUNICIPIO"/>
+	</field>
+	<field name="DATA_NASCIMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_NASCIMENTO"/>
+	</field>
+	<field name="NOME_DO_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DO_PAI"/>
+	</field>
+	<field name="NOME_DA_MAE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DA_MAE"/>
+	</field>
+	<field name="NUMERO_DOCUMENTO_IDENTIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DOCUMENTO_IDENTIFICACAO"/>
+	</field>
+	<field name="DATA_EMISSAO_IDENTIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_EMISSAO_IDENTIDADE"/>
+	</field>
+	<field name="DATA_VALIDADE_IDENTIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_VALIDADE_IDENTIDADE"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="ESPECIALIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ESPECIALIDADE"/>
+	</field>
+	<field name="DECRETO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DECRETO"/>
+	</field>
+	<field name="coordenador_mestrado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="coordenador_mestrado"/>
+	</field>
+	<field name="DECANO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DECANO"/>
+	</field>
+	<field name="CHEFE_SERVICOS_ACADEMICOS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CHEFE_SERVICOS_ACADEMICOS"/>
+	</field>
+	<field name="REITOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REITOR"/>
+	</field>
+	<field name="ANO_CURRICULAR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_CURRICULAR"/>
+	</field>
+	<field name="CODIGO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CODIGO"/>
+	</field>
+	<field name="DESIGNACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESIGNACAO"/>
+	</field>
+	<field name="C.H.T" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="C.H.T"/>
+	</field>
+	<field name="U.C.(1)" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="U.C.(1)"/>
+	</field>
+	<field name="CLASSIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLASSIFICACAO"/>
+	</field>
+	<field name="SITUACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SITUACAO"/>
+	</field>
+	<field name="DATA_CONCLUSAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_CONCLUSAO"/>
+	</field>
+	<field name="MEDIA_FINAL" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="MEDIA_FINAL"/>
+	</field>
+	<field name="MEDIA_EXTENSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MEDIA_EXTENSO"/>
+	</field>
+	<variable name="C.H.T1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{C.H.T}]]></variableExpression>
+	</variable>
+	<variable name="U.C.(1)1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{U.C.(1)}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="318" splitType="Stretch">
+			<textField>
+				<reportElement x="54" y="141" width="481" height="108" uuid="463a7351-50f4-4cb6-8850-aa31f25d239f"/>
+				<textElement textAlignment="Justified" markup="html">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, certifica-se que "+"<b>"+$F{NOME}+"</b>"+", "+($F{SEXO}.equals("FEMININO")? "filha": $F{SEXO}.equals("MASCULINO")? "filho":"")+" de "+$F{NOME_DO_PAI}+" e de "+$F{NOME_DA_MAE}+", "+($F{SEXO}.equals("FEMININO")? "nascida a ": $F{SEXO}.equals("MASCULINO")? "nascido a ": "")+$F{DATA_NASCIMENTO}+", natural d"+$F{PROVINCIA_CONCORDANCIA}+"  "+$F{PROVINCIA}+", "+($F{SEXO}.equals("FEMININO")? "portadora do Bilhete de Identidade n.º ": $F{SEXO}.equals("MASCULINO")? "portador do Bilhete de Identidade n.º ": "")+$F{NUMERO_DOCUMENTO_IDENTIFICACAO}+", emitido aos "+$F{DATA_EMISSAO_IDENTIDADE}+" pelo arquivo de identificação de "+$F{MUNICIPIO}+", obteve aprovação nas seguintes disciplinas que correspondem ao plano curricular do curso de Mestrado em "+"<b>"+$F{CURSO}+"</b>"+ ($F{CURSO}.equals("Comunicação, Marketing e Publicidade")? " ":", na especialidade de "+"<b>"+$F{ESPECIALIDADE})+"</b>"+", aprovado pelo Decreto Executivo nº "+$F{DECRETO}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="104" y="252" width="242" height="18" uuid="e9e84489-4758-4ee7-a2af-01685fb8784f"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DISCIPLINAS COM APROVEITAMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="270" width="50" height="24" uuid="63ea11d0-6c8a-439c-974f-65b90be266c3"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ano Curricular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="270" width="51" height="18" uuid="ed6501f4-4bfe-4eeb-82ae-65986579c285"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="270" width="216" height="18" uuid="ddb92c80-9cd9-44a4-8e8c-b87485563b0e"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESIGNAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="270" width="43" height="18" uuid="4d0caa1e-c44d-4879-ac41-195c54fee323"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[C.H.T.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="270" width="46" height="18" uuid="f953f06a-54ed-4562-bfef-f809f0aebd97"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[U.C.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="437" y="270" width="63" height="18" uuid="1e20982b-fd5f-4abf-9dba-e27333bd698b"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Classificação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="499" y="270" width="44" height="18" uuid="82c6ef3c-fa07-4ba5-9486-1474aac34eea"/>
+				<textElement>
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Situação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="424" y="271" width="20" height="6" uuid="a708cc7b-08e5-4837-a70c-64f4137f1a21"/>
+				<textElement>
+					<font fontName="Serif" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="271" width="20" height="6" uuid="e99264c9-6e5e-4988-8385-592ef0373a87"/>
+				<textElement>
+					<font fontName="Serif" size="4" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(1)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToTallestObject" x="154" y="0" width="217" height="13" uuid="23b162c7-73ba-4ab0-a854-867a1dc5b732"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESIGNACAO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="0" width="49" height="13" uuid="a5838785-e856-413a-9e8d-c092b356df03"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANO_CURRICULAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="0" width="49" height="13" uuid="6aaf17b4-5112-49aa-96a1-785f0e80a649"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="0" width="41" height="13" uuid="9f8880e3-296c-44f0-a2dc-4c65dfe00fc9"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{C.H.T}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="43" height="13" uuid="45caef46-39a4-4e88-b55f-3ba067a7dd28"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{U.C.(1)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="437" y="0" width="62" height="13" uuid="888af847-2b27-4d05-ac12-c47e82ab2013"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLASSIFICACAO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="499" y="0" width="46" height="13" uuid="963f0d4d-71c3-4010-8bf4-0eefaf115361"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SITUACAO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="68" splitType="Immediate"/>
+	</pageFooter>
+	<summary>
+		<band height="714" splitType="Immediate">
+			<textField>
+				<reportElement x="303" y="0" width="45" height="18" uuid="e0ff83c8-a483-473e-a3fd-d66e15cfafcc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TOTAL"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="0" width="39" height="18" uuid="3dac3f18-9858-4421-9ace-5251fb1cb9dc"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{C.H.T1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="41" height="18" uuid="19d4d5c1-f55f-4f22-a5f5-74956619bb71"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{U.C.(1)1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="62" y="33" width="479" height="13" uuid="7cedb6c6-cfbe-4e2f-ae47-8c7c5d25b2d3"/>
+				<textElement>
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<text><![CDATA[Cada Unidade de Crédito corresponde a 15 horas.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="46" width="479" height="13" uuid="8b348893-dea4-4b0f-92ca-19190c1efafa"/>
+				<textElement>
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<text><![CDATA[Escala: Suficiente (10 a 13), Bom (14 e 15), Bom com distinção (16 e 17) e Muito bom (18 a 20).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="34" width="11" height="8" uuid="f8ca6efb-627d-461e-8a77-fb5e1d5658bd"/>
+				<textElement>
+					<font fontName="Serif" size="5"/>
+				</textElement>
+				<text><![CDATA[(1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="46" width="11" height="8" uuid="0204d481-1c65-4435-85af-8ff73658c737"/>
+				<textElement>
+					<font fontName="Serif" size="5"/>
+				</textElement>
+				<text><![CDATA[(2)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="66" width="478" height="30" uuid="a2b83be8-4903-4b6e-a236-9605c6fd7562"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Mais certifica-se que concluiu o referido Mestrado aos "+$F{DATA_CONCLUSAO}+" com a média aritmética de "+$F{MEDIA_FINAL}+" "+$F{MEDIA_EXTENSO}+" valores."]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="41" y="301" width="481" height="1" uuid="596104a3-cd46-45bd-865e-1c93cf0957b6"/>
+			</line>
+			<textField>
+				<reportElement x="41" y="304" width="259" height="18" uuid="497b113f-a82c-4604-954e-4869ab4d2f35"/>
+				<textElement>
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Número de matrícula: "+ ($F{NUMERO_DE_ALUNO})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="363" width="478" height="66" uuid="a719f722-cc8e-4247-ba88-d5c178eba297"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["Por ser verdade e ter sido pedido, mandou-se passar o presente Certificado, que vai assinado e autenticado com selo branco em uso nesta Universidade."+"</b>"+"<br/>"+"<br/>"+"<b>"+"Luanda, "+$P{data}+"."+"</b>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="456" width="155" height="20" uuid="bd2c7b22-f36f-46eb-9aba-ac372556a263"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[O Chefe dos Serviços Académicos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="456" width="155" height="20" uuid="bab5a58f-7296-44c2-9162-e6e050173004"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[O Decano]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="501" width="155" height="1" uuid="42743e6e-93c5-4dc7-84ac-7a5f56739666"/>
+			</line>
+			<line>
+				<reportElement x="363" y="501" width="155" height="1" uuid="419ba257-e2d1-43dd-b7a7-79f907f84fe8"/>
+			</line>
+			<staticText>
+				<reportElement x="194" y="541" width="168" height="20" uuid="6e0f197d-3c9d-4217-af9f-e432ff080065"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[O Reitor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="194" y="589" width="167" height="1" uuid="e53e45ef-1773-4205-9177-5c458a91a3de"/>
+			</line>
+			<staticText>
+				<reportElement x="195" y="607" width="166" height="18" uuid="e0b62c01-28e0-418c-9215-ea285993e11f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<text><![CDATA[Professor Associado]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="39" y="501" width="156" height="18" uuid="d15230c6-3ea2-40ce-8b89-56c3612d5248"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHEFE_SERVICOS_ACADEMICOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="195" y="589" width="166" height="18" uuid="6de705a9-f462-4b4c-a582-7b471fd6cbd9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REITOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="501" width="156" height="18" uuid="a8d4c587-ce07-46c9-b945-969381721c17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DECANO}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="447" y="640" width="98" height="73" uuid="025c8ef8-9119-4a0f-9f79-92ebb1463a6b"/>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<jr:codeExpression><![CDATA["https://validar.ugs.ed.ao/?go=check&cod="+$P{numero_pedido}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

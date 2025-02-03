@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Diploma" pageWidth="842" pageHeight="1190" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0161f9bd-13c1-4af9-87ad-d485deb5dc61">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="102"/>
+	<property name="ireport.y" value="461"/>
+	<parameter name="numero_aluno" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     t_aluno."arquivo_identificacao" AS t_aluno_arquivo_identificacao,
+     t_aluno."atestado_medico" AS t_aluno_atestado_medico,
+     t_aluno."bairro" AS t_aluno_bairro,
+     t_aluno."contencioso" AS t_aluno_contencioso,
+     t_aluno."copia_documento_identificacao" AS t_aluno_copia_documento_identificacao,
+     t_aluno."copia_documento_militar" AS t_aluno_copia_documento_militar,
+     t_aluno."data_cadastro" AS t_aluno_data_cadastro,
+     t_aluno."data_candidatura" AS t_aluno_data_candidatura,
+     t_aluno."data_emissao_identidade" AS t_aluno_data_emissao_identidade,
+     t_aluno."data_fim_do_curso" AS t_aluno_data_fim_do_curso,
+     t_aluno."data_inativo" AS t_aluno_data_inativo,
+     t_aluno."data_nascimento" AS t_aluno_data_nascimento,
+     t_aluno."data_registro_diploma" AS t_aluno_data_registro_diploma,
+     t_aluno."documento_indentificacao" AS t_aluno_documento_indentificacao,
+     t_aluno."email" AS t_aluno_email,
+     t_aluno."empresa" AS t_aluno_empresa,
+     t_aluno."entidade_pagadora" AS t_aluno_entidade_pagadora,
+     t_aluno."estado_civil" AS t_aluno_estado_civil,
+     t_aluno."fim_curso" AS t_aluno_fim_curso,
+     t_aluno."fotografias" AS t_aluno_fotografias,
+     t_aluno."inactivo" AS t_aluno_inactivo,
+     t_aluno."inscrito" AS t_aluno_inscrito,
+     t_aluno."is_trabalhador" AS t_aluno_is_trabalhador,
+     t_aluno."media_final" AS t_aluno_media_final,
+     t_aluno."morada" AS t_aluno_morada,
+     t_aluno."necessidade_educacao_especial" AS t_aluno_necessidade_educacao_especial,
+     t_aluno."nif" AS t_aluno_nif,
+     t_aluno."nome" AS t_aluno_nome,
+     t_aluno."nome_da_mae" AS t_aluno_nome_da_mae,
+     t_aluno."nome_do_pai" AS t_aluno_nome_do_pai,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_aluno."numero_documento_identificacao" AS t_aluno_numero_documento_identificacao,
+     t_aluno."numero_mecanografico" AS t_aluno_numero_mecanografico,
+     t_aluno."observacao" AS t_aluno_observacao,
+     t_aluno."primeira_matricula" AS t_aluno_primeira_matricula,
+     t_aluno."profissao" AS t_aluno_profissao,
+     t_aluno."profissao_mae" AS t_aluno_profissao_mae,
+     t_aluno."profissao_pai" AS t_aluno_profissao_pai,
+     t_aluno."referencia_diploma" AS t_aluno_referencia_diploma,
+     t_aluno."sexo" AS t_aluno_sexo,
+     t_aluno."telefone" AS t_aluno_telefone,
+     t_aluno."telefone1" AS t_aluno_telefone1,
+     t_aluno."telefone2" AS t_aluno_telefone2,
+     t_aluno."tipo_candidatura" AS t_aluno_tipo_candidatura,
+     t_aluno."tipo_empresa" AS t_aluno_tipo_empresa,
+     t_aluno."codigo_ano_lectivo_fim_curso" AS t_aluno_codigo_ano_lectivo_fim_curso,
+     t_aluno."codigo_curso" AS t_aluno_codigo_curso,
+     t_aluno."codigo_instituicao" AS t_aluno_codigo_instituicao,
+     t_aluno."codigo_municipio_nascimento" AS t_aluno_codigo_municipio_nascimento,
+     t_aluno."codigo_pais_nacionalidade" AS t_aluno_codigo_pais_nacionalidade,
+     t_aluno."codigo_pais_residencia" AS t_aluno_codigo_pais_residencia,
+     t_aluno."codigo_provincia_nascimento" AS t_aluno_codigo_provincia_nascimento,
+     t_aluno."codigo_tipo_bolsa" AS t_aluno_codigo_tipo_bolsa,
+     t_curso."codigo" AS t_curso_codigo,
+     t_curso."descricao" AS t_curso_descricao,
+     t_curso."duracao" AS t_curso_duracao,
+     t_curso."grau" AS t_curso_grau,
+     t_curso."inicio" AS t_curso_inicio,
+     t_curso."plano" AS t_curso_plano,
+     t_curso."quantidade_cadeiras" AS t_curso_quantidade_cadeiras,
+     t_curso."status" AS t_curso_status,
+     t_curso."sigla" AS t_curso_sigla,
+     t_municipio."descricao" AS t_municipio_descricao,
+     t_instituicao."id" AS t_instituicao_id,
+     t_instituicao."chefe_servicos_academicos" AS t_instituicao_chefe_servicos_academicos,
+     t_instituicao."code" AS t_instituicao_code,
+     t_instituicao."contribuinte" AS t_instituicao_contribuinte,
+     t_instituicao."decreto_lei" AS t_instituicao_decreto_lei,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_instituicao."email" AS t_instituicao_email,
+     t_instituicao."endereco" AS t_instituicao_endereco,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_instituicao."logo" AS t_instituicao_logo,
+     t_instituicao."reitor" AS t_instituicao_reitor,
+     t_instituicao."secretario_geral" AS t_instituicao_secretario_geral,
+     t_instituicao."sigla" AS t_instituicao_sigla,
+     t_instituicao."unidade_organica" AS t_instituicao_unidade_organica,
+     t_instituicao."vice_reitor" AS t_instituicao_vice_reitor,
+     t_instituicao."web_site" AS t_instituicao_web_site,
+     t_provincia."codigo_provincia" AS t_provincia_codigo_provincia,
+     t_provincia."provincia" AS t_provincia_provincia,
+     t_provincia."sigla" AS t_provincia_sigla,
+     t_provincia."codigo_pais" AS t_provincia_codigo_pais,
+     t_pais."descricao" AS t_pais_descricao
+FROM
+     "dbo"."t_curso" t_curso INNER JOIN "dbo"."t_aluno" t_aluno ON t_curso."id" = t_aluno."codigo_curso"
+     INNER JOIN "dbo"."t_municipio" t_municipio ON t_aluno."codigo_municipio_nascimento" = t_municipio."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_aluno."codigo_instituicao" = t_instituicao."id"
+     INNER JOIN "dbo"."t_provincia" t_provincia ON t_aluno."codigo_provincia_nascimento" = t_provincia."id"
+     INNER JOIN "dbo"."t_pais" t_pais ON t_aluno."codigo_pais_nacionalidade" = t_pais."id"
+where t_aluno."numero_de_aluno"=$P{numero_aluno}]]>
+	</queryString>
+	<field name="t_aluno_arquivo_identificacao" class="java.lang.String"/>
+	<field name="t_aluno_atestado_medico" class="java.lang.Boolean"/>
+	<field name="t_aluno_bairro" class="java.lang.String"/>
+	<field name="t_aluno_contencioso" class="java.lang.Boolean"/>
+	<field name="t_aluno_copia_documento_identificacao" class="java.lang.Boolean"/>
+	<field name="t_aluno_copia_documento_militar" class="java.lang.Boolean"/>
+	<field name="t_aluno_data_cadastro" class="java.sql.Date"/>
+	<field name="t_aluno_data_candidatura" class="java.sql.Date"/>
+	<field name="t_aluno_data_emissao_identidade" class="java.sql.Date"/>
+	<field name="t_aluno_data_fim_do_curso" class="java.sql.Date"/>
+	<field name="t_aluno_data_inativo" class="java.sql.Date"/>
+	<field name="t_aluno_data_nascimento" class="java.sql.Date"/>
+	<field name="t_aluno_data_registro_diploma" class="java.sql.Date"/>
+	<field name="t_aluno_documento_indentificacao" class="java.lang.String"/>
+	<field name="t_aluno_email" class="java.lang.String"/>
+	<field name="t_aluno_empresa" class="java.lang.String"/>
+	<field name="t_aluno_entidade_pagadora" class="java.lang.String"/>
+	<field name="t_aluno_estado_civil" class="java.lang.String"/>
+	<field name="t_aluno_fim_curso" class="java.lang.Boolean"/>
+	<field name="t_aluno_fotografias" class="java.lang.Boolean"/>
+	<field name="t_aluno_inactivo" class="java.lang.Boolean"/>
+	<field name="t_aluno_inscrito" class="java.lang.Boolean"/>
+	<field name="t_aluno_is_trabalhador" class="java.lang.Boolean"/>
+	<field name="t_aluno_media_final" class="java.lang.Double"/>
+	<field name="t_aluno_morada" class="java.lang.String"/>
+	<field name="t_aluno_necessidade_educacao_especial" class="java.lang.String"/>
+	<field name="t_aluno_nif" class="java.lang.String"/>
+	<field name="t_aluno_nome" class="java.lang.String"/>
+	<field name="t_aluno_nome_da_mae" class="java.lang.String"/>
+	<field name="t_aluno_nome_do_pai" class="java.lang.String"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_aluno_numero_documento_identificacao" class="java.lang.String"/>
+	<field name="t_aluno_numero_mecanografico" class="java.lang.String"/>
+	<field name="t_aluno_observacao" class="java.lang.String"/>
+	<field name="t_aluno_primeira_matricula" class="java.lang.Boolean"/>
+	<field name="t_aluno_profissao" class="java.lang.String"/>
+	<field name="t_aluno_profissao_mae" class="java.lang.String"/>
+	<field name="t_aluno_profissao_pai" class="java.lang.String"/>
+	<field name="t_aluno_referencia_diploma" class="java.lang.String"/>
+	<field name="t_aluno_sexo" class="java.lang.String"/>
+	<field name="t_aluno_telefone" class="java.lang.String"/>
+	<field name="t_aluno_telefone1" class="java.lang.String"/>
+	<field name="t_aluno_telefone2" class="java.lang.String"/>
+	<field name="t_aluno_tipo_candidatura" class="java.lang.String"/>
+	<field name="t_aluno_tipo_empresa" class="java.lang.String"/>
+	<field name="t_aluno_codigo_ano_lectivo_fim_curso" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_curso" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_instituicao" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_municipio_nascimento" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_pais_nacionalidade" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_pais_residencia" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_provincia_nascimento" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_tipo_bolsa" class="java.lang.Integer"/>
+	<field name="t_curso_codigo" class="java.lang.String"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_curso_duracao" class="java.lang.Integer"/>
+	<field name="t_curso_grau" class="java.lang.String"/>
+	<field name="t_curso_inicio" class="java.lang.Integer"/>
+	<field name="t_curso_plano" class="java.lang.String"/>
+	<field name="t_curso_quantidade_cadeiras" class="java.lang.Integer"/>
+	<field name="t_curso_status" class="java.lang.Boolean"/>
+	<field name="t_curso_sigla" class="java.lang.String"/>
+	<field name="t_municipio_descricao" class="java.lang.String"/>
+	<field name="t_instituicao_id" class="java.lang.Integer"/>
+	<field name="t_instituicao_chefe_servicos_academicos" class="java.lang.String"/>
+	<field name="t_instituicao_code" class="java.lang.String"/>
+	<field name="t_instituicao_contribuinte" class="java.lang.String"/>
+	<field name="t_instituicao_decreto_lei" class="java.lang.String"/>
+	<field name="t_instituicao_descricao" class="java.lang.String"/>
+	<field name="t_instituicao_email" class="java.lang.String"/>
+	<field name="t_instituicao_endereco" class="java.lang.String"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_instituicao_logo" class="java.lang.Object"/>
+	<field name="t_instituicao_reitor" class="java.lang.String"/>
+	<field name="t_instituicao_secretario_geral" class="java.lang.String"/>
+	<field name="t_instituicao_sigla" class="java.lang.String"/>
+	<field name="t_instituicao_unidade_organica" class="java.lang.String"/>
+	<field name="t_instituicao_vice_reitor" class="java.lang.String"/>
+	<field name="t_instituicao_web_site" class="java.lang.String"/>
+	<field name="t_provincia_codigo_provincia" class="java.lang.Integer"/>
+	<field name="t_provincia_provincia" class="java.lang.String"/>
+	<field name="t_provincia_sigla" class="java.lang.String"/>
+	<field name="t_provincia_codigo_pais" class="java.lang.Integer"/>
+	<field name="t_pais_descricao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="245" splitType="Stretch"/>
+	</title>
+	<columnFooter>
+		<band height="549" splitType="Stretch">
+			<textField>
+				<reportElement x="82" y="37" width="653" height="78" uuid="33b316a5-1961-46a7-915f-e03d7a2969dd"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="18"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Eu, "+$F{t_instituicao_reitor}+", Reitor da "+"Universidade Gregório Semedo"+", faço saber que,"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="115" width="653" height="76" uuid="1660be03-c7c7-40bd-baa6-8b20d4e65b31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Edwardian Script ITC" size="45"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="191" width="653" height="78" uuid="5bb4190d-0d16-4563-b44a-a69b5b1cb94c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="18"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["natural de "+$F{t_municipio_descricao}+", "+"província de "+$F{t_provincia_provincia}+", "+($F{t_aluno_sexo}.equals("F")? "nascida a ": $F{t_aluno_sexo}.equals("M")? "nascido a ": $F{t_aluno_sexo}.equals("null")?"--": "--")+new java.text.SimpleDateFormat("dd 'de' MMMMM 'de' yyyy").format($F{t_aluno_data_nascimento})+" e titular do Bilhete de Identidade nº "+$F{t_aluno_numero_documento_identificacao}+", concluiu a "+new java.text.SimpleDateFormat("dd 'de' MMMMM 'de' yyyy").format($F{t_aluno_data_fim_do_curso})+", o curso de"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="269" width="653" height="76" uuid="4377758c-579d-4d71-a41e-7fe140643b93"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Edwardian Script ITC" size="45"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="82" y="345" width="653" height="26" uuid="04ef076e-4a90-47a7-a947-88b6310ca3ec"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["que lhe confere o Grau de "+($F{t_curso_grau}.equals("LICENCIATURA") ? "Licenciatura.":"")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="82" y="373" width="653" height="107" uuid="875d08df-21fb-4814-bbe3-d4512cb767c1"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="18"/>
+					<paragraph firstLineIndent="20"/>
+				</textElement>
+				<text><![CDATA[E para que conste, mandei passar o presente Diploma, que outorga os direitos e as prerrogativas daquele Grau, em conformidade com a lei vigente, e que vai devidamente assinado e autenticado com o selo branco desta Instituição.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="82" y="494" width="653" height="30" uuid="8d12356c-acd8-4b4b-b633-301447dcd62c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA["O Gabinete do Reitor, em Luanda, a "+new java.text.SimpleDateFormat("dd 'de' MMMMM 'de' yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,1000 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Certificado_Intermedio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="1a9393c7-bfd7-45c4-8a08-a36bcde105ba">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="20"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="numero_matricula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="condicao" class="java.lang.String"/>
+	<parameter name="data" class="java.lang.String"/>
+	<parameter name="numeroPedido" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+	 RD.NUMERO_DECLARACAO NumeroPedido,
+     V_CERTIFICADO_INTERMEDIO."numero" AS V_CERTIFICADO_INTERMEDIO_numero,
+     t_aluno."id" AS t_aluno_id,
+     t_aluno."arquivo_identificacao" AS t_aluno_arquivo_identificacao,
+     t_aluno."atestado_medico" AS t_aluno_atestado_medico,
+     t_aluno."bairro" AS t_aluno_bairro,
+     t_aluno."data_emissao_identidade" AS t_aluno_data_emissao_identidade,
+     t_aluno."data_fim_do_curso" AS t_aluno_data_fim_do_curso,
+     t_aluno."data_inativo" AS t_aluno_data_inativo,
+     t_aluno."data_nascimento" AS t_aluno_data_nascimento,
+     t_aluno."documento_indentificacao" AS t_aluno_documento_indentificacao,
+     t_aluno."fim_curso" AS t_aluno_fim_curso,
+     t_aluno."media_final" AS t_aluno_media_final,
+     t_aluno."morada" AS t_aluno_morada,
+     t_aluno."nome" AS t_aluno_nome,
+     t_aluno."nome_da_mae" AS t_aluno_nome_da_mae,
+     t_aluno."nome_do_pai" AS t_aluno_nome_do_pai,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_aluno."numero_documento_identificacao" AS t_aluno_numero_documento_identificacao,
+     t_aluno."profissao_mae" AS t_aluno_profissao_mae,
+     t_aluno."profissao_pai" AS t_aluno_profissao_pai,
+     t_aluno."sexo" AS t_aluno_sexo,
+     t_curso."descricao" AS t_curso_descricao,
+     t_curso."grau" AS t_curso_grau,
+     t_curso."quantidade_cadeiras" AS t_curso_quantidade_cadeiras,
+     t_provincia."provincia" AS t_provincia_provincia,
+     t_municipio."descricao" AS t_municipio_descricao,
+     t_faculdade."codigo_instituicao" AS t_faculdade_codigo_instituicao,
+     t_instituicao."chefe_servicos_academicos" AS t_instituicao_chefe_servicos_academicos,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_instituicao."endereco" AS t_instituicao_endereco,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_instituicao."reitor" AS t_instituicao_reitor,
+     t_instituicao."secretario_geral" AS t_instituicao_secretario_geral,
+     t_instituicao."vice_reitor" AS t_instituicao_vice_reitor,
+     t_disciplina."ano_corricular" AS t_disciplina_ano_corricular,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     V_CERTIFICADO_INTERMEDIO."equivalencia" AS V_CERTIFICADO_INTERMEDIO_equivalencia,
+     V_CERTIFICADO_INTERMEDIO."validacao" AS V_CERTIFICADO_INTERMEDIO_validacao,
+     t_faculdade."coordenador_mestrado" AS t_faculdade_coordenador_mestrado,
+     t_faculdade."cargo_mestrado" AS t_faculdade_cargo_mestrado,
+     t_faculdade."faculdade" AS t_faculdade_faculdade,
+     t_faculdade."titulo" AS t_faculdade_titulo,
+     V_CERTIFICADO_INTERMEDIO."total_disciplinas" AS V_CERTIFICADO_INTERMEDIO_total_disciplinas
+FROM
+     "dbo"."t_aluno" t_aluno INNER JOIN "dbo"."t_curso" t_curso ON t_aluno."codigo_curso" = t_curso."id"
+	 INNER JOIN t_registro_documentos  RD ON RD.CODIGO_ALUNO = t_aluno."ID"
+     INNER JOIN "dbo"."t_provincia" t_provincia ON t_aluno."codigo_provincia_nascimento" = t_provincia."id"
+     INNER JOIN "dbo"."t_municipio" t_municipio ON t_aluno."codigo_municipio_nascimento" = t_municipio."id"
+     INNER JOIN "V_CERTIFICADO_INTERMEDIO" V_CERTIFICADO_INTERMEDIO ON t_aluno."numero_de_aluno" = V_CERTIFICADO_INTERMEDIO."numero"
+     INNER JOIN "dbo"."t_disciplina" t_disciplina ON V_CERTIFICADO_INTERMEDIO."codigo_disciplina" = t_disciplina."id"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON V_CERTIFICADO_INTERMEDIO."ano_lectivo" = t_ano_lectivo."id"
+     AND t_curso."id" = t_disciplina."codigo_curso"
+     INNER JOIN "dbo"."t_faculdade" t_faculdade ON t_curso."codigo_faculdade" = t_faculdade."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_faculdade."codigo_instituicao" = t_instituicao."id"
+WHERE
+     t_aluno."numero_de_aluno" = $P{numero_matricula}
+     and RD.numero_declaracao=$P{numeroPedido} 
+ORDER BY
+     t_disciplina."ano_corricular" ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="copia_certificado" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="copia_certificado"/>
+	</field>
+	<field name="arquivo_identificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="arquivo_identificacao"/>
+	</field>
+	<field name="atestado_medico" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="atestado_medico"/>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="bairro"/>
+	</field>
+	<field name="contencioso" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="contencioso"/>
+	</field>
+	<field name="copia_documento_identificacao" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="copia_documento_identificacao"/>
+	</field>
+	<field name="copia_documento_militar" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="copia_documento_militar"/>
+	</field>
+	<field name="data_cadastro" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_cadastro"/>
+	</field>
+	<field name="data_candidatura" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_candidatura"/>
+	</field>
+	<field name="data_emissao_identidade" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_emissao_identidade"/>
+	</field>
+	<field name="data_fim_do_curso" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_fim_do_curso"/>
+	</field>
+	<field name="data_inativo" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_inativo"/>
+	</field>
+	<field name="data_nascimento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_nascimento"/>
+	</field>
+	<field name="data_registro_diploma" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_registro_diploma"/>
+	</field>
+	<field name="documento_indentificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="documento_indentificacao"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+	</field>
+	<field name="empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="empresa"/>
+	</field>
+	<field name="entidade_pagadora" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="entidade_pagadora"/>
+	</field>
+	<field name="estado_civil" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="estado_civil"/>
+	</field>
+	<field name="fim_curso" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="fim_curso"/>
+	</field>
+	<field name="fotografias" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="fotografias"/>
+	</field>
+	<field name="inactivo" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="inactivo"/>
+	</field>
+	<field name="inscrito" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="inscrito"/>
+	</field>
+	<field name="is_trabalhador" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="is_trabalhador"/>
+	</field>
+	<field name="media_final" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="media_final"/>
+	</field>
+	<field name="morada" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="morada"/>
+	</field>
+	<field name="necessidade_educacao_especial" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="necessidade_educacao_especial"/>
+	</field>
+	<field name="nif" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nif"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+	</field>
+	<field name="nome_da_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome_da_mae"/>
+	</field>
+	<field name="nome_do_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome_do_pai"/>
+	</field>
+	<field name="numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_de_aluno"/>
+	</field>
+	<field name="numero_documento_identificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_documento_identificacao"/>
+	</field>
+	<field name="numero_mecanografico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_mecanografico"/>
+	</field>
+	<field name="observacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="observacao"/>
+	</field>
+	<field name="primeira_matricula" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="primeira_matricula"/>
+	</field>
+	<field name="profissao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="profissao"/>
+	</field>
+	<field name="profissao_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="profissao_mae"/>
+	</field>
+	<field name="profissao_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="profissao_pai"/>
+	</field>
+	<field name="referencia_diploma" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia_diploma"/>
+	</field>
+	<field name="sexo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sexo"/>
+	</field>
+	<field name="telefone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone"/>
+	</field>
+	<field name="telefone1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone1"/>
+	</field>
+	<field name="telefone2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone2"/>
+	</field>
+	<field name="tipo_candidatura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_candidatura"/>
+	</field>
+	<field name="tipo_empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_empresa"/>
+	</field>
+	<field name="codigo_ano_lectivo_fim_curso" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_ano_lectivo_fim_curso"/>
+	</field>
+	<field name="codigo_curso" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_curso"/>
+	</field>
+	<field name="codigo_instituicao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_instituicao"/>
+	</field>
+	<field name="codigo_municipio_nascimento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_municipio_nascimento"/>
+	</field>
+	<field name="codigo_municio_residencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_municio_residencia"/>
+	</field>
+	<field name="codigo_pais_nacionalidade" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_pais_nacionalidade"/>
+	</field>
+	<field name="codigo_pais_residencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_pais_residencia"/>
+	</field>
+	<field name="codigo_provincia_nascimento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_provincia_nascimento"/>
+	</field>
+	<field name="codigo_provincia_residencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_provincia_residencia"/>
+	</field>
+	<field name="codigo_tipo_bolsa" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_tipo_bolsa"/>
+	</field>
+	<field name="diploma" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="diploma"/>
+	</field>
+	<field name="email_institucional" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email_institucional"/>
+	</field>
+	<field name="ultima_modificacao" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="ultima_modificacao"/>
+	</field>
+	<field name="usuario_ultima_modificacao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="usuario_ultima_modificacao"/>
+	</field>
+	<field name="curso_acesso" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="curso_acesso"/>
+	</field>
+	<field name="email_da_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email_da_mae"/>
+	</field>
+	<field name="email_do_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email_do_pai"/>
+	</field>
+	<field name="email_encarregado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email_encarregado"/>
+	</field>
+	<field name="grau_parentesco" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="grau_parentesco"/>
+	</field>
+	<field name="morada_da_encarregado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="morada_da_encarregado"/>
+	</field>
+	<field name="morada_da_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="morada_da_mae"/>
+	</field>
+	<field name="morada_do_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="morada_do_pai"/>
+	</field>
+	<field name="nacionalidade_da_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nacionalidade_da_mae"/>
+	</field>
+	<field name="nacionalidade_do_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nacionalidade_do_pai"/>
+	</field>
+	<field name="nacionalidade_encarregado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nacionalidade_encarregado"/>
+	</field>
+	<field name="nome_encarregado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome_encarregado"/>
+	</field>
+	<field name="numero_documento_encarregado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_documento_encarregado"/>
+	</field>
+	<field name="telefone1da_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone1da_mae"/>
+	</field>
+	<field name="telefone1do_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone1do_pai"/>
+	</field>
+	<field name="telefone1encarregado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone1encarregado"/>
+	</field>
+	<field name="telefone_da_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone_da_mae"/>
+	</field>
+	<field name="telefone_do_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone_do_pai"/>
+	</field>
+	<field name="telefone_encarregado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone_encarregado"/>
+	</field>
+	<field name="codigo_nacionalidade_da_mae" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_nacionalidade_da_mae"/>
+	</field>
+	<field name="codigo_nacionalidade_do_pai" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_nacionalidade_do_pai"/>
+	</field>
+	<field name="telefone_online" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefone_online"/>
+	</field>
+	<field name="COLUMN_84" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="duracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="duracao"/>
+	</field>
+	<field name="grau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="grau"/>
+	</field>
+	<field name="inicio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="inicio"/>
+	</field>
+	<field name="plano" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="plano"/>
+	</field>
+	<field name="quantidade_cadeiras" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="quantidade_cadeiras"/>
+	</field>
+	<field name="sigla" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sigla"/>
+	</field>
+	<field name="status" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+	</field>
+	<field name="codigo_faculdade" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_faculdade"/>
+	</field>
+	<field name="decreto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="decreto"/>
+	</field>
+	<field name="COLUMN_96" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="ano_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_declaracao"/>
+	</field>
+	<field name="data_declaracao" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_declaracao"/>
+	</field>
+	<field name="numero_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="numero_declaracao"/>
+	</field>
+	<field name="retirado" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="retirado"/>
+	</field>
+	<field name="codigo_aluno" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_aluno"/>
+	</field>
+	<field name="codigo_declaracao_destino" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_declaracao_destino"/>
+	</field>
+	<field name="codigo_guia_pagamento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_guia_pagamento"/>
+	</field>
+	<field name="codigo_tipo_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_tipo_declaracao"/>
+	</field>
+	<field name="cerimonia" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="cerimonia"/>
+	</field>
+	<field name="defesa_tcc" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="defesa_tcc"/>
+	</field>
+	<field name="projecto_final" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="projecto_final"/>
+	</field>
+	<field name="ANO_CURRICULAR" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_CURRICULAR"/>
+	</field>
+	<field name="data_missao" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="data_missao"/>
+	</field>
+	<field name="COLUMN_110" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="codigo_provincia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_provincia"/>
+	</field>
+	<field name="provincia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="provincia"/>
+	</field>
+	<field name="COLUMN_113" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sigla"/>
+	</field>
+	<field name="codigo_pais" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_pais"/>
+	</field>
+	<field name="concordancia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="concordancia"/>
+	</field>
+	<field name="COLUMN_116" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="COLUMN_117" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="COLUMN_118" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_provincia"/>
+	</field>
+	<field name="codigo_municipio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_municipio"/>
+	</field>
+	<field name="COLUMN_120" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="concordancia"/>
+	</field>
+	<field name="COLUMN_121" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="codigo_disciplina" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_disciplina"/>
+	</field>
+	<field name="numero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="numero"/>
+	</field>
+	<field name="disciplina" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="disciplina"/>
+	</field>
+	<field name="nota_final" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="nota_final"/>
+	</field>
+	<field name="validacao" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="validacao"/>
+	</field>
+	<field name="ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_lectivo"/>
+	</field>
+	<field name="equivalencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="equivalencia"/>
+	</field>
+	<field name="ano_curricular" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_curricular"/>
+	</field>
+	<field name="pode_equivalencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="pode_equivalencia"/>
+	</field>
+	<field name="total_disciplinas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="total_disciplinas"/>
+	</field>
+	<field name="COLUMN_132" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="ano_corricular" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_corricular"/>
+	</field>
+	<field name="controle_transicao_ano" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="controle_transicao_ano"/>
+	</field>
+	<field name="COLUMN_135" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="extra_curricular" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="extra_curricular"/>
+	</field>
+	<field name="horas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="horas"/>
+	</field>
+	<field name="nuclear" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="nuclear"/>
+	</field>
+	<field name="opcinal" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="opcinal"/>
+	</field>
+	<field name="ponderacao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ponderacao"/>
+	</field>
+	<field name="COLUMN_141" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sigla"/>
+	</field>
+	<field name="COLUMN_142" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+	</field>
+	<field name="total_carga_horaria" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="total_carga_horaria"/>
+	</field>
+	<field name="COLUMN_145" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_curso"/>
+	</field>
+	<field name="curso_de_verao" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="curso_de_verao"/>
+	</field>
+	<field name="aprovacao_disciplina" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="aprovacao_disciplina"/>
+	</field>
+	<field name="COLUMN_148" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="COLUMN_149" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_lectivo"/>
+	</field>
+	<field name="fim_exame_primeiro_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fim_exame_primeiro_semestre"/>
+	</field>
+	<field name="fim_exame_segundo_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fim_exame_segundo_semestre"/>
+	</field>
+	<field name="fim_primeiro_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fim_primeiro_semestre"/>
+	</field>
+	<field name="fim_recurso_primeiro_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fim_recurso_primeiro_semestre"/>
+	</field>
+	<field name="fim_recurso_segundo_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fim_recurso_segundo_semestre"/>
+	</field>
+	<field name="fim_segundo_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fim_segundo_semestre"/>
+	</field>
+	<field name="inicio_exame_primeiro_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="inicio_exame_primeiro_semestre"/>
+	</field>
+	<field name="inicio_exame_segundo_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="inicio_exame_segundo_semestre"/>
+	</field>
+	<field name="inicio_primeiro_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="inicio_primeiro_semestre"/>
+	</field>
+	<field name="inicio_recurso_primeiro_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="inicio_recurso_primeiro_semestre"/>
+	</field>
+	<field name="inicio_recurso_segundo_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="inicio_recurso_segundo_semestre"/>
+	</field>
+	<field name="inicio_segundo_semestre" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="inicio_segundo_semestre"/>
+	</field>
+	<field name="COLUMN_162" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+	</field>
+	<field name="COLUMN_163" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_instituicao"/>
+	</field>
+	<field name="ano_lectivo_descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ano_lectivo_descricao"/>
+	</field>
+	<field name="COLUMN_165" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="cargo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cargo"/>
+	</field>
+	<field name="faculdade" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="faculdade"/>
+	</field>
+	<field name="responsavel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="responsavel"/>
+	</field>
+	<field name="COLUMN_169" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_instituicao"/>
+	</field>
+	<field name="cargo2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cargo2"/>
+	</field>
+	<field name="responsavel2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="responsavel2"/>
+	</field>
+	<field name="coordenador_mestrado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="coordenador_mestrado"/>
+	</field>
+	<field name="cargo_mestrado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cargo_mestrado"/>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
+	</field>
+	<field name="COLUMN_175" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+	</field>
+	<field name="email_decano" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email_decano"/>
+	</field>
+	<field name="COLUMN_177" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="chefe_servicos_academicos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="chefe_servicos_academicos"/>
+	</field>
+	<field name="code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="code"/>
+	</field>
+	<field name="contribuinte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="contribuinte"/>
+	</field>
+	<field name="decreto_lei" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="decreto_lei"/>
+	</field>
+	<field name="COLUMN_182" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="COLUMN_183" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+	</field>
+	<field name="endereco" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="endereco"/>
+	</field>
+	<field name="grupo_owner" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="grupo_owner"/>
+	</field>
+	<field name="logo" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="logo"/>
+	</field>
+	<field name="reitor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="reitor"/>
+	</field>
+	<field name="secretario_geral" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="secretario_geral"/>
+	</field>
+	<field name="COLUMN_189" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sigla"/>
+	</field>
+	<field name="unidade_organica" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="unidade_organica"/>
+	</field>
+	<field name="vice_reitor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vice_reitor"/>
+	</field>
+	<field name="web_site" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="web_site"/>
+	</field>
+	<field name="vice_reitor_area_academica" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="vice_reitor_area_academica"/>
+	</field>
+	<field name="secretario_geral_adjunto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="secretario_geral_adjunto"/>
+	</field>
+	<field name="NumeroPedido" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NumeroPedido"/>
+	</field>
+	<field name="V_CERTIFICADO_INTERMEDIO_numero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_numero"/>
+	</field>
+	<field name="t_aluno_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_id"/>
+	</field>
+	<field name="t_aluno_arquivo_identificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_arquivo_identificacao"/>
+	</field>
+	<field name="t_aluno_atestado_medico" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_atestado_medico"/>
+	</field>
+	<field name="t_aluno_bairro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_bairro"/>
+	</field>
+	<field name="t_aluno_data_emissao_identidade" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_emissao_identidade"/>
+	</field>
+	<field name="t_aluno_data_fim_do_curso" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_fim_do_curso"/>
+	</field>
+	<field name="t_aluno_data_inativo" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_inativo"/>
+	</field>
+	<field name="t_aluno_data_nascimento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_nascimento"/>
+	</field>
+	<field name="t_aluno_documento_indentificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_documento_indentificacao"/>
+	</field>
+	<field name="t_aluno_fim_curso" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_fim_curso"/>
+	</field>
+	<field name="t_aluno_media_final" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_media_final"/>
+	</field>
+	<field name="t_aluno_morada" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_morada"/>
+	</field>
+	<field name="t_aluno_nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome"/>
+	</field>
+	<field name="t_aluno_nome_da_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome_da_mae"/>
+	</field>
+	<field name="t_aluno_nome_do_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome_do_pai"/>
+	</field>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_de_aluno"/>
+	</field>
+	<field name="t_aluno_numero_documento_identificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_documento_identificacao"/>
+	</field>
+	<field name="t_aluno_profissao_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_profissao_mae"/>
+	</field>
+	<field name="t_aluno_profissao_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_profissao_pai"/>
+	</field>
+	<field name="t_aluno_sexo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_sexo"/>
+	</field>
+	<field name="t_curso_descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_curso_descricao"/>
+	</field>
+	<field name="t_curso_grau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_curso_grau"/>
+	</field>
+	<field name="t_curso_quantidade_cadeiras" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_curso_quantidade_cadeiras"/>
+	</field>
+	<field name="t_provincia_provincia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_provincia_provincia"/>
+	</field>
+	<field name="t_municipio_descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_municipio_descricao"/>
+	</field>
+	<field name="t_faculdade_codigo_instituicao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_codigo_instituicao"/>
+	</field>
+	<field name="t_instituicao_chefe_servicos_academicos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_chefe_servicos_academicos"/>
+	</field>
+	<field name="t_instituicao_descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_descricao"/>
+	</field>
+	<field name="t_instituicao_endereco" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_endereco"/>
+	</field>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_grupo_owner"/>
+	</field>
+	<field name="t_instituicao_reitor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_reitor"/>
+	</field>
+	<field name="t_instituicao_secretario_geral" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_secretario_geral"/>
+	</field>
+	<field name="t_instituicao_vice_reitor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_vice_reitor"/>
+	</field>
+	<field name="t_disciplina_ano_corricular" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_disciplina_ano_corricular"/>
+	</field>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_ano_lectivo"/>
+	</field>
+	<field name="V_CERTIFICADO_INTERMEDIO_equivalencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_equivalencia"/>
+	</field>
+	<field name="V_CERTIFICADO_INTERMEDIO_validacao" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_validacao"/>
+	</field>
+	<field name="t_faculdade_coordenador_mestrado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_coordenador_mestrado"/>
+	</field>
+	<field name="t_faculdade_cargo_mestrado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_cargo_mestrado"/>
+	</field>
+	<field name="t_faculdade_faculdade" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_faculdade"/>
+	</field>
+	<field name="t_faculdade_titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_titulo"/>
+	</field>
+	<field name="V_CERTIFICADO_INTERMEDIO_total_disciplinas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_total_disciplinas"/>
+	</field>
+	<variable name="Total" class="java.lang.String" resetType="Group" resetGroup="Historico" calculation="Sum">
+		<variableExpression><![CDATA[$F{t_curso_quantidade_cadeiras}]]></variableExpression>
+	</variable>
+	<variable name="contador" class="java.lang.String" calculation="Count">
+		<variableExpression><![CDATA[$F{disciplina}]]></variableExpression>
+	</variable>
+	<variable name="contador_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{t_disciplina_ano_corricular}==1 ? $F{t_curso_quantidade_cadeiras} : ""]]></variableExpression>
+	</variable>
+	<group name="Historico" keepTogether="true">
+		<groupExpression><![CDATA[$F{t_disciplina_ano_corricular}]]></groupExpression>
+		<groupFooter>
+			<band height="16">
+				<textField evaluationTime="Group" evaluationGroup="Historico">
+					<reportElement positionType="Float" isPrintRepeatedValues="false" x="34" y="0" width="487" height="15" isPrintInFirstWholeBand="true" printWhenGroupChanges="Historico" uuid="fce7baef-84cd-43b7-be55-8f11b9136d29">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($V{PAGE_NUMBER}.intValue()==1) || new java.lang.Boolean($V{PAGE_NUMBER}.intValue()==2)]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="Serif" size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Numero De Matricula: "+$F{t_aluno_numero_de_aluno}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement positionType="Float" isPrintRepeatedValues="false" x="34" y="0" width="487" height="1" isPrintInFirstWholeBand="true" printWhenGroupChanges="Historico" uuid="9d0bef0b-a1dd-48ae-bba2-87c06f054499">
+						<printWhenExpression><![CDATA[new java.lang.Boolean($V{PAGE_NUMBER}.intValue()==1) || new java.lang.Boolean($V{PAGE_NUMBER}.intValue()==2)]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="1.1"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="268">
+			<line>
+				<reportElement x="397" y="57" width="139" height="1" uuid="19283c7d-e5fd-4c31-ad01-940a9ed16ea7">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="397" y="18" width="139" height="20" uuid="70c92762-5662-4286-b6e8-6500c3b81abf">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Serif"/>
+				</textElement>
+				<text><![CDATA[O Secretário Geral]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="411" y="57" width="110" height="20" uuid="27975f44-55fa-4773-9736-017c06dd64b9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
+    $F{t_instituicao_secretario_geral}  :
+    $P{condicao}.equals("2") ?
+    "" : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="157" width="487" height="111" uuid="eb6897ca-8c66-4631-8d8d-ef2e468c69ae"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, instituída pelo  Decreto Lei n.º 23/07 de 07 de Maio, certifica-se que "+"<b>"+$F{t_aluno_nome}+"</b>"+", "+($F{t_aluno_sexo}.equals("F")? "filha": $F{t_aluno_sexo}.equals("M")? "filho": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "-sem informação-")+" de "+$F{t_aluno_nome_do_pai}+" e de "+$F{t_aluno_nome_da_mae}+", "+($F{t_aluno_sexo}.equals("F")? "portadora do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("M")? "portador do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "else SQL Query")+$F{t_aluno_numero_documento_identificacao}+" emitido aos "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_emissao_identidade})+" pelo arquivo de "+$F{t_aluno_arquivo_identificacao}+", "+($F{t_aluno_sexo}.equals("F")? "nascida a ": $F{t_aluno_sexo}.equals("M")? "nascido a ": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "-sem informação-")+" "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_nascimento})+" natural de "+$F{t_provincia_provincia}+", obteve as seguintes classificações no curso de "+ ($F{t_curso_grau}.equals("LICENCIATURA")? "Licenciatura em ":"Mestrado em ")+"<b>"+$F{t_curso_descricao}+"<b>"+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="133" width="487" height="24" uuid="a9d4aa5a-f68c-47a7-a38d-177cac34cdd1"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
+    "CERTIFICADO DE HABILITAÇÕES INTERMÉDIO" :
+    $P{condicao}.equals("2") ?
+    "USO INTERNO - SEM VALOR LEGAL" : "")]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="14" splitType="Prevent">
+			<textField>
+				<reportElement x="34" y="0" width="313" height="14" uuid="27b8d369-544e-4a12-943e-9d32a3e199e5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disciplina}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<textField pattern="##" isBlankWhenNull="true">
+					<reportElement x="368" y="0" width="96" height="14" uuid="565afd4a-5247-4092-b497-73b9b33e9284"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Serif" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(new DecimalFormat("##")).format($F{nota_final})  +" "+(
+    $F{nota_final} == 1  ?
+    "(Um)" :
+    $F{nota_final} == 2 ?
+    "(Dois)" :
+    $F{nota_final} == 3 ?
+    "(Tres)" :
+    $F{nota_final} == 4 ?
+    "(Quatro)" :
+    $F{nota_final} == 5 ?
+    "(Cinco)" :
+    $F{nota_final} == 6 ?
+    "(Seis)" :
+    $F{nota_final} == 7 ?
+    "(Sete)" :
+    $F{nota_final} == 8 ?
+    "(Oito)" :
+    $F{nota_final} == 9 ?
+    "(Nove)" :
+    $F{nota_final} == 10 ?
+    "(Dez)" :
+    $F{nota_final} == 11 ?
+    "(Onze)" :
+    $F{nota_final} == 12 ?
+    "(Doze)" :
+    $F{nota_final} == 13 ?
+    "(Treze)" :
+    $F{nota_final} == 14 ?
+    "(Catorze)" :
+    $F{nota_final} == 15 ?
+    "(Quinze)" :
+    $F{nota_final} == 16 ?
+    "(Dezasseis)" :
+    $F{nota_final} == 17 ?
+    "(Dezassete)" :
+    $F{nota_final} == 18 ?
+    "(Dezoito)" :
+    $F{nota_final} == 19?
+    "(Dezanove)" :
+    $F{nota_final} == 20 ?
+    "(Vinte)" :
+    "Sem Nota")]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<staticText>
+				<reportElement x="467" y="0" width="54" height="14" uuid="336ee767-aecb-4adc-8abb-7a71a0129b00"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<text><![CDATA[Valores]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band height="216">
+			<textField>
+				<reportElement x="156" y="191" width="241" height="21" uuid="8141aaf5-933d-4c5e-9def-b795ab5c9b6c">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{responsavel}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="156" y="191" width="241" height="1" uuid="8e311aef-3816-45e3-8037-b9e91dcebe86">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement mode="Transparent" x="171" y="128" width="216" height="33" uuid="061deb44-9234-484f-b1cc-8c172ef34e76">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_faculdade_cargo_mestrado}+" da "+$F{t_faculdade_faculdade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="8" width="487" height="67" uuid="b008809d-dd1e-4d55-a6a7-9b077061cb6b"/>
+				<textElement textAlignment="Justified" markup="html">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Por ser verdade e ter sido pedido, mandei passar o presente Certificado, onde constam as classificações obtidas correspondentes à aprovação em "+$V{REPORT_COUNT}+" disciplinas, do total"+" de "+$F{V_CERTIFICADO_INTERMEDIO_total_disciplinas}+" que correspondem ao 1º ano do  plano curricular, do Curso de Mestrado "+$F{t_curso_descricao}+" desta Instituição."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="34" y="74" width="487" height="20" uuid="3577f5cf-298d-41a9-9461-a66bc54f4ce2">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("2")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="12"/>
+				</textElement>
+				<text><![CDATA[USO INTERNO - SEM VALOR LEGAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="75" width="358" height="20" uuid="662b9b2c-31ab-4ddf-a28a-1931a7245c26">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Luanda, "+$P{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

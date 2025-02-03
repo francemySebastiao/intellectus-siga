@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Dashboard" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ad1e91c-3b33-4e23-8249-80afa63e4458">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NOVA_VIDA"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="data" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT	CC.sigla CURSO, CC.grau GRAU, C.data_candidatura DATA_CANDIDATURA, AL.ano_lectivo ANO_LECTIVO, COUNT(*) TOTAL_CANDIDATOS, 
+		(SELECT COUNT(*) FROM t_candidato C WHERE C.data_candidatura= $P{data} ) AS TOTAL_GERAL, I.grupo_owner, M.foto
+
+FROM
+	t_logo_marca M,
+	t_candidato C
+	LEFT JOIN t_curso CC ON (C.codigo_curso = CC.id)
+	LEFT JOIN t_instituicao I ON (C.codigo_instituicao = I.id)
+	LEFT JOIN t_ano_lectivo AL ON (C.codigo_ano_lectivo = AL.id)
+
+WHERE
+	C.data_candidatura = $P{data} 
+
+GROUP BY data_candidatura, AL.ano_lectivo, CC.sigla, CC.grau, I.grupo_owner, M.foto
+
+ORDER BY 5]]>
+	</queryString>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="GRAU" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRAU"/>
+	</field>
+	<field name="DATA_CANDIDATURA" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_CANDIDATURA"/>
+	</field>
+	<field name="ANO_LECTIVO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_LECTIVO"/>
+	</field>
+	<field name="TOTAL_CANDIDATOS" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_CANDIDATOS"/>
+	</field>
+	<field name="TOTAL_GERAL" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_GERAL"/>
+	</field>
+	<field name="grupo_owner" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="grupo_owner"/>
+	</field>
+	<field name="foto" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="foto"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="128" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="59" height="61" uuid="d4a191e7-05a5-4de9-92e0-6dcb16ce3d30"/>
+				<imageExpression><![CDATA[$F{foto}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="475" y="87" width="75" height="1" uuid="717b325e-ccbf-4770-a248-a623b2e79e0c"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="549" y="67" width="1" height="20" uuid="ea0724de-30fa-4f83-81ad-b07d8628d856"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="475" y="67" width="16" height="1" uuid="f44f2ffe-900a-4067-9c52-f24b26ceea21"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="496" y="64" width="34" height="9" uuid="4c9c51e7-c0fe-40f4-b4c3-9a0e21657d42"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<line>
+				<reportElement x="531" y="67" width="18" height="1" uuid="6a6c457b-db0d-44c6-90a4-286ada54e06c"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="240" y="28" width="312" height="30" uuid="38b760ac-c790-4079-a3cb-861f1f8fcb15"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE CANDIDATOS INSCRITOS]]></text>
+			</staticText>
+			<textField pattern="d/M/yyyy">
+				<reportElement x="476" y="68" width="72" height="18" uuid="f067a4ed-5e65-453a-b583-fcb4cd650fb4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATA_CANDIDATURA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="475" y="67" width="1" height="20" uuid="c4a6467d-c948-499e-8488-e84787887d84"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="177" y="103" width="200" height="22" uuid="dc8a84cd-e6b9-4b10-80b5-e12f4f8d24e7"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total: "+$F{TOTAL_GERAL}+ " Candidaturas."]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="2" width="555" height="21" uuid="c92185f9-5cc3-4a5b-adda-c833329c8bfe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grupo_owner}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" uuid="22f79ab3-b2b2-4f1b-8989-0a6f44d88dbc"/>
+			</line>
+			<textField evaluationTime="Report">
+				<reportElement x="535" y="3" width="18" height="20" uuid="1fa1dea7-4759-4540-9364-49ca30603c79"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="3" width="50" height="20" uuid="5d731e55-bfcb-451d-8cfc-373bd3c1c445"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="583" splitType="Stretch">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="20" y="3" width="514" height="520" uuid="da7d53a4-74a8-420b-9a27-ee91ef8fc905"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{CURSO}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{CURSO}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{TOTAL_CANDIDATOS}]]></valueExpression>
+						<labelExpression><![CDATA[$F{CURSO}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel>
+						<font size="8"/>
+					</itemLabel>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="8"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="10"/>
+							</tickLabelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

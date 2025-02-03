@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Guia_Candidato_Recibo" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66531696-d204-42c3-a22e-592ca4a15142">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="196"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="43f81030-4a13-4bf3-8b12-756eedd1150f">
+		<parameter name="numero_guia" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     t_instituicao."id" AS t_instituicao_id,
+     t_instituicao."decreto_lei" AS t_instituicao_decreto_lei,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_instituicao."endereco" AS t_instituicao_endereco,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_curso."descricao" AS t_curso_descricao,
+     t_curso."sigla" AS t_curso_sigla,
+     t_instituicao."contribuinte" AS t_instituicao_contribuinte,
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_logo_marca_A."foto" AS t_logo_marca_A_foto,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_ano_lectivo."codigo_instituicao" AS t_ano_lectivo_codigo_instituicao,
+     t_guia_candidatura."data_emicao" AS t_guia_candidatura_data_emicao,
+     t_guia_candidatura."numero_guia" AS t_guia_candidatura_numero_guia,
+     t_guia_candidatura."valor" AS t_guia_candidatura_valor,
+     t_guia_candidatura."numero_de_candidato" AS t_guia_candidatura_numero_de_candidato,
+     t_candidato."nome" AS t_candidato_nome,
+     t_candidato."morada" AS t_candidato_morada,
+     t_usuario."name" AS t_usuario_name,
+     t_guia_candidatura_historico."numero_de_candidato" AS t_guia_candidatura_historico_numero_de_candidato,
+     t_guia_candidatura_historico."valor" AS t_guia_candidatura_historico_valor,
+     t_emolumento."emolumento" AS t_emolumento_emolumento,
+     t_candidato."numero_candidato" AS t_candidato_numero_candidato,
+     t_emolumento."codigo" AS t_emolumento_codigo
+FROM
+     "dbo"."t_curso" t_curso INNER JOIN "dbo"."t_candidato" t_candidato ON t_curso."id" = t_candidato."codigo_curso"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_candidato."codigo_instituicao" = t_instituicao."id"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_candidato."codigo_ano_lectivo" = t_ano_lectivo."id"
+     INNER JOIN "dbo"."t_guia_candidatura" t_guia_candidatura ON t_candidato."id" = t_guia_candidatura."numero_de_candidato"
+     INNER JOIN "dbo"."t_guia_candidatura_historico" t_guia_candidatura_historico ON t_guia_candidatura."id" = t_guia_candidatura_historico."codigo_guia_candidatura"
+     INNER JOIN "dbo"."t_usuario" t_usuario ON t_guia_candidatura."codigo_usuario_emitiu" = t_usuario."id"
+     INNER JOIN "dbo"."t_emolumento" t_emolumento ON t_guia_candidatura_historico."codigo_emolumento" = t_emolumento."id",
+     "dbo"."t_logo_marca" t_logo_marca,
+     "dbo"."t_logo_marca" t_logo_marca_A
+WHERE
+     t_guia_candidatura."numero_guia" = $P{numero_guia}]]>
+		</queryString>
+		<field name="t_instituicao_id" class="java.lang.Integer"/>
+		<field name="t_instituicao_decreto_lei" class="java.lang.String"/>
+		<field name="t_instituicao_descricao" class="java.lang.String"/>
+		<field name="t_instituicao_endereco" class="java.lang.String"/>
+		<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+		<field name="t_curso_descricao" class="java.lang.String"/>
+		<field name="t_curso_sigla" class="java.lang.String"/>
+		<field name="t_instituicao_contribuinte" class="java.lang.String"/>
+		<field name="t_logo_marca_foto" class="java.lang.Object"/>
+		<field name="t_logo_marca_A_foto" class="java.lang.Object"/>
+		<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+		<field name="t_ano_lectivo_codigo_instituicao" class="java.lang.Integer"/>
+		<field name="t_guia_candidatura_data_emicao" class="java.sql.Date"/>
+		<field name="t_guia_candidatura_numero_guia" class="java.lang.String"/>
+		<field name="t_guia_candidatura_valor" class="java.lang.Double"/>
+		<field name="t_guia_candidatura_numero_de_candidato" class="java.lang.Integer"/>
+		<field name="t_candidato_nome" class="java.lang.String"/>
+		<field name="t_candidato_morada" class="java.lang.String"/>
+		<field name="t_usuario_name" class="java.lang.String"/>
+		<field name="t_guia_candidatura_historico_numero_de_candidato" class="java.lang.Integer"/>
+		<field name="t_guia_candidatura_historico_valor" class="java.lang.Double"/>
+		<field name="t_emolumento_emolumento" class="java.lang.String"/>
+		<field name="t_candidato_numero_candidato" class="java.lang.Integer"/>
+		<field name="t_emolumento_codigo" class="java.lang.Integer"/>
+		<variable name="Soma" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{t_guia_candidatura_valor}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="numero_guia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     t_instituicao."id" AS t_instituicao_id,
+     t_instituicao."decreto_lei" AS t_instituicao_decreto_lei,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_instituicao."endereco" AS t_instituicao_endereco,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_curso."descricao" AS t_curso_descricao,
+     t_curso."sigla" AS t_curso_sigla,
+     t_instituicao."contribuinte" AS t_instituicao_contribuinte,
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_logo_marca_A."foto" AS t_logo_marca_A_foto,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_ano_lectivo."codigo_instituicao" AS t_ano_lectivo_codigo_instituicao,
+     t_guia_candidatura."data_emicao" AS t_guia_candidatura_data_emicao,
+     t_guia_candidatura."numero_guia" AS t_guia_candidatura_numero_guia,
+     t_guia_candidatura."valor" AS t_guia_candidatura_valor,
+     t_guia_candidatura."numero_de_candidato" AS t_guia_candidatura_numero_de_candidato,
+     t_candidato."nome" AS t_candidato_nome,
+     t_candidato."morada" AS t_candidato_morada,
+     t_usuario."name" AS t_usuario_name,
+     t_guia_candidatura_historico."numero_de_candidato" AS t_guia_candidatura_historico_numero_de_candidato,
+     t_guia_candidatura_historico."valor" AS t_guia_candidatura_historico_valor,
+     t_emolumento."emolumento" AS t_emolumento_emolumento,
+     t_candidato."numero_candidato" AS t_candidato_numero_candidato,
+     t_guia_candidatura."data_liquidacao" AS t_guia_candidatura_data_liquidacao,
+     t_guia_candidatura."bordero" AS t_guia_candidatura_bordero,
+     t_guia_candidatura."liquidada" AS t_guia_candidatura_liquidada
+FROM
+     "dbo"."t_curso" t_curso LEFT OUTER JOIN "dbo"."t_candidato" t_candidato ON t_curso."id" = t_candidato."codigo_curso"
+     LEFT OUTER JOIN "dbo"."t_instituicao" t_instituicao ON t_candidato."codigo_instituicao" = t_instituicao."id"
+     LEFT OUTER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_candidato."codigo_ano_lectivo" = t_ano_lectivo."id"
+     INNER JOIN "dbo"."t_guia_candidatura" t_guia_candidatura ON t_candidato."id" = t_guia_candidatura."numero_de_candidato"
+     LEFT OUTER JOIN "dbo"."t_guia_candidatura_historico" t_guia_candidatura_historico ON t_guia_candidatura."id" = t_guia_candidatura_historico."codigo_guia_candidatura"
+     LEFT OUTER JOIN "dbo"."t_usuario" t_usuario ON t_guia_candidatura."codigo_usuario_liquidou" = t_usuario."id"
+     LEFT OUTER JOIN "dbo"."t_emolumento" t_emolumento ON t_guia_candidatura_historico."codigo_emolumento" = t_emolumento."id",
+     "dbo"."t_logo_marca" t_logo_marca,
+     "dbo"."t_logo_marca" t_logo_marca_A
+WHERE
+     t_guia_candidatura."numero_guia" = $P{numero_guia}
+     and t_guia_candidatura."liquidada" = 1]]>
+	</queryString>
+	<field name="t_instituicao_id" class="java.lang.Integer"/>
+	<field name="t_instituicao_decreto_lei" class="java.lang.String"/>
+	<field name="t_instituicao_descricao" class="java.lang.String"/>
+	<field name="t_instituicao_endereco" class="java.lang.String"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_curso_sigla" class="java.lang.String"/>
+	<field name="t_instituicao_contribuinte" class="java.lang.String"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<field name="t_logo_marca_A_foto" class="java.io.InputStream"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_codigo_instituicao" class="java.lang.Integer"/>
+	<field name="t_guia_candidatura_data_emicao" class="java.sql.Date"/>
+	<field name="t_guia_candidatura_numero_guia" class="java.lang.String"/>
+	<field name="t_guia_candidatura_valor" class="java.lang.Double"/>
+	<field name="t_guia_candidatura_numero_de_candidato" class="java.lang.Integer"/>
+	<field name="t_candidato_nome" class="java.lang.String"/>
+	<field name="t_candidato_morada" class="java.lang.String"/>
+	<field name="t_usuario_name" class="java.lang.String"/>
+	<field name="t_guia_candidatura_historico_numero_de_candidato" class="java.lang.Integer"/>
+	<field name="t_guia_candidatura_historico_valor" class="java.lang.Double"/>
+	<field name="t_emolumento_emolumento" class="java.lang.String"/>
+	<field name="t_candidato_numero_candidato" class="java.lang.Integer"/>
+	<field name="t_guia_candidatura_data_liquidacao" class="java.sql.Date"/>
+	<field name="t_guia_candidatura_bordero" class="java.lang.String"/>
+	<field name="t_guia_candidatura_liquidada" class="java.lang.Boolean"/>
+	<background>
+		<band height="555" splitType="Stretch">
+			<line direction="BottomUp">
+				<reportElement x="397" y="278" width="7" height="7" uuid="c1e397fc-b565-43f7-b735-6a33f6bdc798"/>
+			</line>
+			<line>
+				<reportElement x="397" y="278" width="7" height="7" uuid="01310b17-ad33-4ee1-bbce-2af298d084ee"/>
+			</line>
+			<line>
+				<reportElement x="400" y="0" width="1" height="555" uuid="50057093-3d59-4108-87fd-f919b3fa0dff"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</background>
+	<title>
+		<band height="91" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="242" y="49" width="143" height="21" backcolor="#FFFFFF" uuid="ea6a4e56-c6ad-4136-a892-94c73e444975"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_guia_candidatura_numero_guia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="16" y="76" width="226" height="15" uuid="a9d0539a-4fc5-4652-a322-f2aebc66a8b6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Contribuinte n.º "+$F{t_instituicao_contribuinte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="16" y="61" width="226" height="15" uuid="8c49c4ff-f74f-4b6b-aef8-91d67bce9c78"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="16" y="49" width="226" height="13" uuid="3b97d6ab-5e90-46d7-8068-b7bf5afa8a7b"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="60" width="226" height="14" uuid="71230df6-da59-4959-ba22-c9e6f700b7c3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="48" width="226" height="13" uuid="9f2e4938-d345-4fa3-98ca-6ddadcd6d876"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="74" width="226" height="17" uuid="b5a8f127-f80f-4ef4-a46f-ec0d37fa2fca"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Contribuinte n.º "+$F{t_instituicao_contribuinte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="306" y="70" width="79" height="20" uuid="854c3629-9f98-498a-821f-fd6fcb855e73"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Original]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="703" y="71" width="79" height="20" uuid="df61fbf6-abbe-4892-817f-f40de61708ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Duplicado]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="16" y="10" width="40" height="40" uuid="c2749d00-eaad-40e7-af9a-a84277227313"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement x="410" y="10" width="41" height="40" uuid="710ef7d6-2cc0-4461-a49f-7249f97c469c"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_A_foto}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="286" y="47" width="101" height="1" uuid="cf8acdc3-ec4d-43d6-960d-a2b9b3446f5f"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="241" y="47" width="8" height="1" uuid="e1a5ce9b-53fe-4f9f-8da6-e55be5783a53"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="387" y="47" width="1" height="24" uuid="e90a1b9a-8257-4bdb-9d1a-676646b3339a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="253" y="41" width="51" height="10" uuid="465bd73f-9022-4c12-8f99-ef877023aac8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Recibo Nº]]></text>
+			</staticText>
+			<line>
+				<reportElement x="241" y="48" width="1" height="23" uuid="4260d0f4-eab3-4813-bb01-f3640480deaa"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="242" y="70" width="145" height="1" uuid="593a28d6-b5e4-4477-9d81-bd88d4a7c2d7"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="638" y="50" width="1" height="23" uuid="e7deaf13-8da7-40a0-be4e-843585bf7e85"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="638" y="49" width="8" height="1" uuid="424ad160-db65-4525-b1e0-281d2d4f6b94"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="683" y="49" width="101" height="1" uuid="99e4b166-90bd-4f8a-a418-8c2baf8f233e"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="784" y="49" width="1" height="24" uuid="bb2af8fa-a724-43c0-beb4-398a38ae3c97"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement mode="Opaque" x="639" y="51" width="143" height="21" backcolor="#FFFFFF" uuid="16d52083-0874-4d3f-80af-e89fed1c2276"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_guia_candidatura_numero_guia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="650" y="43" width="51" height="10" uuid="8168f7c6-d00f-4e46-bb61-8aee5150b564"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Recibo Nº]]></text>
+			</staticText>
+			<line>
+				<reportElement x="638" y="73" width="147" height="1" uuid="da19c6a9-0923-4192-8f96-42e29c86ba36"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="410" y="0" width="372" height="75" uuid="3d2149f9-f6d4-4d03-9d1b-a53702b7091a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="410" y="0" width="372" height="75" forecolor="#CCCCCC" uuid="30895902-4d09-4625-beb1-f23de4a7a9d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="36"/>
+				</textElement>
+				<text><![CDATA[CANDIDATURA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="16" y="0" width="372" height="75" uuid="2e929d71-56ba-4a15-8f29-da86bb67514e"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="16" y="0" width="372" height="75" forecolor="#CCCCCC" uuid="cb15eb31-8022-46b4-bd20-6e20c1f488a5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="36"/>
+				</textElement>
+				<text><![CDATA[CANDIDATURA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="295" y="0" width="93" height="20" uuid="91e895b1-ff8c-4af1-950c-f25045a3fba3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Candidato N.º "+$F{t_candidato_numero_candidato}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="28" y="40" width="267" height="20" uuid="f9cd8106-dfd0-4ab8-ade5-52a7edb3ada7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_candidato_morada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="28" y="20" width="267" height="20" uuid="dd1e20ea-398f-4b0e-8529-dc7358d1a516"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_candidato_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="55" width="82" height="20" uuid="365decee-c2d6-41dd-bc7c-17c3cb6163d0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_sigla}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="28" y="0" width="192" height="20" uuid="8c6fac5f-9c14-47e3-80f5-d201101467b6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Exmo.(a) Sr.(a)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="682" y="0" width="100" height="20" uuid="eacb62d7-2042-4613-a54f-869e0413caaf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Candidato N.º "+$F{t_candidato_numero_candidato}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="20" width="267" height="20" uuid="6a916279-c5b3-49f0-9fec-82e6a13a126e"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_candidato_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="422" y="0" width="192" height="20" uuid="2be5b061-73ce-4de8-bd7a-950fb3e9a77f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Exmo.(a) Sr.(a)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="700" y="55" width="82" height="20" uuid="41c55f94-35e2-4d39-86b1-f92b3a60bc3b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_sigla}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="422" y="40" width="267" height="20" uuid="fe3ad9d2-b771-4e36-9324-04f4c03dfe6e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_candidato_morada}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="46" y="0" width="278" height="14" uuid="1b23f55e-c6dc-490d-84f0-d0c13d5894a7"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="90e55115-73d9-4898-9c3e-fa73d8459543">
+						<datasetParameter name="numero_guia">
+							<datasetParameterExpression><![CDATA[$F{t_guia_candidatura_numero_guia}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="194" uuid="c1939e0e-33cb-43f4-a67f-f2a3152f229c">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="194" height="14" uuid="660e04ca-34e2-43a9-b137-393e924730f0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Descrição]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="19" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="194" height="18" uuid="8ee44672-4769-4118-b059-690896ef5192"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total (kz.)]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="38" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="194" height="19" uuid="991a3e31-3c0d-4174-b3ba-01060873c94c"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="19" width="194" height="19" uuid="967cbf2d-b194-4b29-bb16-1eefa714a676"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{t_emolumento_emolumento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="67" uuid="33afe5cb-b5ec-41a5-9fb0-f2b2fd55c05b">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="63" height="14" uuid="3cd3aaa0-9781-4a07-9e0a-870e7583438e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Código]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 2_TD" height="38" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="67" height="38" uuid="c4e0249a-9314-4ce2-9c98-7ad83872e250"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_emolumento_codigo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="1ae2a502-36b8-4107-9159-7b4f63f8019c">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="14" uuid="c1812a09-ad03-4258-9581-c20154721d2a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Importância]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="19" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField pattern="#,##0.00 Akz">
+								<reportElement x="0" y="0" width="80" height="19" uuid="257943a8-d98a-4fc1-93cf-5f673cb32728"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_candidatura_valor}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="38" rowSpan="1">
+							<textField pattern="#,##0.00 Akz">
+								<reportElement x="0" y="0" width="80" height="38" uuid="8d070933-5cb5-41c6-9411-61a2a0305e05"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_candidatura_historico_valor}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="440" y="1" width="278" height="12" uuid="6e92ab90-cef0-4418-88f9-9370a50e412d"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="0899a6c7-cea0-4979-b053-e43f5c0ab98b">
+						<datasetParameter name="numero_guia">
+							<datasetParameterExpression><![CDATA[$F{t_guia_candidatura_numero_guia}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="194" uuid="d6ab461c-41dd-46e4-af15-af9439f4d02f">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="194" height="14" uuid="5bf4e1f1-d050-4ee9-bfbb-eb3e90df7285"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Descrição]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="19" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="194" height="18" uuid="b5a6a59a-5c86-4b20-9b1e-5e5906eecf8f"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total (kz.)]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="38" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="194" height="19" uuid="dccafebd-8b91-44b6-8259-6aa23379e17d"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[""]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="19" width="194" height="19" uuid="0c8ddd59-9729-4a0b-8be3-a29c286c5cfd"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{t_emolumento_emolumento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="67" uuid="86f6f996-72b4-4ab6-a67a-2420c9d4d183">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="63" height="14" uuid="26389b95-e717-4280-9a1a-4990c6f6b18d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Código]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 2_TD" height="38" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="67" height="38" uuid="5712c3b2-88dc-4b7e-aa27-af42a8777d9b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_emolumento_codigo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="044bb970-443f-41cb-b1fd-6fb3c3a0c27c">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="14" uuid="873a68f8-a973-4c7d-a9b8-85f6357dbe23"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Importância]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="19" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField pattern="#,##0.00 Akz">
+								<reportElement x="0" y="0" width="80" height="19" uuid="f991f9f1-0ab0-4269-a29f-f60b1d360f82"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_candidatura_valor}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="38" rowSpan="1">
+							<textField pattern="#,##0.00 Akz">
+								<reportElement x="0" y="0" width="80" height="38" uuid="515a3f03-f279-49a4-b407-d2abb7244918"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_candidatura_historico_valor}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="72">
+			<textField>
+				<reportElement x="16" y="48" width="366" height="20" uuid="12cc7f97-b25c-4178-ae9a-2924f1cf90b3"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Liquidado Por : "+$F{t_usuario_name}+" a "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_guia_candidatura_data_liquidacao})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="48" width="337" height="20" uuid="cb367bb9-a711-4dd5-b4dc-032580450fe6"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Liquidado Por : "+$F{t_usuario_name}+" a "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_guia_candidatura_data_liquidacao})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="16" y="24" width="366" height="20" uuid="355c5464-a2a8-4349-987a-4583d3970749"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" - "+($F{t_guia_candidatura_bordero} == null ? "" :$F{t_guia_candidatura_bordero} )+" - "+(new DecimalFormat("#,##0.00 Akz")).format($F{t_guia_candidatura_valor})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="24" width="337" height="20" uuid="f1545ff9-353d-4d8b-adbd-a6ac1f97c8ea"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" - "+($F{t_guia_candidatura_bordero} == null ? "" :$F{t_guia_candidatura_bordero} )+" - "+(new DecimalFormat("#,##0.00 Akz")).format($F{t_guia_candidatura_valor})]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<lastPageFooter>
+		<band height="96">
+			<staticText>
+				<reportElement x="16" y="69" width="164" height="19" uuid="c2813987-1d3c-48f2-8838-57838a66ca43"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fale Connosco: online.sf@ugs.ed.ao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="72" width="164" height="19" uuid="880ba9fc-ebdb-4bbb-ada8-be1227a0f482"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fale Connosco: online.sf@ugs.ed.ao]]></text>
+			</staticText>
+			<line>
+				<reportElement x="16" y="69" width="360" height="2" uuid="56c8d8dc-2f7c-45f0-8310-33631a18d225"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="410" y="71" width="360" height="1" uuid="26a5f072-a735-4192-809a-b6f1c59fb4f9"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="16" y="25" width="164" height="35" uuid="f82dd81f-b9bd-4b4e-9625-3fb3461458a9"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Selo pago por Guia Decreto N.º 18/92
+D.R. 1ª Série N.º 19/92 de Maio 92]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="25" width="162" height="19" uuid="9a098edf-5e31-40f6-bd7b-544f42700eb7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[A Contabilidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="44" width="162" height="16" uuid="d849fe25-1f27-40e5-bc54-285edf375a1b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Não efectuamos reembolsos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="220" y="24" width="162" height="1" uuid="37e7ad5e-fc58-47e5-8809-ab3181d4bfa1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="614" y="23" width="162" height="1" uuid="a8d60aaf-c81a-436f-aae3-8b2b05265576"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="614" y="43" width="162" height="16" uuid="cc9d1fc5-34d6-4059-87ec-c8d3654f38e9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Não efectuamos reembolsos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="614" y="24" width="162" height="19" uuid="d583b797-42e5-4f61-bea1-1a568aacead8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[A Contabilidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="24" width="164" height="35" uuid="0a3b2a50-4f94-420d-abca-5a8c7ac39f27"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Selo pago por Guia Decreto N.º 18/92
+D.R. 1ª Série N.º 19/92 de Maio 92]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Registo_Credito_Bolseiro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="999d2d37-419f-4f76-b36d-fe6d946e1699">
+	<property name="ireport.zoom" value="1.5026296018031553"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NOVA_VIDA"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ano" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.numero_de_aluno NUMERO,a.nome NOME,cr.descricao CURSO,e.designacao EMPRESA,S.DATA_DEPOSITO,S.BORDERO,al.ano_lectivo ANO,i.descricao INSTITUICAO,I.grupo_owner GRUPO,l.foto LOGO_MARCA,SUM(S.valor) VALOR_DEPOSITO
+from t_credito_de_aluno s,t_empresa_convenio e,t_ano_lectivo al,t_aluno a,t_curso cr,t_instituicao i,t_logo_marca l
+where s.codigo_empresa=e.id  and
+      s.codigo_ano_lectivo=al.id and
+	  s.codigo_aluno=a.id and
+	  a.codigo_curso=cr.id and
+	  i.id=2 AND
+	  l.id=1 and
+      e.designacao= $P{empresa}   and --21
+	  al.id=$P{ano} --18
+GROUP BY a.numero_de_aluno,a.nome,cr.descricao,e.designacao,al.ano_lectivo,S.DATA_DEPOSITO,i.descricao,I.grupo_owner,l.foto,S.BORDERO
+ORDER BY 2]]>
+	</queryString>
+	<field name="NUMERO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="EMPRESA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EMPRESA"/>
+	</field>
+	<field name="DATA_DEPOSITO" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_DEPOSITO"/>
+	</field>
+	<field name="BORDERO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="BORDERO"/>
+	</field>
+	<field name="ANO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO"/>
+	</field>
+	<field name="INSTITUICAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INSTITUICAO"/>
+	</field>
+	<field name="GRUPO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRUPO"/>
+	</field>
+	<field name="LOGO_MARCA" class="java.io.InputStream">
+		<property name="com.jaspersoft.studio.field.label" value="LOGO_MARCA"/>
+	</field>
+	<field name="VALOR_DEPOSITO" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="VALOR_DEPOSITO"/>
+	</field>
+	<variable name="TotalValor" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR_DEPOSITO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="127" splitType="Stretch">
+			<image>
+				<reportElement uuid="5cddb36a-3acd-4ec1-b8fe-c46941f47906" x="454" y="21" width="57" height="57"/>
+				<imageExpression><![CDATA[$F{LOGO_MARCA}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="5c363f73-201a-433d-96f5-2e2c4f639660" mode="Opaque" x="414" y="80" width="139" height="20" backcolor="#CCCCCC"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[REGISTO DE CREDITO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="86d0543b-7246-462a-9517-0b333a4e51f1" x="5" y="51" width="172" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Empresa: "+$F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aeaaa739-9c59-4a46-8abc-cd259b997a19" x="5" y="68" width="172" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ano: "+$F{ANO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement uuid="388a6d1d-05b2-4df1-8419-09ec71825d30" x="32" y="85" width="145" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="79aff50b-dcfd-4b8a-a154-6800c509f9f7" x="5" y="85" width="28" height="17"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement uuid="9ab4dc01-b4c4-40dc-867f-60c806407f9c" x="-1" y="0" width="556" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="3768857b-0578-4d6f-81b5-9cd8865183f5" x="0" y="0" width="23" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N/O]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7e891a96-6203-4c98-8415-cc6dda1d2898" x="24" y="0" width="220" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome Completo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ae1fc0da-e9d4-4ca5-949f-43e3b7f79455" x="244" y="0" width="137" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Curso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="06fd39c1-504c-4507-a52a-9b88de56689b" x="381" y="0" width="73" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Deposito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="62cfa25d-809a-4f71-a1e7-cca69f10f128" x="454" y="0" width="100" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Depositado]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="2c9796ff-c5f6-4776-9bcf-185f27c70ac1" x="-1" y="16" width="557" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="65a6bd9b-8786-4968-9bcb-b6ae7fe54503" x="24" y="0" width="220" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a57abb79-5104-4f28-9c13-b924f7aac1a5" x="244" y="0" width="137" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CURSO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="5492ed24-90a4-4b53-86b3-e32420802594" x="381" y="0" width="73" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATA_DEPOSITO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 Akz">
+				<reportElement uuid="085aa0c2-e37a-4eb4-983a-8dd9a64ec267" x="454" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALOR_DEPOSITO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9b8fa0b8-49bf-4804-9eeb-48c2346e735c" x="0" y="0" width="23" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="122" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="47685620-f747-4096-a785-84b010fa01d8" x="33" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Usuario]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="b1c3bf51-3e55-48f2-81cd-c08a66727ad2" x="23" y="43" width="137" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement uuid="8348ea9b-60ac-40ce-a220-b4fdf3488dc2" x="0" y="0" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="a2bd8e6d-9120-48c6-86d2-990d8d9d4435" x="434" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="452c425b-10eb-47d9-b676-a7cdf93cdb96" x="514" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dd00fd07-78c2-4227-b9ae-f44843ee84bd" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{GRUPO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4a513f9c-bc43-409f-a6a1-310b442dc4a4" x="0" y="32" width="114" height="17">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE CRÈDITO]]></text>
+			</staticText>
+			<textField pattern="#,##0.00 Akz">
+				<reportElement uuid="ddf60b4b-6280-4050-845d-b442f7afe76d" x="454" y="32" width="99" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalValor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

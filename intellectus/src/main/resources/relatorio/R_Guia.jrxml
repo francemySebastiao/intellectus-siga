@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Guia_Pagamento" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66531696-d204-42c3-a22e-592ca4a15142">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="43f81030-4a13-4bf3-8b12-756eedd1150f">
+		<parameter name="numero_guia" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     t_guia_pagamento."id" AS t_guia_pagamento_id,
+     t_guia_pagamento."numero_guia" AS t_guia_pagamento_numero_guia,
+     t_guia_pagamento."valor" AS t_guia_pagamento_valor,
+     t_guia_pagamento_historico."id" AS t_guia_pagamento_historico_id,
+     t_guia_pagamento_historico."obs" AS t_guia_pagamento_historico_obs,
+     t_guia_pagamento_historico."valor" AS t_guia_pagamento_historico_valor,
+     t_guia_pagamento_historico."codigo_emolumento" AS t_guia_pagamento_historico_codigo_emolumento,
+     t_guia_pagamento_historico."codigo_guia_pagamento" AS t_guia_pagamento_historico_codigo_guia_pagamento,
+     t_emolumento."id" AS t_emolumento_id,
+     t_emolumento."codigo" AS t_emolumento_codigo,
+     t_emolumento."emolumento" AS t_emolumento_emolumento,
+     t_moeda."designacao" AS t_moeda_designacao,
+     t_moeda."moeda" AS t_moeda_moeda,
+     t_moeda."status" AS t_moeda_status,
+     t_guia_pagamento."codigo_moeda" AS t_guia_pagamento_codigo_moeda,
+     t_moeda."id" AS t_moeda_id
+
+FROM
+     "dbo"."t_guia_pagamento" t_guia_pagamento INNER JOIN "dbo"."t_guia_pagamento_historico" t_guia_pagamento_historico ON t_guia_pagamento."id" = t_guia_pagamento_historico."codigo_guia_pagamento"
+     INNER JOIN "dbo"."t_emolumento" t_emolumento ON t_guia_pagamento_historico."codigo_emolumento" = t_emolumento."id"
+     INNER JOIN "dbo"."t_moeda" t_moeda ON t_guia_pagamento."codigo_moeda" = t_moeda."id"
+WHERE
+     t_guia_pagamento."numero_guia" = $P{numero_guia}]]>
+		</queryString>
+		<field name="t_guia_pagamento_id" class="java.lang.Integer"/>
+		<field name="t_guia_pagamento_numero_guia" class="java.lang.String"/>
+		<field name="t_guia_pagamento_valor" class="java.lang.Double"/>
+		<field name="t_guia_pagamento_historico_id" class="java.lang.Integer"/>
+		<field name="t_guia_pagamento_historico_obs" class="java.lang.String"/>
+		<field name="t_guia_pagamento_historico_valor" class="java.lang.Double"/>
+		<field name="t_guia_pagamento_historico_codigo_emolumento" class="java.lang.Integer"/>
+		<field name="t_guia_pagamento_historico_codigo_guia_pagamento" class="java.lang.Integer"/>
+		<field name="t_emolumento_id" class="java.lang.Integer"/>
+		<field name="t_emolumento_codigo" class="java.lang.Integer"/>
+		<field name="t_emolumento_emolumento" class="java.lang.String"/>
+		<field name="t_moeda_designacao" class="java.lang.String"/>
+		<field name="t_moeda_moeda" class="java.lang.String"/>
+		<field name="t_moeda_status" class="java.lang.Boolean"/>
+		<field name="t_guia_pagamento_codigo_moeda" class="java.lang.Integer"/>
+		<field name="t_moeda_id" class="java.lang.Integer"/>
+		<variable name="Soma" class="java.lang.Double" calculation="Sum">
+			<variableExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="numero_guia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nome" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     t_guia_pagamento."id" AS t_guia_pagamento_id,
+     t_guia_pagamento."valor" AS t_guia_pagamento_valor,
+     t_guia_pagamento."codigo_aluno" AS t_guia_pagamento_codigo_aluno,
+     t_guia_pagamento."codigo_ano_lectivo" AS t_guia_pagamento_codigo_ano_lectivo,
+     t_guia_pagamento."numero_guia" AS t_guia_pagamento_numero_guia,
+     t_guia_pagamento_historico."obs" AS t_guia_pagamento_historico_obs,
+     t_guia_pagamento_historico."valor" AS t_guia_pagamento_historico_valor,
+     t_guia_pagamento_historico."codigo_aluno" AS t_guia_pagamento_historico_codigo_aluno,
+     t_guia_pagamento_historico."codigo_ano_lectivo" AS t_guia_pagamento_historico_codigo_ano_lectivo,
+     t_guia_pagamento_historico."codigo_emolumento" AS t_guia_pagamento_historico_codigo_emolumento,
+     t_guia_pagamento_historico."codigo_guia_pagamento" AS t_guia_pagamento_historico_codigo_guia_pagamento,
+     t_emolumento."emolumento" AS t_emolumento_emolumento,
+     t_aluno."nome" AS t_aluno_nome,
+     t_aluno."codigo_ano_lectivo_fim_curso" AS t_aluno_codigo_ano_lectivo_fim_curso,
+     t_aluno."codigo_instituicao" AS t_aluno_codigo_instituicao,
+     t_aluno."codigo_municipio_nascimento" AS t_aluno_codigo_municipio_nascimento,
+     t_aluno."codigo_municio_residencia" AS t_aluno_codigo_municio_residencia,
+     t_aluno."codigo_pais_nacionalidade" AS t_aluno_codigo_pais_nacionalidade,
+     t_aluno."codigo_pais_residencia" AS t_aluno_codigo_pais_residencia,
+     t_aluno."codigo_provincia_nascimento" AS t_aluno_codigo_provincia_nascimento,
+     t_aluno."codigo_provincia_residencia" AS t_aluno_codigo_provincia_residencia,
+     t_instituicao."id" AS t_instituicao_id,
+     t_instituicao."decreto_lei" AS t_instituicao_decreto_lei,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_instituicao."endereco" AS t_instituicao_endereco,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_matricula."ano_curricular" AS t_matricula_ano_curricular,
+     t_matricula."ano_lectivo" AS t_matricula_ano_lectivo,
+     t_matricula."numero_de_aluno" AS t_matricula_numero_de_aluno,
+     t_matricula."codigo_aluno" AS t_matricula_codigo_aluno,
+     t_matricula."codigo_ano_lectivo" AS t_matricula_codigo_ano_lectivo,
+     t_matricula."codigo_curso" AS t_matricula_codigo_curso,
+     t_matricula."codigo_turma_base" AS t_matricula_codigo_turma_base,
+     t_turma."id" AS t_turma_id,
+     t_turma."turma" AS t_turma_turma,
+     t_turma."turno" AS t_turma_turno,
+     t_curso."descricao" AS t_curso_descricao,
+     t_moeda."designacao" AS t_moeda_designacao,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_curso."sigla" AS t_curso_sigla,
+     t_aluno."morada" AS t_aluno_morada,
+     t_instituicao."contribuinte" AS t_instituicao_contribuinte,
+     t_emolumento."codigo" AS t_emolumento_codigo,
+     t_guia_pagamento."data_emissao" AS t_guia_pagamento_data_emissao,
+     t_logo_marca."foto" AS t_logo_marca_foto
+FROM
+     "dbo"."t_guia_pagamento" t_guia_pagamento INNER JOIN "dbo"."t_guia_pagamento_historico" t_guia_pagamento_historico ON t_guia_pagamento."id" = t_guia_pagamento_historico."codigo_guia_pagamento"
+     INNER JOIN "dbo"."t_emolumento" t_emolumento ON t_guia_pagamento_historico."codigo_emolumento" = t_emolumento."id"
+     INNER JOIN "dbo"."t_aluno" t_aluno ON t_guia_pagamento."codigo_aluno" = t_aluno."id"
+     INNER JOIN "dbo"."t_moeda" t_moeda ON t_guia_pagamento."codigo_moeda" = t_moeda."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_aluno."codigo_instituicao" = t_instituicao."id"
+     INNER JOIN "dbo"."t_matricula" t_matricula ON t_aluno."id" = t_matricula."codigo_aluno"
+     INNER JOIN "dbo"."t_turma" t_turma ON t_matricula."codigo_turma_base" = t_turma."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_matricula."codigo_curso" = t_curso."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     t_guia_pagamento."numero_guia" = $P{numero_guia}]]>
+	</queryString>
+	<field name="t_guia_pagamento_id" class="java.lang.Integer"/>
+	<field name="t_guia_pagamento_valor" class="java.lang.Double"/>
+	<field name="t_guia_pagamento_codigo_aluno" class="java.lang.Integer"/>
+	<field name="t_guia_pagamento_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_guia_pagamento_numero_guia" class="java.lang.String"/>
+	<field name="t_guia_pagamento_historico_obs" class="java.lang.String"/>
+	<field name="t_guia_pagamento_historico_valor" class="java.lang.Double"/>
+	<field name="t_guia_pagamento_historico_codigo_aluno" class="java.lang.Integer"/>
+	<field name="t_guia_pagamento_historico_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_guia_pagamento_historico_codigo_emolumento" class="java.lang.Integer"/>
+	<field name="t_guia_pagamento_historico_codigo_guia_pagamento" class="java.lang.Integer"/>
+	<field name="t_emolumento_emolumento" class="java.lang.String"/>
+	<field name="t_aluno_nome" class="java.lang.String"/>
+	<field name="t_aluno_codigo_ano_lectivo_fim_curso" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_instituicao" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_municipio_nascimento" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_municio_residencia" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_pais_nacionalidade" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_pais_residencia" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_provincia_nascimento" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_provincia_residencia" class="java.lang.Integer"/>
+	<field name="t_instituicao_id" class="java.lang.Integer"/>
+	<field name="t_instituicao_decreto_lei" class="java.lang.String"/>
+	<field name="t_instituicao_descricao" class="java.lang.String"/>
+	<field name="t_instituicao_endereco" class="java.lang.String"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_matricula_ano_curricular" class="java.lang.Integer"/>
+	<field name="t_matricula_ano_lectivo" class="java.lang.String"/>
+	<field name="t_matricula_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_matricula_codigo_aluno" class="java.lang.Integer"/>
+	<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_matricula_codigo_curso" class="java.lang.Integer"/>
+	<field name="t_matricula_codigo_turma_base" class="java.lang.Integer"/>
+	<field name="t_turma_id" class="java.lang.Integer"/>
+	<field name="t_turma_turma" class="java.lang.String"/>
+	<field name="t_turma_turno" class="java.lang.String"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_moeda_designacao" class="java.lang.String"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_curso_sigla" class="java.lang.String"/>
+	<field name="t_aluno_morada" class="java.lang.String"/>
+	<field name="t_instituicao_contribuinte" class="java.lang.String"/>
+	<field name="t_emolumento_codigo" class="java.lang.Integer"/>
+	<field name="t_guia_pagamento_data_emissao" class="java.sql.Date"/>
+	<field name="t_logo_marca_foto" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="91" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="236" y="46" width="146" height="24" backcolor="#CCCCCC" uuid="ea6a4e56-c6ad-4136-a892-94c73e444975"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Guia N.º "+$F{t_guia_pagamento_numero_guia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="251" y="70" width="131" height="20" uuid="a9d0539a-4fc5-4652-a322-f2aebc66a8b6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Contribuinte n.º "+$F{t_instituicao_contribuinte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="66" width="226" height="25" uuid="8c49c4ff-f74f-4b6b-aef8-91d67bce9c78"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="46" width="226" height="20" uuid="3b97d6ab-5e90-46d7-8068-b7bf5afa8a7b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="66" width="226" height="25" uuid="71230df6-da59-4959-ba22-c9e6f700b7c3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="47" width="226" height="20" uuid="9f2e4938-d345-4fa3-98ca-6ddadcd6d876"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="661" y="70" width="129" height="20" uuid="b5a8f127-f80f-4ef4-a46f-ec0d37fa2fca"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Contribuinte n.º "+$F{t_instituicao_contribuinte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="644" y="46" width="146" height="24" backcolor="#CCCCCC" uuid="1c7ee916-848f-4a17-a0fb-18dc98ef3f8e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Guia N.º "+$F{t_guia_pagamento_numero_guia}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="10" y="0" width="49" height="46" uuid="17ea3e59-67ae-49d6-9c77-d74eb6ddcc03"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement x="419" y="0" width="49" height="47" uuid="4545fae6-003a-4477-a7a7-2a5e27cef4e5"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<rectangle>
+				<reportElement x="9" y="0" width="372" height="40" uuid="2e929d71-56ba-4a15-8f29-da86bb67514e"/>
+				<graphicElement>
+					<pen lineWidth="1.1"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="251" y="0" width="100" height="20" uuid="91e895b1-ff8c-4af1-950c-f25045a3fba3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Aluno N.º "+$F{t_aluno_numero_de_aluno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="20" width="264" height="20" uuid="dd1e20ea-398f-4b0e-8529-dc7358d1a516"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="286" y="20" width="93" height="20" uuid="365decee-c2d6-41dd-bc7c-17c3cb6163d0"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_sigla}+"-"+$F{t_matricula_ano_curricular}+"º Ano:"+$F{t_turma_turma}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="418" y="0" width="372" height="40" uuid="3d2149f9-f6d4-4d03-9d1b-a53702b7091a"/>
+				<graphicElement>
+					<pen lineWidth="1.1"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="22" y="0" width="192" height="20" uuid="8c6fac5f-9c14-47e3-80f5-d201101467b6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Exmo.(a) Sr.(a)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="661" y="0" width="100" height="20" uuid="eacb62d7-2042-4613-a54f-869e0413caaf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Aluno N.º "+$F{t_aluno_numero_de_aluno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="20" width="266" height="20" uuid="6a916279-c5b3-49f0-9fec-82e6a13a126e"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="430" y="0" width="192" height="20" uuid="2be5b061-73ce-4de8-bd7a-950fb3e9a77f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Exmo.(a) Sr.(a)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="696" y="20" width="93" height="20" uuid="41c55f94-35e2-4d39-86b1-f92b3a60bc3b"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_sigla}+"-"+$F{t_matricula_ano_curricular}+"º Ano:"+$F{t_turma_turma}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="9" y="0" width="260" height="23" uuid="9c6e0817-fc29-43ff-8908-0ff625ab3cf9"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="121297cd-a3b1-4b79-8a61-341764423376">
+						<datasetParameter name="numero_guia">
+							<datasetParameterExpression><![CDATA[$F{t_guia_pagamento_numero_guia}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="207" uuid="4069432d-9048-4070-884b-81b53642535c">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="194" height="14" uuid="bcff9c33-d69e-4428-9765-1c634fa0c04c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Descrição]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="72" rowSpan="1">
+							<box topPadding="0" bottomPadding="0"/>
+							<staticText>
+								<reportElement x="0" y="56" width="207" height="15" uuid="df696998-57eb-4741-b131-90445759b5d2"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total (kz.)]]></text>
+							</staticText>
+							<line>
+								<reportElement x="0" y="55" width="207" height="1" uuid="9229d915-ec01-4268-b58b-9f780df39ffa"/>
+							</line>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField>
+								<reportElement x="21" y="2" width="173" height="12" uuid="6117c2df-7088-4d73-8d02-b549d23fa170"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_emolumento_emolumento}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement x="21" y="12" width="173" height="15" uuid="f00bf77a-5057-4bc3-b01d-f79ce893b20b"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Times New Roman" size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_obs}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="83" uuid="b0c7d7ab-4fc6-4004-8882-5cdb4222f789">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="83" height="14" uuid="57cb6f10-fdb6-47d6-88c3-93041bb80fa2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Código]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="72" rowSpan="1">
+							<line>
+								<reportElement x="0" y="55" width="83" height="1" uuid="8ff421e3-705e-448c-bcf1-c6b0dd7c9c6c"/>
+							</line>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="2" width="83" height="12" uuid="d968bb2f-42e7-491b-bb9f-3ec8b2c33a27"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_emolumento_codigo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="6ece70eb-00a0-4f0e-84af-b7e380eb7a6b">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="14" uuid="96b952ab-7578-4d09-9f69-2a85968d6bc7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Importância]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="72" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField pattern="#,##0 Kz">
+								<reportElement x="0" y="56" width="80" height="16" uuid="13b92036-9cc9-4126-8c06-830c0efdbe29"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement x="0" y="55" width="80" height="1" uuid="852277c3-6280-4127-a774-e94d946a5520"/>
+							</line>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
+							<textField pattern="#,##0 Kz">
+								<reportElement x="0" y="2" width="79" height="12" uuid="bb95fe87-33fe-452e-97be-9b57c8989d8a"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="418" y="0" width="260" height="23" uuid="d82fe7ed-40e2-4c1d-b667-611cab9526b3"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="9bc5f11c-c521-4c9a-b531-9952118b697a">
+						<datasetParameter name="numero_guia">
+							<datasetParameterExpression><![CDATA[$F{t_guia_pagamento_numero_guia}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="207" uuid="11bc7c4a-37c4-4b04-99c2-0b8b65565d80">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="194" height="14" uuid="38b7320e-ea66-4fc5-b1e4-e99995a42e3f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Descrição]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="72" rowSpan="1">
+							<box topPadding="0" bottomPadding="0"/>
+							<staticText>
+								<reportElement x="0" y="56" width="207" height="15" uuid="1ac2b6c4-506c-4da6-a296-af4986650e84"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total (kz.)]]></text>
+							</staticText>
+							<line>
+								<reportElement x="0" y="55" width="207" height="1" uuid="8187bc57-6677-43ae-9fe3-0e4f73c8dc10"/>
+							</line>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField>
+								<reportElement x="21" y="2" width="173" height="12" uuid="4590a90a-9e74-40ac-9355-e98292efe7aa"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_emolumento_emolumento}]]></textFieldExpression>
+							</textField>
+							<textField isBlankWhenNull="true">
+								<reportElement x="21" y="12" width="173" height="15" uuid="feb95d6d-7d2e-4298-8438-3361d235cd65"/>
+								<textElement verticalAlignment="Bottom">
+									<font fontName="Times New Roman" size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_obs}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="83" uuid="326d37d8-e471-47dd-91d2-a15e83f065e5">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="83" height="14" uuid="774b8e90-3987-4742-9b62-7a2052ff06de"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Código]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="72" rowSpan="1">
+							<line>
+								<reportElement x="0" y="55" width="83" height="1" uuid="81b33fee-f285-406f-aa74-d2f8501217a6"/>
+							</line>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="2" width="83" height="12" uuid="a798161f-9ffe-474a-85d4-d4db8fc85c27"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_emolumento_codigo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="2c4f3028-5ff4-4924-8860-437f00ff506f">
+						<jr:tableHeader style="table 1" height="16" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="14" uuid="7fb9e4b7-8a78-4ab8-a9fe-a1d7f6c0422b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Importância]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="72" rowSpan="1">
+							<box>
+								<pen lineWidth="1.0"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textField pattern="#,##0 Kz">
+								<reportElement x="0" y="56" width="80" height="16" uuid="60e46f4a-e165-4ab7-8f7e-1436ce817792"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
+							</textField>
+							<line>
+								<reportElement x="0" y="55" width="80" height="1" uuid="137680b3-139f-4577-bb44-ebd28c1e9937"/>
+							</line>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
+							<textField pattern="#,##0 Kz">
+								<reportElement x="0" y="2" width="79" height="12" uuid="ad0ba073-94bf-4d4e-b731-8f6bbc0f55de"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="153">
+			<line>
+				<reportElement x="245" y="125" width="130" height="1" uuid="a88d9aa3-dbcf-4764-bcae-709839e38b57"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="262" y="127" width="100" height="20" uuid="879d9660-8cf4-4c96-bb90-76a50c540aaf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[A Contabilidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="126" width="100" height="20" uuid="6f86e72c-c524-42d4-8d1c-c5f809e7e782"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Depositante]]></text>
+			</staticText>
+			<line>
+				<reportElement x="62" y="124" width="130" height="1" uuid="718016db-738c-43e8-96b9-897d7259b589"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="666" y="127" width="100" height="20" uuid="5a1d35dd-e094-482b-a5a2-e0ed0349671b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[A Contabilidade]]></text>
+			</staticText>
+			<line>
+				<reportElement x="649" y="125" width="130" height="1" uuid="3bc93cc2-9448-4d8e-8564-641469d74f77"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="483" y="126" width="100" height="20" uuid="40b5ae37-e3ed-4fd4-b22c-f58462b146be"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Depositante]]></text>
+			</staticText>
+			<line>
+				<reportElement x="466" y="124" width="130" height="1" uuid="d5391f47-702c-4351-addf-92185de41235"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="22" y="72" width="359" height="20" uuid="c9230ed5-bc3e-4a92-b455-d7b5033b1847"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Obs: Todos os Pagamentos são efectuados por depósito e/ou transferência bancária.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="72" width="360" height="20" uuid="29021c7d-2904-499c-84a4-8b48c722297e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Obs: Todos os Pagamentos são efectuados por depósito e/ou transferência bancária.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="22" y="52" width="344" height="20" uuid="b6297a66-f70e-4ce3-a462-850b4b10cf06"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Emitido por : "+$P{nome}+", em "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_guia_pagamento_data_emissao})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="52" width="344" height="20" uuid="30bdc220-9e2f-4d96-ba24-3718391027b8"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Emitido por : "+$P{nome}+", em "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_guia_pagamento_data_emissao})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="32" width="344" height="20" uuid="095bd4ca-b581-4049-a456-78a905e777b6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Ref. "+(new DecimalFormat("#,##0.00 Akz")).format($F{t_guia_pagamento_valor})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="32" width="344" height="20" uuid="6afed833-d967-481e-9132-92aaae45e8d2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Ref. "+(new DecimalFormat("#,##0.00 Akz")).format($F{t_guia_pagamento_valor})]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="93" splitType="Stretch">
+			<rectangle>
+				<reportElement x="22" y="41" width="360" height="36" uuid="bf577bdb-6fec-4dba-98c8-cc5eb78c5f97"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="22" y="17" width="360" height="24" uuid="2b7b7a34-c3a8-4920-937c-352a550cc831"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="40" y="25" width="326" height="15" backcolor="#999999" uuid="9e1d401b-dafe-49eb-bb60-c3ae0740a82b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zona de Certificação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="57" width="326" height="20" uuid="e5c1416a-e0ab-4d6f-97d5-b44f1e045378"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Este depósito só é válido após certificação do banco]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="430" y="41" width="360" height="36" uuid="6ef95c6b-7076-49c8-9bac-4cd003bf020f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="450" y="57" width="324" height="20" uuid="34a9111b-e407-48d3-baa8-4d19e28499d3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Este depósito só é válido após certificação do banco]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="77" width="42" height="16" uuid="56337f1d-40d1-4865-9d88-f7c6e02eac04"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Luanda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="77" width="42" height="16" uuid="8682383a-ba08-4ebd-ab07-fd6586072a48"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Luanda]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="430" y="17" width="360" height="24" uuid="95646a65-5578-46ff-921c-b77a169b10f1"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="448" y="25" width="326" height="15" backcolor="#999999" uuid="fea44a06-ba2d-4a5d-bc7a-da00eb1b8fb3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zona de Certificação]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

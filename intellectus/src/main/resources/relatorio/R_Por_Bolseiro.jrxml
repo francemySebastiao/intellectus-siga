@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Por_Bolseiro" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="661d3675-1a9e-40c5-b7b4-01c9e67f493f">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigo_ano_lectivo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="instituicao" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     t_aluno."nome" AS t_aluno_nome,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_aluno."codigo_tipo_bolsa" AS t_aluno_codigo_tipo_bolsa,
+     t_aluno."entidade_pagadora" AS t_aluno_entidade_pagadora,
+     t_aluno."id" AS t_aluno_id,
+     t_matricula."codigo_ano_lectivo" AS t_matricula_codigo_ano_lectivo,
+     t_matricula."percentagem_desconto" AS t_matricula_percentagem_desconto,
+     t_ano_lectivo."id" AS t_ano_lectivo_id,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_empresa_convenio."id" AS t_empresa_convenio_id,
+     t_empresa_convenio."designacao" AS t_empresa_convenio_designacao,
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_matricula."ano_curricular" AS t_matricula_ano_curricular,
+     t_curso."sigla" AS t_curso_sigla
+FROM
+     "dbo"."t_aluno" t_aluno INNER JOIN "dbo"."t_matricula" t_matricula ON t_aluno."id" = t_matricula."codigo_aluno"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_matricula."codigo_ano_lectivo" = t_ano_lectivo."id"
+     INNER JOIN "dbo"."t_empresa_convenio" t_empresa_convenio ON t_matricula."codigo_empres_convenio" = t_empresa_convenio."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_matricula."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_ano_lectivo."codigo_instituicao" = t_instituicao."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     t_ano_lectivo."id" = $P{codigo_ano_lectivo}
+   and t_empresa_convenio."id"=$P{instituicao}
+ORDER BY
+     t_empresa_convenio."designacao",t_aluno."nome"]]>
+	</queryString>
+	<field name="t_aluno_nome" class="java.lang.String"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<field name="t_aluno_codigo_tipo_bolsa" class="java.lang.Integer"/>
+	<field name="t_aluno_entidade_pagadora" class="java.lang.String"/>
+	<field name="t_aluno_id" class="java.lang.Integer"/>
+	<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_matricula_percentagem_desconto" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_id" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_empresa_convenio_id" class="java.lang.Integer"/>
+	<field name="t_empresa_convenio_designacao" class="java.lang.String"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<field name="t_instituicao_descricao" class="java.lang.String"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_matricula_ano_curricular" class="java.lang.Integer"/>
+	<field name="t_curso_sigla" class="java.lang.String"/>
+	<variable name="soma" class="java.lang.Integer" resetType="Group" resetGroup="primeiro" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{t_aluno_id}]]></variableExpression>
+	</variable>
+	<group name="primeiro">
+		<groupExpression><![CDATA[$F{t_empresa_convenio_designacao}]]></groupExpression>
+		<groupHeader>
+			<band height="41">
+				<textField>
+					<reportElement x="0" y="0" width="213" height="20" uuid="bca44c13-3be2-4b61-ad5c-0a0ee8e2b3df"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_empresa_convenio_designacao}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="19" width="553" height="1" uuid="d94aa8d0-aef4-407c-b628-22f0e8758a46"/>
+				</line>
+				<staticText>
+					<reportElement x="-421" y="18" width="46" height="20" uuid="e7ba7165-bb72-4257-b054-cac85a69e471"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nº Aluno]]></text>
+				</staticText>
+				<line>
+					<reportElement x="-434" y="37" width="83" height="1" uuid="71ae12da-5ec2-4fb6-971a-96b39370a32c"/>
+				</line>
+				<line>
+					<reportElement x="106" y="40" width="283" height="1" uuid="41e5ee33-1eba-4fc4-b3ac-3f2cc79cd2d4"/>
+				</line>
+				<staticText>
+					<reportElement x="106" y="20" width="283" height="20" uuid="27cf5751-2f10-4bd5-8f7a-870c2241aef5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="390" y="20" width="88" height="20" uuid="f30f3d62-8880-4617-870d-c217859a76d5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Curso]]></text>
+				</staticText>
+				<line>
+					<reportElement x="390" y="40" width="88" height="1" uuid="44d1717a-9e08-46ac-89d6-f8ca0392fb91"/>
+				</line>
+				<staticText>
+					<reportElement x="489" y="21" width="64" height="19" uuid="e21b4af8-e563-4982-bd5d-a90acbd9c960"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Ano Curricular]]></text>
+				</staticText>
+				<line>
+					<reportElement x="489" y="40" width="64" height="1" uuid="2a21de9f-326b-4ada-99d8-2c89bf590958"/>
+				</line>
+				<line>
+					<reportElement x="3" y="40" width="89" height="1" uuid="1484737e-081e-4476-8ddd-b3bec2ccaead"/>
+				</line>
+				<staticText>
+					<reportElement x="4" y="20" width="88" height="20" uuid="24922d5f-0ece-4a85-89ae-ff0f272fab02"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Nº Aluno]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="213" y="0" width="210" height="19" uuid="ab0d6f56-8c8d-4971-b5ff-6643aa08f9c5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="18">
+				<textField>
+					<reportElement x="4" y="0" width="102" height="18" uuid="ae0e296b-5d1e-404a-8d2b-e299ce7772a2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total de Bolseiros: "+$V{soma}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="69" height="66" uuid="c6e65881-d745-465b-9991-d0a491e75c9c"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="83" y="33" width="470" height="33" uuid="e160b9b9-e1cf-44a3-b390-07c5eda4ad21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="26"/>
+				</textElement>
+				<text><![CDATA[Listagem De Bolseiros]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="106" y="0" width="283" height="20" uuid="50837977-70d0-430f-a850-468ee08964e3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="0" width="88" height="20" uuid="5bf19574-3cf4-4f17-8129-c9e9c6c323e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_aluno_numero_de_aluno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="0" width="88" height="20" uuid="52d1c329-55dd-42d7-a99e-09389fed8882"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_sigla}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="489" y="0" width="64" height="20" uuid="efd55b77-5184-484d-af4c-bd498eb127c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_matricula_ano_curricular}+"º Ano"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="505" y="3" width="40" height="20" uuid="4c5989da-82d9-40a6-bb25-04c3e3171012"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="3" width="80" height="20" uuid="c49aa62b-5a25-49d7-90a8-12d479ec7ce4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement isPrintRepeatedValues="false" x="4" y="3" width="419" height="20" uuid="f97145f0-30ef-4efa-82a3-3b67d4ed34d2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="2" width="553" height="1" uuid="089422af-3839-414d-a4b1-c435188f1b7b"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

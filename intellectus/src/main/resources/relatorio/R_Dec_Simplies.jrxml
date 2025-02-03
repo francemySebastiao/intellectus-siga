@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Dec_Simplies" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="c50a7745-ad10-499a-86a7-b72f48669b29">
+	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MeuPc"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="numero_matricula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_dec" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="condicao" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     t_matricula."codigo_ano_lectivo" AS t_matricula_codigo_ano_lectivo,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_matricula."ano_curricular" AS t_matricula_ano_curricular,
+     t_matricula."numero_de_aluno" AS t_matricula_numero_de_aluno,
+     t_aluno."id" AS t_aluno_id,
+     t_aluno."arquivo_identificacao" AS t_aluno_arquivo_identificacao,
+     t_aluno."data_nascimento" AS t_aluno_data_nascimento,
+     t_aluno."documento_indentificacao" AS t_aluno_documento_indentificacao,
+     t_aluno."nome_da_mae" AS t_aluno_nome_da_mae,
+     t_aluno."nome_do_pai" AS t_aluno_nome_do_pai,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_aluno."numero_documento_identificacao" AS t_aluno_numero_documento_identificacao,
+     t_aluno."sexo" AS t_aluno_sexo,
+     t_provincia."provincia" AS t_provincia_provincia,
+     t_aluno."data_emissao_identidade" AS t_aluno_data_emissao_identidade,
+     t_declaracao_destino."descricao" AS t_declaracao_destino_descricao,
+     t_aluno."nome" AS t_aluno_nome,
+     t_curso."descricao" AS t_curso_descricao,
+     t_ano_lectivo."status" AS t_ano_lectivo_status,
+     t_faculdade."cargo" AS t_faculdade_cargo,
+     t_faculdade."faculdade" AS t_faculdade_faculdade,
+     t_faculdade."responsavel" AS t_faculdade_responsavel,
+     t_registro_documentos."ano_declaracao" AS t_registro_documentos_ano_declaracao,
+     t_registro_documentos."numero_declaracao" AS t_registro_documentos_numero_declaracao,
+     t_curso."grau" AS t_curso_grau,
+     t_faculdade."cargo2" AS t_faculdade_cargo2,
+     t_faculdade."responsavel2" AS t_faculdade_responsavel2,
+     t_matricula."anulado" AS t_matricula_anulado,
+     t_registro_documentos."codigo_declaracao_destino" AS t_registro_documentos_codigo_declaracao_destino
+FROM
+     "dbo"."t_ano_lectivo" t_ano_lectivo INNER JOIN "dbo"."t_matricula" t_matricula ON t_ano_lectivo."id" = t_matricula."codigo_ano_lectivo"
+     INNER JOIN "dbo"."t_aluno" t_aluno ON t_matricula."codigo_aluno" = t_aluno."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_matricula."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_faculdade" t_faculdade ON t_curso."codigo_faculdade" = t_faculdade."id"
+     INNER JOIN "dbo"."t_provincia" t_provincia ON t_aluno."codigo_provincia_nascimento" = t_provincia."id"
+     INNER JOIN "dbo"."t_registro_documentos" t_registro_documentos ON t_aluno."id" = t_registro_documentos."codigo_aluno"
+     INNER JOIN "dbo"."t_declaracao_destino" t_declaracao_destino ON t_registro_documentos."codigo_declaracao_destino" = t_declaracao_destino."id"
+WHERE
+     t_matricula."numero_de_aluno" = $P{numero_matricula}
+     and t_matricula."codigo_ano_lectivo" = $P{id}
+     and t_registro_documentos."id" = $P{codigo_dec}
+     and  t_matricula.anulado = 0]]>
+	</queryString>
+	<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_codigo_ano_lectivo"/>
+	</field>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_ano_lectivo"/>
+	</field>
+	<field name="t_matricula_ano_curricular" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_ano_curricular"/>
+	</field>
+	<field name="t_matricula_numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_numero_de_aluno"/>
+	</field>
+	<field name="t_aluno_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_id"/>
+	</field>
+	<field name="t_aluno_arquivo_identificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_arquivo_identificacao"/>
+	</field>
+	<field name="t_aluno_data_nascimento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_nascimento"/>
+	</field>
+	<field name="t_aluno_documento_indentificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_documento_indentificacao"/>
+	</field>
+	<field name="t_aluno_nome_da_mae" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome_da_mae"/>
+	</field>
+	<field name="t_aluno_nome_do_pai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome_do_pai"/>
+	</field>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_de_aluno"/>
+	</field>
+	<field name="t_aluno_numero_documento_identificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_documento_identificacao"/>
+	</field>
+	<field name="t_aluno_sexo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_sexo"/>
+	</field>
+	<field name="t_provincia_provincia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_provincia_provincia"/>
+	</field>
+	<field name="t_aluno_data_emissao_identidade" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_emissao_identidade"/>
+	</field>
+	<field name="t_declaracao_destino_descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_declaracao_destino_descricao"/>
+	</field>
+	<field name="t_aluno_nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome"/>
+	</field>
+	<field name="t_curso_descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_curso_descricao"/>
+	</field>
+	<field name="t_ano_lectivo_status" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_status"/>
+	</field>
+	<field name="t_faculdade_cargo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_cargo"/>
+	</field>
+	<field name="t_faculdade_faculdade" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_faculdade"/>
+	</field>
+	<field name="t_faculdade_responsavel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_responsavel"/>
+	</field>
+	<field name="t_registro_documentos_ano_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_registro_documentos_ano_declaracao"/>
+	</field>
+	<field name="t_registro_documentos_numero_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_registro_documentos_numero_declaracao"/>
+	</field>
+	<field name="t_curso_grau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_curso_grau"/>
+	</field>
+	<field name="t_faculdade_cargo2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_cargo2"/>
+	</field>
+	<field name="t_faculdade_responsavel2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_responsavel2"/>
+	</field>
+	<field name="t_matricula_anulado" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_anulado"/>
+	</field>
+	<field name="t_registro_documentos_codigo_declaracao_destino" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_registro_documentos_codigo_declaracao_destino"/>
+	</field>
+	<variable name="variable1" class="java.util.Date" calculation="System">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="195" splitType="Stretch">
+			<textField>
+				<reportElement x="44" y="162" width="482" height="33" uuid="4622b724-bfa4-47d7-a955-f8f8416f7848"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{condicao}.equals("1") ? "DECLARAÇÃO DE MATRÍCULA" : "ESTE DOCUMENTO NÃO TEM QUALQUER USO LEGAL"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="492" splitType="Stretch">
+			<staticText>
+				<reportElement x="44" y="233" width="482" height="47" uuid="43f1d2b6-65d9-4d33-bb57-36c5123eecec">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Serif" size="12"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[Por ser verdade e me ter sido solicitada, mandei passar a presente declaração que vai assinada por mim e autenticada com o carimbo a óleo em uso nesta Secretaria.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="219" y="402" width="321" height="1" uuid="8f3e187c-ef85-444c-a4b1-8f7042192f59">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement x="219" y="403" width="321" height="19" uuid="0b21ba1d-7d58-4d9f-998a-b862b81da7ff"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_grau}.equals("LICENCIATURA")? $F{t_faculdade_responsavel2} :
+$F{t_faculdade_responsavel}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="219" y="320" width="308" height="50" uuid="f4a2dfbe-d8da-4347-9647-0934f7ffd9a6">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_grau}.equals("LICENCIATURA")? $F{t_faculdade_cargo2}+" da "+$F{t_faculdade_faculdade} :
+$F{t_faculdade_cargo}+" da "+$F{t_faculdade_faculdade}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="44" y="2" width="482" height="233" uuid="2a5e305d-9aa4-4f27-8089-d56c955e1d07"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font fontName="Serif" size="12" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, instituída pelo  Decreto de Lei n.º 23/07 de 07 de Maio, declara-se para efeitos "+$F{t_declaracao_destino_descricao}+" que "+"<b>"+$F{t_aluno_nome}+"</b>"+", "+($F{t_aluno_sexo}.equals("F")? "Filha de ": $F{t_aluno_sexo}.equals("M")? "Filho de ": "Filha de ")+$F{t_aluno_nome_do_pai}+" e de "+$F{t_aluno_nome_da_mae}+($F{t_aluno_sexo}.equals("F")? ", Portadora do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("M")? ", Portador do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("null")?"--": "--")+$F{t_aluno_numero_documento_identificacao}+" emitido em "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_emissao_identidade})+" pelo Arquivo de "+$F{t_aluno_arquivo_identificacao}+($F{t_aluno_sexo}.equals("F")? " nascida aos ": $F{t_aluno_sexo}.equals("M")? " nascido aos ": "")+" "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_nascimento})+" natural da provincia de "+$F{t_provincia_provincia}+" "+($F{t_aluno_sexo}.equals("M") ? " e encontra-se matriculado com o n.º " : $F{t_aluno_sexo}.equals("F") ? " e encontra-se matriculada com o n.º " : "sem dados ")+$F{t_matricula_numero_de_aluno}+($F{t_ano_lectivo_status} == true ? " e frequenta o " : " e frequentou o ")+$F{t_matricula_ano_curricular}+"º Ano do Curso de "+($F{t_curso_grau}.equals("LICENCIATURA")? "Licenciatura em ":$F{t_curso_grau}.equals("MESTRADO") ? "Mestrado em ":$F{t_curso_grau}.equals("CESE") ? "" :"")+$F{t_curso_descricao}+", no Ano Lectivo "+$F{t_ano_lectivo_ano_lectivo}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="44" y="295" width="42" height="20" uuid="4f2a75a4-dab0-4597-8879-33043fb07fb4">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" size="12"/>
+				</textElement>
+				<text><![CDATA[Luanda ,]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="295" width="316" height="20" uuid="c1e693da-ff64-472d-8109-d5c04b88d875">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{data}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="44" y="275" width="482" height="20" uuid="ee17963f-270b-4452-bf72-9ead4a5c7a50">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("2")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="12"/>
+				</textElement>
+				<text><![CDATA[USO INTERNO - SEM VALOR LEGAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="74" y="470" width="102" height="1" uuid="168b8cb7-f536-4a25-9c67-a358b4a88ec7">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="44" y="452" width="38" height="20" uuid="a1793b89-4351-4c84-acff-8090b5534965">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<text><![CDATA[Conf.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="44" y="472" width="132" height="20" uuid="3a08af7c-f5fa-4dca-9ef0-80affef51261">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["N.º Dec. "+$F{t_registro_documentos_numero_declaracao}+"/"+($F{t_ano_lectivo_ano_lectivo}.toString().substring(2))]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnFooter>
+		<band height="46"/>
+	</columnFooter>
+</jasperReport>

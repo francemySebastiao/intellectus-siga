@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Horario_Sala" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c9100fb3-b735-449e-802f-005b0e38ac57">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<subDataset name="Table Dataset 1" uuid="58047bf4-9622-4a75-a435-17bd9a231624">
+		<parameter name="codigo_ano_letivo" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codigo_sala" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="codigo_curso" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="data1" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="data2" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     *,
+     t_turma."turma" AS t_turma_turma,
+     o."codigo_turma" AS o_codigo_turma,
+     t_sala."designacao" AS t_sala_designacao,
+     t_intervalo."descricao" AS t_intervalo_descricao,
+     t_intervalo."dia_semana" AS t_intervalo_dia_semana,
+     t_disciplina."sigla" AS t_disciplina_sigla,
+     t_curso."sigla" AS t_curso_sigla,
+     o."codigo_intervalo" AS o_codigo_intervalo,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     o."codigo_sala" AS o_codigo_sala,
+     o."codigo_curso" AS o_codigo_curso
+FROM
+     "t_leciona" o INNER JOIN "dbo"."t_turma" t_turma ON o."codigo_turma" = t_turma."id"
+     INNER JOIN "dbo"."t_sala" t_sala ON o."codigo_sala" = t_sala."id"
+     INNER JOIN "dbo"."t_intervalo" t_intervalo ON o."codigo_intervalo" = t_intervalo."id"
+     INNER JOIN "dbo"."t_disciplina" t_disciplina ON o."codigo_disciplina" = t_disciplina."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON o."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON o."codigo_ano_lectivo" = t_ano_lectivo."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_turma."codigo_instituicao" = t_instituicao."id"
+WHERE
+     o."codigo_sala" = $P{codigo_sala}
+     and t_ano_lectivo."id" = $P{codigo_ano_letivo}
+     and o.dia_aula Between $P{data1} and $P{data2} order by o."codigo_intervalo"]]>
+		</queryString>
+		<field name="id" class="java.lang.Integer"/>
+		<field name="ano_curricular" class="java.lang.Integer"/>
+		<field name="data_cadastro" class="java.sql.Timestamp"/>
+		<field name="desconto_minuto_final" class="java.lang.Integer"/>
+		<field name="desconto_minutos" class="java.lang.Integer"/>
+		<field name="dia_aula" class="java.sql.Timestamp"/>
+		<field name="dia_semana" class="java.lang.String"/>
+		<field name="hora_entrada" class="java.sql.Timestamp"/>
+		<field name="hora_saida" class="java.sql.Timestamp"/>
+		<field name="justificado" class="java.lang.Boolean"/>
+		<field name="minutos_justificados" class="java.lang.Integer"/>
+		<field name="semestre" class="java.lang.String"/>
+		<field name="sumario_emitido" class="java.lang.Boolean"/>
+		<field name="tipo_aula" class="java.lang.String"/>
+		<field name="codigo_ano_lectivo" class="java.lang.Integer"/>
+		<field name="codigo_curso" class="java.lang.Integer"/>
+		<field name="codigo_disciplina" class="java.lang.Integer"/>
+		<field name="codigo_docente" class="java.lang.Integer"/>
+		<field name="codigo_instituicao" class="java.lang.Integer"/>
+		<field name="codigo_intervalo" class="java.lang.Integer"/>
+		<field name="codigo_sala" class="java.lang.Integer"/>
+		<field name="codigo_turma" class="java.lang.Integer"/>
+		<field name="turma" class="java.lang.String"/>
+		<field name="turno" class="java.lang.String"/>
+		<field name="mesa" class="java.lang.Boolean"/>
+		<field name="capacidade" class="java.lang.Integer"/>
+		<field name="designacao" class="java.lang.String"/>
+		<field name="estado" class="java.lang.Boolean"/>
+		<field name="projector" class="java.lang.Boolean"/>
+		<field name="quadro_multimedia" class="java.lang.Boolean"/>
+		<field name="sector" class="java.lang.Integer"/>
+		<field name="som" class="java.lang.Boolean"/>
+		<field name="tipo_sala" class="java.lang.Integer"/>
+		<field name="descricao" class="java.lang.String"/>
+		<field name="fim" class="java.lang.String"/>
+		<field name="inicio" class="java.lang.String"/>
+		<field name="ordem1" class="java.lang.Integer"/>
+		<field name="ordem2" class="java.lang.Integer"/>
+		<field name="ordem_dia" class="java.lang.Integer"/>
+		<field name="ano_corricular" class="java.lang.Integer"/>
+		<field name="controle_transicao_ano" class="java.lang.String"/>
+		<field name="extra_curricular" class="java.lang.Boolean"/>
+		<field name="horas" class="java.lang.Integer"/>
+		<field name="nuclear" class="java.lang.Boolean"/>
+		<field name="opcinal" class="java.lang.Boolean"/>
+		<field name="ponderacao" class="java.lang.Integer"/>
+		<field name="sigla" class="java.lang.String"/>
+		<field name="status" class="java.lang.Boolean"/>
+		<field name="tipo" class="java.lang.String"/>
+		<field name="total_carga_horaria" class="java.lang.Integer"/>
+		<field name="codigo" class="java.lang.String"/>
+		<field name="duracao" class="java.lang.Integer"/>
+		<field name="grau" class="java.lang.String"/>
+		<field name="plano" class="java.lang.String"/>
+		<field name="quantidade_cadeiras" class="java.lang.Integer"/>
+		<field name="codigo_faculdade" class="java.lang.Integer"/>
+		<field name="ano_lectivo" class="java.lang.Integer"/>
+		<field name="fim_exame_primeiro_semestre" class="java.sql.Timestamp"/>
+		<field name="fim_exame_segundo_semestre" class="java.sql.Timestamp"/>
+		<field name="fim_primeiro_semestre" class="java.sql.Timestamp"/>
+		<field name="fim_recurso_primeiro_semestre" class="java.sql.Timestamp"/>
+		<field name="fim_recurso_segundo_semestre" class="java.sql.Timestamp"/>
+		<field name="fim_segundo_semestre" class="java.sql.Timestamp"/>
+		<field name="inicio_exame_primeiro_semestre" class="java.sql.Timestamp"/>
+		<field name="inicio_exame_segundo_semestre" class="java.sql.Timestamp"/>
+		<field name="inicio_primeiro_semestre" class="java.sql.Timestamp"/>
+		<field name="inicio_recurso_primeiro_semestre" class="java.sql.Timestamp"/>
+		<field name="inicio_recurso_segundo_semestre" class="java.sql.Timestamp"/>
+		<field name="inicio_segundo_semestre" class="java.sql.Timestamp"/>
+		<field name="email" class="java.lang.String"/>
+		<field name="chefe_servicos_academicos" class="java.lang.String"/>
+		<field name="code" class="java.lang.String"/>
+		<field name="contribuinte" class="java.lang.String"/>
+		<field name="decreto_lei" class="java.lang.String"/>
+		<field name="endereco" class="java.lang.String"/>
+		<field name="grupo_owner" class="java.lang.String"/>
+		<field name="reitor" class="java.lang.String"/>
+		<field name="secretario_geral" class="java.lang.String"/>
+		<field name="unidade_organica" class="java.lang.String"/>
+		<field name="vice_reitor" class="java.lang.String"/>
+		<field name="web_site" class="java.lang.String"/>
+		<field name="logo" class="java.lang.Object"/>
+		<field name="t_turma_turma" class="java.lang.String"/>
+		<field name="o_codigo_turma" class="java.lang.Integer"/>
+		<field name="t_sala_designacao" class="java.lang.String"/>
+		<field name="t_intervalo_descricao" class="java.lang.String"/>
+		<field name="t_intervalo_dia_semana" class="java.lang.String"/>
+		<field name="t_disciplina_sigla" class="java.lang.String"/>
+		<field name="t_curso_sigla" class="java.lang.String"/>
+		<field name="o_codigo_intervalo" class="java.lang.Integer"/>
+		<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+		<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+		<field name="o_codigo_sala" class="java.lang.Integer"/>
+		<field name="o_codigo_curso" class="java.lang.Integer"/>
+	</subDataset>
+	<parameter name="codigo_ano_letivo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo_sala" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     t_turma."turma" AS t_turma_turma,
+     o."codigo_turma" AS o_codigo_turma,
+     t_sala."designacao" AS t_sala_designacao,
+     t_intervalo."descricao" AS t_intervalo_descricao,
+     t_intervalo."dia_semana" AS t_intervalo_dia_semana,
+     t_disciplina."sigla" AS t_disciplina_sigla,
+     t_curso."sigla" AS t_curso_sigla,
+     o."codigo_intervalo" AS o_codigo_intervalo,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     o."codigo_sala" AS o_codigo_sala,
+     o."codigo_curso" AS o_codigo_curso,
+     o."dia_semana" AS o_dia_semana,
+     o."dia_semana_inteiro" AS o_dia_semana_inteiro,
+     t_logo_marca."foto" AS t_logo_marca_foto
+FROM
+     "t_leciona" o INNER JOIN "dbo"."t_turma" t_turma ON o."codigo_turma" = t_turma."id"
+     INNER JOIN "dbo"."t_sala" t_sala ON o."codigo_sala" = t_sala."id"
+     INNER JOIN "dbo"."t_intervalo" t_intervalo ON o."codigo_intervalo" = t_intervalo."id"
+     INNER JOIN "dbo"."t_disciplina" t_disciplina ON o."codigo_disciplina" = t_disciplina."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON o."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON o."codigo_ano_lectivo" = t_ano_lectivo."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_turma."codigo_instituicao" = t_instituicao."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     o."codigo_sala" = $P{codigo_sala}
+     and t_ano_lectivo."id" = $P{codigo_ano_letivo}
+     and o.dia_aula BETWEEN $P{data1} and $P{data2}
+ORDER BY
+     o."dia_semana_inteiro" ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="ano_curricular" class="java.lang.Integer"/>
+	<field name="data_cadastro" class="java.sql.Timestamp"/>
+	<field name="desconto_minuto_final" class="java.lang.Integer"/>
+	<field name="desconto_minutos" class="java.lang.Integer"/>
+	<field name="dia_aula" class="java.sql.Timestamp"/>
+	<field name="dia_semana" class="java.lang.String"/>
+	<field name="hora_entrada" class="java.sql.Timestamp"/>
+	<field name="hora_saida" class="java.sql.Timestamp"/>
+	<field name="justificado" class="java.lang.Boolean"/>
+	<field name="minutos_justificados" class="java.lang.Integer"/>
+	<field name="semestre" class="java.lang.String"/>
+	<field name="sumario_emitido" class="java.lang.Boolean"/>
+	<field name="tipo_aula" class="java.lang.String"/>
+	<field name="codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="codigo_curso" class="java.lang.Integer"/>
+	<field name="codigo_disciplina" class="java.lang.Integer"/>
+	<field name="codigo_docente" class="java.lang.Integer"/>
+	<field name="codigo_instituicao" class="java.lang.Integer"/>
+	<field name="codigo_intervalo" class="java.lang.Integer"/>
+	<field name="codigo_sala" class="java.lang.Integer"/>
+	<field name="codigo_turma" class="java.lang.Integer"/>
+	<field name="dia_semana_inteiro" class="java.lang.Integer"/>
+	<field name="turma" class="java.lang.String"/>
+	<field name="turno" class="java.lang.String"/>
+	<field name="mesa" class="java.lang.Boolean"/>
+	<field name="capacidade" class="java.lang.Integer"/>
+	<field name="designacao" class="java.lang.String"/>
+	<field name="estado" class="java.lang.Boolean"/>
+	<field name="projector" class="java.lang.Boolean"/>
+	<field name="quadro_multimedia" class="java.lang.Boolean"/>
+	<field name="sector" class="java.lang.Integer"/>
+	<field name="som" class="java.lang.Boolean"/>
+	<field name="tipo_sala" class="java.lang.Integer"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="fim" class="java.lang.String"/>
+	<field name="inicio" class="java.lang.String"/>
+	<field name="ordem1" class="java.lang.Integer"/>
+	<field name="ordem2" class="java.lang.Integer"/>
+	<field name="ordem_dia" class="java.lang.Integer"/>
+	<field name="ano_corricular" class="java.lang.Integer"/>
+	<field name="controle_transicao_ano" class="java.lang.String"/>
+	<field name="extra_curricular" class="java.lang.Boolean"/>
+	<field name="horas" class="java.lang.Integer"/>
+	<field name="nuclear" class="java.lang.Boolean"/>
+	<field name="opcinal" class="java.lang.Boolean"/>
+	<field name="ponderacao" class="java.lang.Integer"/>
+	<field name="sigla" class="java.lang.String"/>
+	<field name="status" class="java.lang.Boolean"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="total_carga_horaria" class="java.lang.Integer"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="duracao" class="java.lang.Integer"/>
+	<field name="grau" class="java.lang.String"/>
+	<field name="plano" class="java.lang.String"/>
+	<field name="quantidade_cadeiras" class="java.lang.Integer"/>
+	<field name="codigo_faculdade" class="java.lang.Integer"/>
+	<field name="ano_lectivo" class="java.lang.Integer"/>
+	<field name="fim_exame_primeiro_semestre" class="java.sql.Timestamp"/>
+	<field name="fim_exame_segundo_semestre" class="java.sql.Timestamp"/>
+	<field name="fim_primeiro_semestre" class="java.sql.Timestamp"/>
+	<field name="fim_recurso_primeiro_semestre" class="java.sql.Timestamp"/>
+	<field name="fim_recurso_segundo_semestre" class="java.sql.Timestamp"/>
+	<field name="fim_segundo_semestre" class="java.sql.Timestamp"/>
+	<field name="inicio_exame_primeiro_semestre" class="java.sql.Timestamp"/>
+	<field name="inicio_exame_segundo_semestre" class="java.sql.Timestamp"/>
+	<field name="inicio_primeiro_semestre" class="java.sql.Timestamp"/>
+	<field name="inicio_recurso_primeiro_semestre" class="java.sql.Timestamp"/>
+	<field name="inicio_recurso_segundo_semestre" class="java.sql.Timestamp"/>
+	<field name="inicio_segundo_semestre" class="java.sql.Timestamp"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="chefe_servicos_academicos" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="contribuinte" class="java.lang.String"/>
+	<field name="decreto_lei" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<field name="grupo_owner" class="java.lang.String"/>
+	<field name="reitor" class="java.lang.String"/>
+	<field name="secretario_geral" class="java.lang.String"/>
+	<field name="unidade_organica" class="java.lang.String"/>
+	<field name="vice_reitor" class="java.lang.String"/>
+	<field name="web_site" class="java.lang.String"/>
+	<field name="logo" class="java.lang.Object"/>
+	<field name="foto" class="java.lang.Object"/>
+	<field name="t_turma_turma" class="java.lang.String"/>
+	<field name="o_codigo_turma" class="java.lang.Integer"/>
+	<field name="t_sala_designacao" class="java.lang.String"/>
+	<field name="t_intervalo_descricao" class="java.lang.String"/>
+	<field name="t_intervalo_dia_semana" class="java.lang.String"/>
+	<field name="t_disciplina_sigla" class="java.lang.String"/>
+	<field name="t_curso_sigla" class="java.lang.String"/>
+	<field name="o_codigo_intervalo" class="java.lang.Integer"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="o_codigo_sala" class="java.lang.Integer"/>
+	<field name="o_codigo_curso" class="java.lang.Integer"/>
+	<field name="o_dia_semana" class="java.lang.String"/>
+	<field name="o_dia_semana_inteiro" class="java.lang.Integer"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<variable name="nome1" class="java.lang.String">
+		<variableExpression><![CDATA[$F{t_disciplina_sigla}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<group name="PRIMEIRO" isResetPageNumber="true"/>
+	<group name="segundo">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="137">
+			<staticText>
+				<reportElement x="1" y="0" width="801" height="29" uuid="9e9e537a-ebe6-46a6-ad94-505a23265f14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Horário Da Sala]]></text>
+			</staticText>
+			<line>
+				<reportElement x="545" y="75" width="1" height="46" uuid="617b79d1-0ac8-46b9-9de6-dc6446964d7f"/>
+			</line>
+			<rectangle>
+				<reportElement x="0" y="76" width="795" height="46" backcolor="#FFFFFF" uuid="88d59bcd-bc2b-4a0b-a3ba-d327e5bf1a4f"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="76" width="794" height="24" uuid="3918411c-f590-44d6-982d-8484d02cf476"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ano Lectivo: "+$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="100" width="795" height="1" uuid="45ed4db6-f985-4d65-9527-b3d71082523f"/>
+			</line>
+			<textField>
+				<reportElement x="1" y="101" width="794" height="20" uuid="0eef365d-aea2-4d21-b860-c49b15b909ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sala: "+$F{designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="30" width="801" height="24" uuid="0a8ec932-8555-4c01-9e8f-ef9d2859c9d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($P{data1})+" - "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($P{data2})]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="17" y="0" width="82" height="67" uuid="26df120b-6a5c-4465-b565-7e8cabfefa23"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="29">
+			<textField>
+				<reportElement x="1" y="2" width="794" height="27" uuid="489805b4-5136-45d5-948d-d347aaa2593e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grupo_owner}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="230">
+			<crosstab>
+				<reportElement x="0" y="0" width="802" height="230" uuid="e0d585a7-bf6b-4f74-8072-856f00289bf0"/>
+				<rowGroup name="codigo_intervalo" width="98">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{codigo_intervalo}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="98" height="25" uuid="17d8fbfa-748e-4658-b5e8-111d7f67b950"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($V{codigo_intervalo}==1 ? "08:30-09:20":
+ $V{codigo_intervalo}==2 ? "09:30-10:20":
+ $V{codigo_intervalo}==3 ? "10:30-11:20":
+ $V{codigo_intervalo}==4 ? "11:30-12:20":
+ $V{codigo_intervalo}==5 ? "12:30-13:20":
+ $V{codigo_intervalo}==6 ? "(Almoço)":
+ $V{codigo_intervalo}==7 ? "14:00-14:50":
+$V{codigo_intervalo}==8 ? "15:00-15:50":
+$V{codigo_intervalo}==9? "16:00-16:50":
+$V{codigo_intervalo}==10 ? "17:00-17:50":
+$V{codigo_intervalo}==11 ? "18:30-19:15":
+$V{codigo_intervalo}==12 ? "19:20-20:05":
+$V{codigo_intervalo}==13 ? "20:10-20:55":
+$V{codigo_intervalo}==14 ? "21:00-21:45":
+$V{codigo_intervalo}==15 ? "21:50-22:35":"")]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="o_dia_semana_inteiro" height="0">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{o_dia_semana_inteiro}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="dia_semana" height="30">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{dia_semana}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="116" height="30" uuid="2a031c5c-89c0-42ce-bbb3-b891d0f4e7ca"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[($V{dia_semana}.equals("SEGUNDA") ? "Segunda-Feira" :
+$V{dia_semana}.equals("TERCA") ? "Terça-Feira":
+$V{dia_semana}.equals("QUARTA") ? "Quarta-Feira":
+$V{dia_semana}.equals("QUINTA") ? "Quinta-Feira":
+$V{dia_semana}.equals("SEXTA") ? "Sexta-Feira":
+$V{dia_semana}.equals("SABADO") ? "Sabado":"")]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="t_disciplina_siglaMeasure" class="java.lang.String" calculation="First">
+					<measureExpression><![CDATA[$F{t_disciplina_sigla}]]></measureExpression>
+				</measure>
+				<crosstabCell width="116" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="116" height="25" uuid="d9788b74-3d55-4807-98de-4bc85da1ac59"/>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Times New Roman"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{t_disciplina_siglaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="codigo_intervalo">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="33b7aba4-8d3e-41ad-97b6-4e0560b2bfe9"/>
+							<textFieldExpression><![CDATA[$V{t_disciplina_siglaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="o_dia_semana_inteiro">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="0698ea2c-5143-4485-bff5-67131fd3f14b"/>
+							<textFieldExpression><![CDATA[$V{t_disciplina_siglaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="codigo_intervalo" columnTotalGroup="o_dia_semana_inteiro">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="42397db7-3518-43b8-a8e0-8a152dbbe0bd"/>
+							<textFieldExpression><![CDATA[$V{t_disciplina_siglaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="dia_semana">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="0dda027b-e051-43f4-9b21-a23e7e8e3925"/>
+							<textFieldExpression><![CDATA[$V{t_disciplina_siglaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="codigo_intervalo" columnTotalGroup="dia_semana">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="67662adc-f8c2-43f8-960f-7670ee007d93"/>
+							<textFieldExpression><![CDATA[$V{t_disciplina_siglaMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

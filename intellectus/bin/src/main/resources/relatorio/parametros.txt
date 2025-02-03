@@ -1,0 +1,5 @@
+
+codigo_ano - int
+data1- date
+data2 - date
+

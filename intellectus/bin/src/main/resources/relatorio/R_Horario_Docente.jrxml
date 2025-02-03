@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Horario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b47fe05c-b5aa-40c0-be26-4576ffa06c21">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NOVA_VIDA"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="codigo_docente" class="java.lang.String"/>
+	<parameter name="ano_letivo" class="java.lang.String"/>
+	<parameter name="semestre" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT [data_cadastro]
+      ,[SEMANA]
+      ,[SEMANA_ORDEM]
+      ,[INTERVALO]
+      ,[CURSO]
+      ,[DISCIPLINA]
+      ,[ANO]
+      ,[TURMA]
+      ,[SALA]
+      ,[DOCENTE]
+      ,[DOCENTE_ID]
+      ,[SEMESTRE]
+      ,[ANO_LECTIVO]
+  FROM [siga_intellectus].[dbo].[V_LISTA_HORARIO_DOCENTE]
+  WHERE [DOCENTE_ID] =   $P{codigo_docente}  AND
+  [ANO_LECTIVO] =  $P{ano_letivo}  AND
+  [SEMESTRE] =  $P{semestre} 
+  order by 3]]>
+	</queryString>
+	<field name="data_cadastro" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="data_cadastro"/>
+	</field>
+	<field name="SEMANA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMANA"/>
+	</field>
+	<field name="SEMANA_ORDEM" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="SEMANA_ORDEM"/>
+	</field>
+	<field name="INTERVALO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="INTERVALO"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="DISCIPLINA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DISCIPLINA"/>
+	</field>
+	<field name="ANO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO"/>
+	</field>
+	<field name="TURMA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TURMA"/>
+	</field>
+	<field name="SALA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SALA"/>
+	</field>
+	<field name="DOCENTE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DOCENTE"/>
+	</field>
+	<field name="DOCENTE_ID" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="DOCENTE_ID"/>
+	</field>
+	<field name="SEMESTRE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEMESTRE"/>
+	</field>
+	<field name="ANO_LECTIVO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_LECTIVO"/>
+	</field>
+	<variable name="variable1" class="java.lang.String" incrementType="Report" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{INTERVALO}]]></variableExpression>
+	</variable>
+	<group name="semana">
+		<groupExpression><![CDATA[$F{SEMANA_ORDEM}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<line>
+					<reportElement x="0" y="20" width="555" height="1" uuid="f1f55938-b4c3-4eaf-9f38-4066a6885124">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+				<textField>
+					<reportElement x="0" y="0" width="90" height="20" uuid="0911fb92-67b6-445b-9e72-94427a2774d1"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SEMANA}+"-FEIRA"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="91" y="1" width="60" height="19" uuid="bfe5b72b-806f-4122-bbff-535ad97591b0"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CURSO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="152" y="1" width="70" height="19" uuid="6f4ffb86-3822-4f4b-ac6e-96d467f34a3b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DISCIPLINA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="410" y="1" width="53" height="19" uuid="c15ac143-2df5-4194-8f7c-67b6416edb15"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ANO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="463" y="0" width="40" height="19" uuid="2691e826-00cc-42c4-9d37-ac4b06742e2a"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TURMA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="503" y="0" width="52" height="19" uuid="9d11b070-1f79-4068-92ad-c98c23ba178e"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[SALA]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="18" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="42" width="120" height="30" uuid="e177ba6e-6d33-4451-86e6-0aea4580e13f"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ano Lectivo:  "+$F{ANO_LECTIVO}+"  -  "+" "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="503" height="30" uuid="e5939137-d585-4842-8795-635a27dc296b"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DOCENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="42" width="415" height="30" uuid="15fbdb75-e88e-4a97-b054-5012ff04e423"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SEMESTRE}.equals("PRIMEIRO") ? "1º Semestre":
+$F{SEMESTRE}.equals("SEGUNDO") ? "2º Semestre":""]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="90" height="13" uuid="e5957a22-1d9c-4322-b69d-0e4b6a054212">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{INTERVALO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="0" width="60" height="13" uuid="e898c273-e85c-4f5b-80d8-e1aef25b62be"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{CURSO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="0" width="100" height="13" uuid="045215fd-7896-49d1-a597-db3e12da33fd"/>
+				<textFieldExpression><![CDATA[$F{DISCIPLINA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="53" height="13" uuid="216fda49-86f5-48a7-9bbc-69a9a6335211"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ANO}+"º Ano"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="0" width="40" height="13" uuid="feef7cec-8648-4268-a5f1-eece39db8479"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TURMA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="503" y="0" width="52" height="13" uuid="b90103af-e0e4-422b-a97a-a18894d30fe4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{SALA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="70" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="68" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="12" width="310" height="20" uuid="42c42d47-ccaf-4197-82c9-7c04730f06dc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Total de horas semanais: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="12" width="205" height="20" uuid="701c9b1a-cf9d-4866-b430-35eedb87bf04"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

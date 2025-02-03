@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Reconciliacao_Bancaria" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad01183b-56ea-4022-8179-44e26e3404df">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="condicao" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.numero_de_aluno NÚMERO,a.nome NOME,c.descricao CURSO,c.grau GRAU,e.emolumento,s.valor
+from t_guia_pagamento g,
+     t_guia_pagamento_historico o,
+	 t_aluno a,
+	 t_emolumento e,
+	 t_emolumento_historico s,
+	 t_curso c
+where g.id=o.codigo_guia_pagamento  and
+      g.codigo_aluno=a.id           and
+	  o.codigo_emolumento=e.id      and
+	  e.id=s.codigo_emolumento      and
+	  s.codigo_ano_lectivo=18       and
+	  s.codigo_curso=a.codigo_curso and
+	  a.codigo_curso=c.id           and
+	  g.codigo_ano_lectivo=18       and
+	  g.liquidada=1                 and
+	  o.codigo_emolumento in(23,80,82,83,52,54,55,59,60,61,62,63,64,65,66,67)]]>
+	</queryString>
+	<field name="NÚMERO" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="CURSO" class="java.lang.String"/>
+	<field name="GRAU" class="java.lang.String"/>
+	<field name="emolumento" class="java.lang.String"/>
+	<field name="valor" class="java.lang.Double"/>
+	<group name="primeiro">
+		<groupHeader>
+			<band height="29">
+				<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="66" splitType="Stretch"/>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" uuid="9a195fb9-128d-46e2-bb7b-753f12fe0651"/>
+			</rectangle>
+			<textField>
+				<reportElement x="3" y="1" width="171" height="19" uuid="dc0bedb6-c3b4-4876-93c8-73358d005612"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="176" y="1" width="53" height="19" uuid="3df9fd2e-6a3f-4ead-ab5f-7bae413dfbb4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Inscrição") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="174" y="0" width="1" height="20" uuid="58b5a9a7-b068-4cf8-8355-fc0b667634ee"/>
+			</line>
+			<line>
+				<reportElement x="229" y="0" width="1" height="20" uuid="7a7fff9f-94ce-44c2-be0c-8a0871f7f999"/>
+			</line>
+			<textField>
+				<reportElement x="231" y="1" width="53" height="19" uuid="cb8b3460-ffca-4893-8430-b8ea5cd0fb64"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Março") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="286" y="1" width="53" height="19" uuid="06242f28-ac9f-41ca-b698-660394052dd3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Abril") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="284" y="0" width="1" height="20" uuid="aa8b18ff-2e90-45ef-bd7d-f354ad24ae98"/>
+			</line>
+			<line>
+				<reportElement x="339" y="0" width="1" height="20" uuid="d86b6810-441e-411a-8663-42a527a04026"/>
+			</line>
+			<textField>
+				<reportElement x="341" y="1" width="53" height="19" uuid="ae26a153-bbf9-46ed-81dc-2ee854da4ba6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Maio") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="394" y="0" width="1" height="20" uuid="ce6aac52-3171-4291-b97c-877fab3bfb77"/>
+			</line>
+			<textField>
+				<reportElement x="396" y="1" width="53" height="19" uuid="9b7bb7d8-f4cf-4dde-8b0f-991f8263e586"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Junho") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="449" y="0" width="1" height="20" uuid="3b67e5e6-bf2a-47a2-8715-2fc39de778c7"/>
+			</line>
+			<textField>
+				<reportElement x="451" y="1" width="53" height="19" uuid="8558c978-fcff-4b76-b69c-f29ddee3ed1d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Julho") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="505" y="0" width="1" height="20" uuid="4a5e3c13-1675-42e4-ad08-f8a44881ec8c"/>
+			</line>
+			<textField>
+				<reportElement x="507" y="1" width="53" height="19" uuid="7c5a4040-c88c-4b43-8f62-ea490331d0fa"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Agosto") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="561" y="0" width="1" height="20" uuid="59149bbf-e2a1-41ba-86dd-bf346a235f08"/>
+			</line>
+			<textField>
+				<reportElement x="563" y="1" width="53" height="19" uuid="d75b34e6-8b75-4228-aec7-2f922258bca1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Setembro") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="617" y="0" width="1" height="20" uuid="204954d1-3af2-404d-919f-a7a93218bc3d"/>
+			</line>
+			<textField>
+				<reportElement x="619" y="1" width="53" height="19" uuid="111bf9f6-be5e-415e-8035-23ca0540f1cc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Outubro") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="673" y="0" width="1" height="20" uuid="74bd2b9d-ed3e-43f4-9112-dcc5cfdd4646"/>
+			</line>
+			<textField>
+				<reportElement x="675" y="1" width="53" height="19" uuid="31c7e67c-ecf3-4b43-8eee-57c1c498941f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Novembro") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="729" y="0" width="1" height="20" uuid="fa8aa39e-6322-4f15-993e-f090422df657"/>
+			</line>
+			<textField>
+				<reportElement x="731" y="1" width="53" height="19" uuid="f3d213a3-7748-49d5-b037-cbe70459c3b4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emolumento}.equals("Propina Dezembro") ? (new DecimalFormat("#,##0.00 Akz")).format($F{valor}) : "0"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="23"/>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Emolumentos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fbe15863-4bea-42e7-bf0e-b010030a21c3">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigo_ano" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     t_emolumento."id" AS t_emolumento_id,
+     t_emolumento."emolumento" AS t_emolumento_emolumento,
+     t_emolumento_historico."id" AS t_emolumento_historico_id,
+     t_emolumento_historico."valor" AS t_emolumento_historico_valor,
+     t_emolumento_historico."codigo_ano_lectivo" AS t_emolumento_historico_codigo_ano_lectivo,
+     t_emolumento_historico."codigo_curso" AS t_emolumento_historico_codigo_curso,
+     t_emolumento_historico."codigo_emolumento" AS t_emolumento_historico_codigo_emolumento,
+     t_ano_lectivo."id" AS t_ano_lectivo_id,
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_ano_lectivo."fim_exame_primeiro_semestre" AS t_ano_lectivo_fim_exame_primeiro_semestre,
+     t_curso."id" AS t_curso_id,
+     t_curso."codigo" AS t_curso_codigo,
+     t_curso."descricao" AS t_curso_descricao,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_logo_marca."foto" AS t_logo_marca_foto
+FROM
+     "dbo"."t_emolumento" t_emolumento INNER JOIN "dbo"."t_emolumento_historico" t_emolumento_historico ON t_emolumento."id" = t_emolumento_historico."codigo_emolumento"
+     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_emolumento_historico."codigo_ano_lectivo" = t_ano_lectivo."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_emolumento_historico."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_ano_lectivo."codigo_instituicao" = t_instituicao."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     t_ano_lectivo."id" = $P{codigo_ano}]]>
+	</queryString>
+	<field name="t_emolumento_id" class="java.lang.Integer"/>
+	<field name="t_emolumento_emolumento" class="java.lang.String"/>
+	<field name="t_emolumento_historico_id" class="java.lang.Integer"/>
+	<field name="t_emolumento_historico_valor" class="java.lang.Double"/>
+	<field name="t_emolumento_historico_codigo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_emolumento_historico_codigo_curso" class="java.lang.Integer"/>
+	<field name="t_emolumento_historico_codigo_emolumento" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_id" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer"/>
+	<field name="t_ano_lectivo_fim_exame_primeiro_semestre" class="java.sql.Timestamp"/>
+	<field name="t_curso_id" class="java.lang.Integer"/>
+	<field name="t_curso_codigo" class="java.lang.String"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<group name="emolumento">
+		<groupExpression><![CDATA[$F{t_curso_codigo}]]></groupExpression>
+		<groupHeader>
+			<band height="66">
+				<line>
+					<reportElement x="0" y="41" width="253" height="1" uuid="d6ea1737-fcdc-4284-950b-4414932d41be"/>
+				</line>
+				<staticText>
+					<reportElement x="53" y="48" width="363" height="18" uuid="8af68efc-34cd-4615-9c77-4339e22640cd"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Emolumento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="48" width="39" height="18" uuid="8d490049-0617-40cf-8462-32339b61b995"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Código]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="444" y="48" width="110" height="18" uuid="cd878678-7671-4fb3-8e48-b7a59102705d"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valor  ]]></text>
+				</staticText>
+				<line>
+					<reportElement x="1" y="65" width="39" height="1" uuid="abda425f-6976-4368-afb4-58dcc9f6c50f"/>
+				</line>
+				<line>
+					<reportElement x="53" y="65" width="363" height="1" uuid="efb28dd2-6904-4d2a-beb8-94d47ac9d10e"/>
+				</line>
+				<line>
+					<reportElement x="444" y="65" width="110" height="1" uuid="20d2a826-2da1-444e-b96b-56af61a4645f"/>
+				</line>
+				<textField>
+					<reportElement x="1" y="21" width="225" height="20" uuid="7b27f3da-5471-45e1-bc64-8358b16b1701"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_curso_descricao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="2" y="1" width="135" height="20" uuid="624cd25d-db36-4e11-980f-0fa6e8c2d991"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="grupo2">
+		<groupExpression><![CDATA[$F{t_emolumento_id}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="59" width="555" height="17" uuid="494e20ef-c0c0-4ef4-90eb-5d39eed2f632"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[VALOR DOS EMOLUMENTOS]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="67" height="59" uuid="6ede4801-0b40-4007-8754-698d1f1311b4"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="39" height="20" uuid="55f624e1-d379-441b-aae3-12400ec7067e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_emolumento_historico_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="0" width="363" height="20" uuid="ffd11302-9825-4ed0-a320-d58bc02be124"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_emolumento_emolumento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 Akz">
+				<reportElement x="444" y="0" width="110" height="20" uuid="c5dc51c2-4e7f-4b21-9d5d-4a6c6c7f36a2"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_emolumento_historico_valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="514" y="4" width="40" height="20" uuid="9505d2d7-e6b5-477a-9086-2da787fb67c9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="4" width="80" height="20" uuid="2e053b8b-98dc-4ba8-8da0-ba1eef020e2a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement isPrintRepeatedValues="false" x="0" y="4" width="434" height="20" uuid="98a0f18d-2295-4e32-b707-36f68a9ba7ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="2" width="552" height="1" uuid="14c3d882-13c0-474c-9620-52431829da05"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

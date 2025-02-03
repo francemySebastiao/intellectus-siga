@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Ficha_Aluno" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7da7e1f4-d93c-4180-b894-5e90df020daa">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="690"/>
+	<parameter name="numero_aluno" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     t_aluno."codigo_municipio_nascimento" AS t_aluno_codigo_municipio_nascimento,
+     t_aluno."codigo_municio_residencia" AS t_aluno_codigo_municio_residencia,
+     t_aluno."codigo_pais_nacionalidade" AS t_aluno_codigo_pais_nacionalidade,
+     t_aluno."codigo_pais_residencia" AS t_aluno_codigo_pais_residencia,
+     t_pais."id" AS t_pais_id,
+     t_pais."codigo" AS t_pais_codigo,
+     t_pais."descricao" AS t_pais_descricao,
+     t_provincia."id" AS t_provincia_id,
+     t_provincia."codigo_provincia" AS t_provincia_codigo_provincia,
+     t_provincia."provincia" AS t_provincia_provincia,
+     t_provincia."sigla" AS t_provincia_sigla,
+     t_provincia."codigo_pais" AS t_provincia_codigo_pais,
+     t_municipio."id" AS t_municipio_id,
+     t_municipio."descricao" AS t_municipio_descricao,
+     t_municipio."codigo_provincia" AS t_municipio_codigo_provincia,
+     t_aluno."codigo_provincia_residencia" AS t_aluno_codigo_provincia_residencia,
+     t_curso."descricao" AS t_curso_descricao,
+     t_curso."grau" AS t_curso_grau,
+     t_instituicao."email" AS t_instituicao_email,
+     t_instituicao."chefe_servicos_academicos" AS t_instituicao_chefe_servicos_academicos,
+     t_instituicao."code" AS t_instituicao_code,
+     t_instituicao."contribuinte" AS t_instituicao_contribuinte,
+     t_instituicao."decreto_lei" AS t_instituicao_decreto_lei,
+     t_instituicao."descricao" AS t_instituicao_descricao,
+     t_instituicao."endereco" AS t_instituicao_endereco,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_instituicao."logo" AS t_instituicao_logo,
+     t_instituicao."reitor" AS t_instituicao_reitor,
+     t_instituicao."secretario_geral" AS t_instituicao_secretario_geral,
+     t_instituicao."sigla" AS t_instituicao_sigla,
+     t_instituicao."unidade_organica" AS t_instituicao_unidade_organica,
+     t_instituicao."vice_reitor" AS t_instituicao_vice_reitor,
+     t_instituicao."web_site" AS t_instituicao_web_site,
+     t_faculdade."cargo" AS t_faculdade_cargo,
+     t_faculdade."faculdade" AS t_faculdade_faculdade,
+     t_faculdade."responsavel" AS t_faculdade_responsavel,
+     t_logo_marca."id" AS t_logo_marca_id,
+     t_logo_marca."descricao" AS t_logo_marca_descricao,
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_aluno_anexo."foto" AS t_aluno_anexo_foto,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno
+FROM
+     "dbo"."t_pais" t_pais INNER JOIN "dbo"."t_provincia" t_provincia ON t_pais."id" = t_provincia."codigo_pais"
+     INNER JOIN "dbo"."t_municipio" t_municipio ON t_provincia."id" = t_municipio."codigo_provincia"
+     INNER JOIN "t_aluno" t_aluno ON t_provincia."codigo_provincia" = t_aluno."codigo_provincia_residencia"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_aluno."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_aluno_anexo" t_aluno_anexo ON t_aluno."id" = t_aluno_anexo."codigo_aluno"
+     INNER JOIN "dbo"."t_faculdade" t_faculdade ON t_curso."codigo_faculdade" = t_faculdade."id"
+     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_faculdade."codigo_instituicao" = t_instituicao."id",
+     "dbo"."t_logo_marca" t_logo_marca
+WHERE
+     t_aluno."numero_de_aluno" = $P{numero_aluno}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="codigo_provincia" class="java.lang.Integer"/>
+	<field name="provincia" class="java.lang.String"/>
+	<field name="sigla" class="java.lang.String"/>
+	<field name="codigo_pais" class="java.lang.Integer"/>
+	<field name="copia_certificado" class="java.lang.Boolean"/>
+	<field name="arquivo_identificacao" class="java.lang.String"/>
+	<field name="atestado_medico" class="java.lang.Boolean"/>
+	<field name="bairro" class="java.lang.String"/>
+	<field name="contencioso" class="java.lang.Boolean"/>
+	<field name="copia_documento_identificacao" class="java.lang.Boolean"/>
+	<field name="copia_documento_militar" class="java.lang.Boolean"/>
+	<field name="data_cadastro" class="java.sql.Timestamp"/>
+	<field name="data_candidatura" class="java.sql.Timestamp"/>
+	<field name="data_emissao_identidade" class="java.sql.Timestamp"/>
+	<field name="data_fim_do_curso" class="java.sql.Timestamp"/>
+	<field name="data_inativo" class="java.sql.Timestamp"/>
+	<field name="data_nascimento" class="java.sql.Timestamp"/>
+	<field name="data_registro_diploma" class="java.sql.Timestamp"/>
+	<field name="documento_indentificacao" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="entidade_pagadora" class="java.lang.String"/>
+	<field name="estado_civil" class="java.lang.String"/>
+	<field name="fim_curso" class="java.lang.Boolean"/>
+	<field name="fotografias" class="java.lang.Boolean"/>
+	<field name="inactivo" class="java.lang.Boolean"/>
+	<field name="is_trabalhador" class="java.lang.Boolean"/>
+	<field name="media_final" class="java.lang.Double"/>
+	<field name="morada" class="java.lang.String"/>
+	<field name="necessidade_educacao_especial" class="java.lang.String"/>
+	<field name="nif" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="nome_da_mae" class="java.lang.String"/>
+	<field name="nome_do_pai" class="java.lang.String"/>
+	<field name="numero_de_aluno" class="java.lang.String"/>
+	<field name="numero_documento_identificacao" class="java.lang.String"/>
+	<field name="numero_mecanografico" class="java.lang.String"/>
+	<field name="observacao" class="java.lang.String"/>
+	<field name="primeira_matricula" class="java.lang.Boolean"/>
+	<field name="profissao" class="java.lang.String"/>
+	<field name="profissao_mae" class="java.lang.String"/>
+	<field name="profissao_pai" class="java.lang.String"/>
+	<field name="referencia_diploma" class="java.lang.String"/>
+	<field name="sexo" class="java.lang.String"/>
+	<field name="telefone" class="java.lang.String"/>
+	<field name="telefone1" class="java.lang.String"/>
+	<field name="telefone2" class="java.lang.String"/>
+	<field name="tipo_candidatura" class="java.lang.String"/>
+	<field name="tipo_empresa" class="java.lang.String"/>
+	<field name="codigo_ano_lectivo_fim_curso" class="java.lang.Integer"/>
+	<field name="codigo_curso" class="java.lang.Integer"/>
+	<field name="codigo_instituicao" class="java.lang.Integer"/>
+	<field name="codigo_municipio_nascimento" class="java.lang.Integer"/>
+	<field name="codigo_municio_residencia" class="java.lang.Integer"/>
+	<field name="codigo_pais_nacionalidade" class="java.lang.Integer"/>
+	<field name="codigo_pais_residencia" class="java.lang.Integer"/>
+	<field name="codigo_provincia_nascimento" class="java.lang.Integer"/>
+	<field name="codigo_provincia_residencia" class="java.lang.Integer"/>
+	<field name="codigo_tipo_bolsa" class="java.lang.Integer"/>
+	<field name="duracao" class="java.lang.Integer"/>
+	<field name="grau" class="java.lang.String"/>
+	<field name="inicio" class="java.lang.Integer"/>
+	<field name="plano" class="java.lang.String"/>
+	<field name="quantidade_cadeiras" class="java.lang.Integer"/>
+	<field name="status" class="java.lang.Boolean"/>
+	<field name="codigo_faculdade" class="java.lang.Integer"/>
+	<field name="foto" class="java.lang.Object"/>
+	<field name="codigo_aluno" class="java.lang.Integer"/>
+	<field name="cargo" class="java.lang.String"/>
+	<field name="faculdade" class="java.lang.String"/>
+	<field name="responsavel" class="java.lang.String"/>
+	<field name="chefe_servicos_academicos" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="contribuinte" class="java.lang.String"/>
+	<field name="decreto_lei" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<field name="grupo_owner" class="java.lang.String"/>
+	<field name="logo" class="java.lang.Object"/>
+	<field name="reitor" class="java.lang.String"/>
+	<field name="secretario_geral" class="java.lang.String"/>
+	<field name="unidade_organica" class="java.lang.String"/>
+	<field name="vice_reitor" class="java.lang.String"/>
+	<field name="web_site" class="java.lang.String"/>
+	<field name="t_aluno_codigo_municipio_nascimento" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_municio_residencia" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_pais_nacionalidade" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_pais_residencia" class="java.lang.Integer"/>
+	<field name="t_pais_id" class="java.lang.Integer"/>
+	<field name="t_pais_codigo" class="java.lang.String"/>
+	<field name="t_pais_descricao" class="java.lang.String"/>
+	<field name="t_provincia_id" class="java.lang.Integer"/>
+	<field name="t_provincia_codigo_provincia" class="java.lang.Integer"/>
+	<field name="t_provincia_provincia" class="java.lang.String"/>
+	<field name="t_provincia_sigla" class="java.lang.String"/>
+	<field name="t_provincia_codigo_pais" class="java.lang.Integer"/>
+	<field name="t_municipio_id" class="java.lang.Integer"/>
+	<field name="t_municipio_descricao" class="java.lang.String"/>
+	<field name="t_municipio_codigo_provincia" class="java.lang.Integer"/>
+	<field name="t_aluno_codigo_provincia_residencia" class="java.lang.Integer"/>
+	<field name="t_curso_descricao" class="java.lang.String"/>
+	<field name="t_curso_grau" class="java.lang.String"/>
+	<field name="t_instituicao_email" class="java.lang.String"/>
+	<field name="t_instituicao_chefe_servicos_academicos" class="java.lang.String"/>
+	<field name="t_instituicao_code" class="java.lang.String"/>
+	<field name="t_instituicao_contribuinte" class="java.lang.String"/>
+	<field name="t_instituicao_decreto_lei" class="java.lang.String"/>
+	<field name="t_instituicao_descricao" class="java.lang.String"/>
+	<field name="t_instituicao_endereco" class="java.lang.String"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_instituicao_logo" class="java.lang.Object"/>
+	<field name="t_instituicao_reitor" class="java.lang.String"/>
+	<field name="t_instituicao_secretario_geral" class="java.lang.String"/>
+	<field name="t_instituicao_sigla" class="java.lang.String"/>
+	<field name="t_instituicao_unidade_organica" class="java.lang.String"/>
+	<field name="t_instituicao_vice_reitor" class="java.lang.String"/>
+	<field name="t_instituicao_web_site" class="java.lang.String"/>
+	<field name="t_faculdade_cargo" class="java.lang.String"/>
+	<field name="t_faculdade_faculdade" class="java.lang.String"/>
+	<field name="t_faculdade_responsavel" class="java.lang.String"/>
+	<field name="t_logo_marca_id" class="java.lang.Integer"/>
+	<field name="t_logo_marca_descricao" class="java.lang.String"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<field name="t_aluno_anexo_foto" class="java.io.InputStream"/>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="24" uuid="58c3d4f8-4640-4e30-aa05-2499579e117f"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ficha de Matricula]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="229" y="24" width="80" height="72" uuid="9c093558-1400-4402-bc03-33193ca37b1f"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="448" y="24" width="84" height="72" uuid="d85a93e6-ad16-45de-bc42-655017b6a496"/>
+			</rectangle>
+			<image scaleImage="FillFrame">
+				<reportElement x="448" y="24" width="84" height="72" uuid="1b5bdec7-a0c7-42df-833b-264c0b6f642f"/>
+				<imageExpression><![CDATA[$F{t_aluno_anexo_foto}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement mode="Transparent" x="13" y="0" width="522" height="20" backcolor="#FFFFFF" uuid="ec795577-f822-41ef-b426-0045d801b04d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_de_aluno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="13" y="20" width="522" height="20" backcolor="#CCCCCC" uuid="a33f7441-c6c9-422c-83c9-324d96bf7bf4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="606" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="69" width="100" height="17" uuid="e0a59391-13b1-43f7-8172-1dd674bcec4f"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nascimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="0" width="100" height="17" uuid="aacc20db-6cb4-44dc-924c-73565c906f37"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Morada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="69" width="100" height="17" uuid="ac0a8740-8db6-44ed-98d8-a48632c93e91"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contactos]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="13" y="17" width="522" height="52" uuid="d98959a4-7944-4d0c-b4ae-f54608004e3b"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="24" y="49" width="421" height="20" uuid="41551aed-280d-4a18-aac5-c25f7ef2c25d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bairro}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="24" y="29" width="497" height="20" uuid="fe8316fa-b3c4-4f97-8464-f15045d52f8e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{morada}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="13" y="86" width="262" height="74" uuid="a1685f75-0879-4a81-8d0e-a8e8bac03776"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="275" y="86" width="262" height="74" uuid="08b6f2fa-e10d-46ca-8b58-c0c329882817"/>
+			</rectangle>
+			<textField pattern="###-###-###" isBlankWhenNull="true">
+				<reportElement x="284" y="96" width="164" height="20" uuid="00d91bad-9e29-4934-8d3c-0fd9061bc7ed"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="284" y="127" width="237" height="20" uuid="767c4bcc-8ffa-4ab8-93b4-2acff64d429b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="24" y="96" width="205" height="20" uuid="67023ad5-a34e-4f25-9cb4-4e5db97e62c4"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("dd-MM-yyyy").format($F{data_nascimento}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="24" y="127" width="205" height="20" uuid="553c2094-b2cc-45a0-b87b-dd0d2966cd81"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_provincia_provincia}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="275" y="177" width="262" height="122" uuid="c9aadd97-7370-4bb1-b6ed-0b62a54a8cf9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="284" y="160" width="100" height="17" uuid="eb1c479f-a590-415f-811d-9fad83ec6439"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documentação]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="13" y="177" width="262" height="122" uuid="f096dda5-a88f-4b05-b3e8-41e8ea6d1862"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="24" y="160" width="124" height="17" uuid="2a64c4cd-e911-46f9-813f-a288643f5653"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Doc. Identificação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="187" width="100" height="20" uuid="852766c4-8f04-478f-a729-f14ed33481bf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bilhete De Identidade Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="207" width="85" height="20" uuid="fab3f373-3a06-4fcc-b0fb-8a5652190143"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Emissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="227" width="85" height="20" uuid="5f450486-59a6-4e60-939a-54f206ebc4f2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Arquivo]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="187" width="147" height="20" uuid="5a886e34-2d02-4b95-b3e8-ad1226ac3d07"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_documento_identificacao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="207" width="147" height="20" uuid="fd208e14-1601-4272-ae01-b2e2fba90bbc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new java.text.SimpleDateFormat("dd-MM-yyyy").format($F{data_emissao_identidade}))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="227" width="147" height="20" uuid="23c893cf-78e5-4bbb-8f73-815638e1713d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{arquivo_identificacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="284" y="207" width="85" height="20" uuid="d433e7a4-0ff4-4c8a-9be9-78af222eb24e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Atestado Médico ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="227" width="85" height="20" uuid="0015dd51-ad67-44f5-8b68-6ac9ce0c63e7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documento Militar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="187" width="129" height="20" uuid="9da436d5-6d4f-447d-b078-5ea710f75d2e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fotocópias Doc. Identificação]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="448" y="187" width="67" height="20" uuid="7838c09e-5942-4b72-af84-468c32e245c3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    $F{copia_documento_identificacao} ==true ?
+    "Entregue" :
+    $F{copia_documento_identificacao} == false ?
+    "Em falta" :
+    "Unknown"
+)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="207" width="67" height="20" uuid="fd4cadea-8166-4c7c-9148-c189c6cf4363"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    $F{atestado_medico} ==true ?
+    "Entregue" :
+    $F{atestado_medico} == false ?
+    "Em falta" :
+    "Unknown"
+)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="227" width="67" height="20" uuid="d53da2ad-c155-4b56-a8eb-e9ada6046113"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(
+    $F{copia_documento_militar} ==true ?
+    "Entregue" :
+    $F{copia_documento_militar} == false ?
+    "Em falta" :
+    "Unknown"
+)]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="299" width="100" height="17" uuid="6410ff50-5fdf-4d9d-bb16-58d6e71657d7"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Filiação]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="10" y="316" width="522" height="48" uuid="7831a11f-ce08-46c3-b3a7-8b54094a8b11"/>
+			</rectangle>
+			<textField>
+				<reportElement x="24" y="344" width="421" height="20" uuid="81ba23b1-96f6-4136-8bc2-da43fea3a4dd"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_da_mae}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="24" y="324" width="421" height="20" uuid="6d197f1e-95d1-428c-b8ec-478602ccf098"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_do_pai}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="364" width="100" height="17" uuid="7e3077d2-d944-4036-b589-829204199eb1"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Outros Dados]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="10" y="381" width="522" height="59" uuid="73a300de-7f7c-4c5d-a588-6ec5eaf76a78"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="21" y="381" width="51" height="20" uuid="a2d3db6b-215d-4cc9-93f3-6501727deeff"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profissão:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="72" y="381" width="220" height="20" uuid="e80d4fd5-198a-40ed-9a88-21f15b34009e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{profissao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="411" width="124" height="20" uuid="b0fc0384-8e51-4c4a-bae5-e391ed8a1eb4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_civil}.equals("S")? "Solteiro(a)"
+:
+$F{estado_civil}.equals("C")? "Casado(a)"
+:
+$F{estado_civil}.equals("D")? "Divorciado(a)" : ""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="411" width="87" height="20" uuid="1e612542-1e6e-4544-8944-180ef7a79898"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado Civil:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="411" width="100" height="20" uuid="5a71327b-5f0a-407f-bf7a-6bc5d20351cb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{sexo}.equals("F")? "Feminino ": $F{sexo}.equals("M")? "Masculino": $F{sexo}.equals("null")?"--": "--")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="358" y="411" width="26" height="20" uuid="4bffa949-7737-4f1d-8af2-23504326c970"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="10" y="550" width="522" height="54" uuid="37203c6b-9529-4cd0-9e11-7d4562e21344"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="23" y="533" width="100" height="17" uuid="dbf550bf-9f6b-4fe1-bfb8-1780cabb19aa"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observações]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="10" y="457" width="522" height="78" uuid="2d9778df-e03b-4612-86f3-57170c5dacb2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="24" y="440" width="153" height="17" uuid="04bf59c4-dc8c-4c0e-9e05-ffe67a64e800"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dados Académicos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="24" y="457" width="294" height="20" uuid="10e0c3fd-b3c4-4fb9-94d8-515e201e7cad"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="24" y="477" width="294" height="20" uuid="f5762270-3de4-4dcb-802f-15729f8b6ceb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_faculdade_faculdade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="24" y="497" width="248" height="20" uuid="99f00bf9-65eb-41df-89c5-a4df10c1372d"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_curso_grau}.equals("LICENCIATURA") ? "Licenciatura" : "Sem Dados"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="26">
+			<textField>
+				<reportElement x="10" y="6" width="471" height="18" uuid="a19ca7e5-ee0d-4fb9-8890-259e4a3defbd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="481" y="6" width="51" height="18" uuid="32c07ab0-5f51-4433-99fb-71b25ad7d80a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="4" width="555" height="1" uuid="d3650fc9-70ae-4973-9482-daf5c1a3b9df"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

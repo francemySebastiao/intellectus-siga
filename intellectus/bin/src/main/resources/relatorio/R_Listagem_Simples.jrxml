@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Listagem_Simples" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad01183b-56ea-4022-8179-44e26e3404df">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="data1" class="java.util.Date"/>
+	<parameter name="data2" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     t_instituicao."id" AS t_instituicao_id,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner
+FROM
+     "T_GUIAS_LIQUIDADAS" T_GUIAS_LIQUIDADAS,
+     "dbo"."t_instituicao" t_instituicao
+WHERE
+     DATA_LIQUIDACAO BETWEEN $P{data1} AND $P{data2}
+AND t_instituicao."id"=2]]>
+	</queryString>
+	<field name="NUMERO_GUIA" class="java.lang.String"/>
+	<field name="ANO_LECTIVO" class="java.lang.Integer"/>
+	<field name="CURSO" class="java.lang.String"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="DATA_LIQUIDACAO" class="java.sql.Date"/>
+	<field name="BANCO" class="java.lang.String"/>
+	<field name="EMOLUMENTO" class="java.lang.String"/>
+	<field name="VALOR" class="java.lang.Double"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="grupo_owner" class="java.lang.String"/>
+	<field name="t_instituicao_id" class="java.lang.Integer"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<variable name="soma" class="java.lang.Double" resetType="Group" resetGroup="primeiro" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
+	</variable>
+	<variable name="soma2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
+	</variable>
+	<group name="primeiro">
+		<groupExpression><![CDATA[$F{CURSO}]]></groupExpression>
+		<groupHeader>
+			<band height="63">
+				<staticText>
+					<reportElement x="477" y="42" width="73" height="18" uuid="a853f76a-ad78-41e0-ab93-57c5f515b339"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="155" y="43" width="311" height="18" uuid="3c165214-253d-4dab-b0b3-22be42161cd0"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome do Aluno]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="43" width="68" height="18" uuid="4615a8a3-14c1-427d-9dbb-b7f9a77d727b"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N.º de recibo ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="68" y="43" width="86" height="18" uuid="a77c2846-548e-4a8c-a95f-1292451d5cbb"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data de Liquidação]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="61" width="68" height="1" uuid="8bc9a8c6-afc9-41c1-8f15-77b150c70531"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="477" y="61" width="73" height="1" uuid="938c19c5-7865-4536-93ff-54a73b57ed53"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="70" y="61" width="82" height="1" uuid="7bca2009-b443-4019-af0f-362f4803e478"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="154" y="61" width="312" height="1" uuid="548d5304-13c1-44ec-9fe4-dd1c9e185846"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="42" width="253" height="1" uuid="267668e6-e511-4145-9578-7654554e51d4"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="0" y="22" width="241" height="20" uuid="24ce6da2-f9cd-4789-9a9f-9974472df1d7"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CURSO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="">
+					<reportElement x="0" y="2" width="108" height="20" uuid="3c3abbd6-9ffc-41e8-b794-11b12a6a8847"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ANO_LECTIVO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement isPrintRepeatedValues="false" x="477" y="0" width="73" height="20" uuid="002cc822-21ea-4038-a67d-07190b17db19"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 Akz").format(Double.valueOf($V{soma}))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="152" height="20" uuid="71fb54f0-3a41-40d0-94ac-6a52f1079205"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SubTotal]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement x="399" y="40" width="152" height="20" uuid="a751ec30-6e65-4cbf-a4d0-0c86b1f5fc25"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTAGEM SIMPLES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="76" width="1" height="20" uuid="b09a1437-c747-4843-ba3b-4714278c8fa5"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="12" y="82" width="143" height="10" uuid="92d7476f-f8e8-477b-95cd-b2fd2d8904c0"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{data1})+" á "+new SimpleDateFormat("dd/MM/yyyy").format($P{data2})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="181" y="76" width="1" height="20" uuid="e98a4934-1c2a-4ff7-a23a-19712fc7ec7f"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="47" y="76" width="134" height="1" uuid="584981e6-88f7-4c1c-85f7-793388f607cb"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="6" y="76" width="15" height="1" uuid="24e25109-e954-4faa-bb6b-fadfef98850f"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="6" y="95" width="175" height="1" uuid="1435eb9f-d390-4960-9775-77aff99a7ea3"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="24" y="72" width="30" height="9" uuid="e9199b19-2f02-40d1-a9a0-d3b529828fea"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Periodo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,##0.00 Akz" isBlankWhenNull="false">
+				<reportElement x="477" y="0" width="73" height="20" uuid="1ab73f07-51a6-4921-823c-a59439ba5bb5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement x="70" y="0" width="82" height="20" uuid="db207bcf-a14a-4e14-aaae-15408d92fd0e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATA_LIQUIDACAO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement x="0" y="0" width="68" height="20" uuid="563de528-f074-4a3d-8e9c-cb35f13c5e13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMERO_GUIA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement x="155" y="0" width="311" height="20" uuid="30b1866c-889c-46a3-8913-096f9819e6a4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24">
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="74131de0-f075-45f2-9b9e-54f86dfe1f88"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField evaluationTime="Report">
+				<reportElement x="514" y="3" width="40" height="20" uuid="9b0bc74b-2682-4eec-8c63-9b1e76b3e95a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="3" width="80" height="20" uuid="e6bb8485-f714-4300-a33e-e53dc7aa0619"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="3" width="550" height="20" uuid="a9f0dea8-b1a7-4791-a7b6-aa08c5d92731"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="23">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="434" y="0" width="117" height="23" uuid="384d2dbb-6503-4ee6-a35e-d8192f0bf94c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00 Akz").format(Double.valueOf($V{soma2}))]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="-1" width="152" height="24" uuid="a184ff00-def3-40ca-baf7-a9496ba28283"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Geral]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

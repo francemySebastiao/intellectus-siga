@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Listagem_Candidatos_guia_pago" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="46c2baf9-d5cc-4a81-b5b3-24ea6652a005">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigo_ano" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="grau" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="liquidada" class="java.lang.String"/>
+	<parameter name="seriado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     t_logo_marca."foto" AS t_logo_marca_foto,
+     t_instituicao."id" AS t_instituicao_id,
+     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
+     t_logo_marca."id" AS t_logo_marca_id,
+     V_CANDIDATOS_GERAL."SERIADO" AS V_CANDIDATOS_GERAL_SERIADO
+FROM
+     "V_CANDIDATOS_GERAL" V_CANDIDATOS_GERAL,
+     "dbo"."t_logo_marca" t_logo_marca,
+     "dbo"."t_instituicao" t_instituicao
+WHERE
+     V_CANDIDATOS_GERAL."ANO" = $P{codigo_ano}
+     and V_CANDIDATOS_GERAL."DATA CANDIDATURA" BETWEEN $P{data1} AND $P{data2}
+ AND GRAU = $P{grau}
+ AND t_logo_marca."id" = 1
+ AND t_instituicao."id" = 2
+ AND V_CANDIDATOS_GERAL."LIQUIDADA_GUIA" = $P{liquidada}
+
+ORDER BY
+     V_CANDIDATOS_GERAL."NOME" ASC]]>
+	</queryString>
+	<field name="NUMERO" class="java.lang.Integer"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="CURSO" class="java.lang.String"/>
+	<field name="GRAU" class="java.lang.String"/>
+	<field name="TURNO" class="java.lang.String"/>
+	<field name="DATA CANDIDATURA" class="java.sql.Date"/>
+	<field name="SERIADO" class="java.lang.String"/>
+	<field name="LIQUIDADA_GUIA" class="java.lang.String"/>
+	<field name="ANO" class="java.lang.Integer"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="foto" class="java.lang.Object"/>
+	<field name="chefe_servicos_academicos" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="contribuinte" class="java.lang.String"/>
+	<field name="decreto_lei" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="endereco" class="java.lang.String"/>
+	<field name="grupo_owner" class="java.lang.String"/>
+	<field name="logo" class="java.lang.Object"/>
+	<field name="reitor" class="java.lang.String"/>
+	<field name="secretario_geral" class="java.lang.String"/>
+	<field name="sigla" class="java.lang.String"/>
+	<field name="unidade_organica" class="java.lang.String"/>
+	<field name="vice_reitor" class="java.lang.String"/>
+	<field name="web_site" class="java.lang.String"/>
+	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
+	<field name="t_instituicao_id" class="java.lang.Integer"/>
+	<field name="t_instituicao_grupo_owner" class="java.lang.String"/>
+	<field name="t_logo_marca_id" class="java.lang.Integer"/>
+	<field name="V_CANDIDATOS_GERAL_SERIADO" class="java.lang.String"/>
+	<variable name="soma" class="java.lang.String" calculation="Count">
+		<variableExpression><![CDATA[$F{NOME}]]></variableExpression>
+	</variable>
+	<variable name="soma_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{NOME}]]></variableExpression>
+	</variable>
+	<variable name="soma2" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{NOME}]]></variableExpression>
+	</variable>
+	<variable name="soma2_1" class="java.lang.String" calculation="Sum">
+		<variableExpression><![CDATA[$F{DATA CANDIDATURA}]]></variableExpression>
+	</variable>
+	<group name="SEGUNDA" keepTogether="true">
+		<groupExpression><![CDATA[$F{CURSO}]]></groupExpression>
+		<groupHeader>
+			<band height="41">
+				<printWhenExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA")]]></printWhenExpression>
+				<textField>
+					<reportElement x="3" y="0" width="423" height="16" uuid="e4b26436-984f-470c-92b6-74c9d8234a20"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Curso: "+$F{CURSO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="401" y="20" width="68" height="20" uuid="2c6f9bbd-cee6-4bb7-8d7e-fe4c39864697"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DATA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="55" y="20" width="346" height="20" uuid="81767668-2e84-4570-b02a-99a9e9fd8fc7"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOME]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="20" width="555" height="1" uuid="436665c8-c6fe-4f9a-acec-8448b618cf30"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineStyle="Dashed"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="3" y="20" width="52" height="20" uuid="14653262-02eb-43fc-9083-583292551ce8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NÚMERO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="469" y="20" width="84" height="20" uuid="91741366-24ad-4ebf-a6ec-9dbeeaeb9438"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TURNO]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="39" width="555" height="1" uuid="ae3811ac-73a8-4799-b0ea-4ac6a73b3c55"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA")]]></printWhenExpression>
+				<textField>
+					<reportElement x="401" y="0" width="152" height="20" uuid="b87d5b3c-6f4e-4d17-8d09-7b0a11768917"/>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="7" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SEGUNDA_COUNT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="152" height="20" uuid="2fe91320-7eae-4255-bc16-0f1509ddaeef"/>
+					<textElement verticalAlignment="Middle">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sub-Total:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="148" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="60" height="61" uuid="b967a4fc-7ecb-4085-bcfc-d2625cdc30b3"/>
+				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="370" y="96" width="51" height="10" uuid="0c016a57-7710-40ed-b35f-daf77951c300"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="96" width="90" height="10" uuid="a3375da1-f5f0-440f-993f-a22454e3a0ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{data1})+" á "+new SimpleDateFormat("dd/MM/yyyy").format($P{data2})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="96" width="99" height="10" uuid="bbe846e3-d3f6-4689-9d7b-37931b55d4d8"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GRAU}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="7" y="91" width="15" height="1" uuid="8c0c78e8-4654-4086-aaba-7f2d41ee4952"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="25" y="87" width="30" height="9" uuid="e3dc7638-9eca-4fa2-aa53-bd229510d365"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Detalhe]]></text>
+			</staticText>
+			<line>
+				<reportElement x="57" y="91" width="125" height="1" uuid="e87164b4-ed5e-4d5e-a89e-ae837ebc158d"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="7" y="91" width="1" height="20" uuid="4f8e4cbb-a501-4dec-a8c5-fa25617f0648"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="7" y="110" width="175" height="1" uuid="44d927b5-9ae1-476a-9126-8d2757bcbef0"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="182" y="91" width="1" height="20" uuid="d80ad938-e037-4ced-a9c7-ccac9a7970da"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="257" y="89" width="1" height="20" uuid="a4485602-4747-42b9-a980-00e4bf18b160"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="258" y="109" width="296" height="1" uuid="c7c68a48-8c86-4db7-b2d9-f3f21e919836"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="300" y="89" width="70" height="1" uuid="419bc75d-68eb-4a62-b262-e2b3168949bb"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="553" y="89" width="1" height="20" uuid="53edbcf3-ab8a-4517-a869-ce000c3a7720"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="275" y="86" width="24" height="9" uuid="d7798fb3-eeed-407e-a106-b5b269e227c6"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Periodo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="258" y="89" width="15" height="1" uuid="602172ed-f04e-4ec8-b273-21f8736103e3"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="359" y="93" width="1" height="14" forecolor="#9999FF" uuid="1b173944-8eed-4a4a-ba77-f03e1e51e959"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="373" y="86" width="37" height="9" uuid="2539af00-9c7f-4245-b968-ec06261f34a1"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Ano Lectivo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="412" y="89" width="57" height="1" uuid="3d225a56-ce80-48f6-a934-58a1595cf70f"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="453" y="93" width="1" height="14" forecolor="#9999FF" uuid="c339223f-f82f-4d04-8e0c-9331261932e9"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="475" y="86" width="60" height="9" uuid="a65f89fa-04fc-4dfd-8e17-5f93501e5dc1"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Tipo Candidatura]]></text>
+			</staticText>
+			<line>
+				<reportElement x="535" y="89" width="18" height="1" uuid="f359f0a8-be4f-44b2-8cf3-807011f43b59"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="13" y="97" width="68" height="10" uuid="84e59a4f-0c4a-4e6d-b623-63c3333bad4f"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SERIADO}.equals("SIM") ? "Seriado: "+"SIM" : "Seriado: "+"NÃO"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="97" width="74" height="10" uuid="8ff92353-c629-4011-8ed6-f69fab0452cc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LIQUIDADA_GUIA}.equals("SIM") ? "Candidatura Paga: "+"SIM" : "Candidatura Paga: "+"NÃO"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="97" y="94" width="1" height="14" forecolor="#9999FF" uuid="67cb17be-4182-4d28-bdbf-18ef9d805457"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="350" y="41" width="203" height="20" uuid="c426d41b-2be5-45cc-8069-18508055e22e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTA DE CANDIDATOS ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA")]]></printWhenExpression>
+			<textField>
+				<reportElement x="55" y="0" width="346" height="14" uuid="97ddffbb-ca33-4f55-95da-39e853be44d3">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA")]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="0" width="84" height="14" uuid="174c818b-f8e0-45bb-9b3a-059b939445a5">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TURNO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="0" width="52" height="14" uuid="3199ce79-d792-473f-a182-0983a5839d26">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NUMERO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="401" y="0" width="68" height="14" uuid="e34406ac-f1f2-428c-999e-75344be1af11">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DATA CANDIDATURA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="3" y="15" width="552" height="1" forecolor="#CCCCCC" uuid="4b8f73fe-1b32-4791-b466-e7167ee2dc21">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("LICENCIATURA")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="17">
+			<printWhenExpression><![CDATA[$F{GRAU}.equals("MESTRADO")]]></printWhenExpression>
+			<textField>
+				<reportElement x="469" y="0" width="84" height="14" uuid="0dd87af1-617e-4df1-8ca2-1a901f761517">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("MESTRADO")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TURNO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="3" y="15" width="552" height="1" forecolor="#CCCCCC" uuid="3039a97d-f2bf-494f-b564-12a4bba19019">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("MESTRADO")]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="401" y="0" width="68" height="14" uuid="eccad6dc-fe43-4faa-8e1f-3d3a144ea6fa">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("MESTRADO")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DATA CANDIDATURA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="0" width="52" height="14" uuid="0d5fc397-90ee-4685-8bf1-119dc44d2f0f">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("MESTRADO")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NUMERO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="0" width="346" height="14" uuid="de6c050f-e1c6-462f-8681-42af735c6022">
+					<printWhenExpression><![CDATA[$F{GRAU}.equals("MESTRADO")]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="434" y="2" width="80" height="20" uuid="dc2fb19c-0f6b-4389-b17b-c96f5d053100"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="2" width="555" height="20" uuid="654f5828-b493-4585-84d0-f4dc4cc0f883"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="2" width="554" height="1" uuid="c2ae566a-452e-4df6-ba82-432353a10b40"/>
+			</line>
+			<textField evaluationTime="Report">
+				<reportElement x="514" y="2" width="40" height="20" uuid="1c72dcda-af8a-4a51-87b6-d650c323ddf2"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="24">
+			<staticText>
+				<reportElement x="0" y="0" width="55" height="20" uuid="51f84c1c-f385-4ebf-a0d0-4f07fff0517a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL GERAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="0" width="153" height="20" uuid="1b231774-7f44-4e9a-a376-127ab09a3a95"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{soma_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

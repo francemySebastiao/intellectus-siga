@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Listagem_Simples_Utilizador" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7cfd8282-e60b-4383-b460-39ce240dae2f">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MeuPC"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="data1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     T_GUIA_POR_UTILIZADOR."ANO_LECTIVO" AS T_GUIA_POR_UTILIZADOR_ANO_LECTIVO,
+     T_GUIA_POR_UTILIZADOR."NUMERO" AS T_GUIA_POR_UTILIZADOR_NUMERO,
+     T_GUIA_POR_UTILIZADOR."DATA" AS T_GUIA_POR_UTILIZADOR_DATA,
+     T_GUIA_POR_UTILIZADOR."NOME" AS T_GUIA_POR_UTILIZADOR_NOME,
+     T_GUIA_POR_UTILIZADOR."CURSO" AS T_GUIA_POR_UTILIZADOR_CURSO,
+     T_GUIA_POR_UTILIZADOR."FUNCIONARIO" AS T_GUIA_POR_UTILIZADOR_FUNCIONARIO,
+     T_GUIA_POR_UTILIZADOR."ID_FUNCIONARIO" AS T_GUIA_POR_UTILIZADOR_ID_FUNCIONARIO,
+     T_GUIA_POR_UTILIZADOR."VALOR" AS T_GUIA_POR_UTILIZADOR_VALOR
+FROM
+     "dbo"."T_GUIA_POR_UTILIZADOR" T_GUIA_POR_UTILIZADOR
+
+where T_GUIA_POR_UTILIZADOR."DATA" BETWEEN $P{data1} AND $P{data2} 
+
+order by T_GUIA_POR_UTILIZADOR."CURSO"]]>
+	</queryString>
+	<field name="T_GUIA_POR_UTILIZADOR_ANO_LECTIVO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="T_GUIA_POR_UTILIZADOR_ANO_LECTIVO"/>
+	</field>
+	<field name="T_GUIA_POR_UTILIZADOR_NUMERO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="T_GUIA_POR_UTILIZADOR_NUMERO"/>
+	</field>
+	<field name="T_GUIA_POR_UTILIZADOR_DATA" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="T_GUIA_POR_UTILIZADOR_DATA"/>
+	</field>
+	<field name="T_GUIA_POR_UTILIZADOR_NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="T_GUIA_POR_UTILIZADOR_NOME"/>
+	</field>
+	<field name="T_GUIA_POR_UTILIZADOR_CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="T_GUIA_POR_UTILIZADOR_CURSO"/>
+	</field>
+	<field name="T_GUIA_POR_UTILIZADOR_FUNCIONARIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="T_GUIA_POR_UTILIZADOR_FUNCIONARIO"/>
+	</field>
+	<field name="T_GUIA_POR_UTILIZADOR_ID_FUNCIONARIO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="T_GUIA_POR_UTILIZADOR_ID_FUNCIONARIO"/>
+	</field>
+	<field name="T_GUIA_POR_UTILIZADOR_VALOR" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="T_GUIA_POR_UTILIZADOR_VALOR"/>
+	</field>
+	<variable name="soma" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_VALOR}]]></variableExpression>
+	</variable>
+	<group name="Primeiro">
+		<groupExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_CURSO}]]></groupExpression>
+		<groupHeader>
+			<band height="63">
+				<textField>
+					<reportElement x="0" y="23" width="471" height="20" uuid="0b195166-a221-462d-ba8b-8a692bda3b85"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Curso: "+$F{T_GUIA_POR_UTILIZADOR_CURSO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="166" y="44" width="266" height="18" uuid="1c76c563-5293-47f1-9ef6-30e643107168"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome do Aluno]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="430" y="44" width="73" height="18" uuid="7ba87af3-5751-432c-9419-7207109ed716"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="44" width="60" height="18" uuid="97bcc1a8-fd52-480c-861c-cfaffd81f3df"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N.º de recibo ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="60" y="44" width="87" height="18" uuid="128473cb-60d0-4829-b0e7-3c92f21b9482"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Times New Roman" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data de Liquidação]]></text>
+				</staticText>
+				<line>
+					<reportElement x="431" y="62" width="59" height="1" uuid="3f876ea1-6c4b-4c35-8ec8-041ce575fc80"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="62" width="58" height="1" uuid="eccb4fe4-6641-4d31-baab-7b1c25fb3d09"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="179" y="61" width="241" height="1" uuid="1f351047-72d4-4580-b601-e4c63982c41d"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="60" y="62" width="85" height="1" uuid="ce6b4d73-13ea-4a84-b74e-b1cf65464f57"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="2" y="3" width="100" height="20" uuid="96522ad4-1eb3-43a0-b54b-64310e13e443"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_ANO_LECTIVO}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="2" y="40" width="469" height="1" uuid="a143e95f-bb8f-4e8e-b485-d0f357eae4e5"/>
+					<graphicElement>
+						<pen lineWidth="0.5"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<staticText>
+					<reportElement x="0" y="0" width="47" height="24" uuid="236d6e1c-cdfd-4036-9a4e-3e984f34f598"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SubTotal]]></text>
+				</staticText>
+				<textField pattern="#,##0.00 Akz">
+					<reportElement x="431" y="0" width="121" height="24" uuid="0f6fc1d2-92d7-42da-80d7-dedf3ed4f2e9"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[(new DecimalFormat("#,##0.00 Akz")).format($V{soma})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="295" y="48" width="260" height="20" uuid="81b06eac-9e50-4aef-b4b7-bbed395d574b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTAGEM POR UTILIZADORES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="77" width="15" height="1" uuid="e8cc1051-39c7-4496-a735-4a90b2c34a5d"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="6" y="96" width="175" height="1" uuid="503c8259-0e36-4947-aed1-2dc2ee062987"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="24" y="73" width="30" height="9" uuid="4cf24117-637d-495a-ac52-71f75ee9cc66"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Periodo]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="77" width="1" height="20" uuid="5d7c165f-0e74-42fc-a4ad-5bd8aebaf08a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="12" y="83" width="167" height="10" uuid="06d6e861-1861-40f3-8191-1d84d07cac2f"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{data1})+" á "+new SimpleDateFormat("dd/MM/yyyy").format($P{data2})]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="181" y="77" width="1" height="20" uuid="421e0607-cd9b-44b6-a202-eaa2c9e36eab"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="47" y="77" width="134" height="1" uuid="e6d0b8d1-b642-42ce-aa69-b0feb558f5d1"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="f30197ca-d807-4820-bffd-324c5c2bc2c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_NUMERO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="60" y="0" width="85" height="20" isRemoveLineWhenBlank="true" uuid="2f74e203-77cf-483b-b825-1bba8607d228"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_DATA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="145" y="0" width="266" height="20" isRemoveLineWhenBlank="true" uuid="cce98039-539a-4a34-b485-41d4d54f7d43"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_NOME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 Akz">
+				<reportElement x="432" y="0" width="73" height="20" isRemoveLineWhenBlank="true" uuid="4df56588-74f6-4204-a202-122aaf4c3992"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_VALOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="503" y="0" width="52" height="20" uuid="d515aaea-f994-4879-b890-8bf5faac00e3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_FUNCIONARIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="23" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="1" width="550" height="1" forecolor="#000000" uuid="accb5a95-d088-4e71-ac45-08fce44f570e"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="431" y="2" width="80" height="20" uuid="99ae5ea1-5dab-4083-936b-a07cae8fa6b3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="511" y="2" width="40" height="20" uuid="f8b6b98e-c0ec-4306-a166-cb8f802b3609"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="24">
+			<textField pattern="#,##0.00 Akz">
+				<reportElement x="431" y="0" width="121" height="24" uuid="bd6eba65-f7a1-406b-85dc-a8e52e18ffc3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[(new DecimalFormat("#,##0.00 Akz")).format($V{soma})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="79" height="24" uuid="043c1445-44b8-4d57-a893-6b248bf438ff"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Geral]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
