@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Pauta_Presenca" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d04cd625-61a4-45c0-81b9-92eb1889eab2">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
@@ -20,10 +19,10 @@
 	<parameter name="turno" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT * FROM V_LT_CANDIDATO_POR_TIPO
-WHERE DATA BETWEEN $P{begin}  AND  $P{end}  AND ANO_LECTIVO=$P{anoLectivo} 
- AND CODIGO_CURSO=$P{curso} 
- AND TURNO=$P{turno} 
- AND TIPO_CANDIDATURA=$P{tipoCandidato} ]]>
+WHERE DATA BETWEEN $P{begin}  AND  $P{end}  AND ANO_LECTIVO=$P{anoLectivo}
+ AND CODIGO_CURSO=$P{curso}
+ AND TURNO=$P{turno}
+ AND TIPO_CANDIDATURA=$P{tipoCandidato}]]>
 	</queryString>
 	<field name="ID" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="ID"/>

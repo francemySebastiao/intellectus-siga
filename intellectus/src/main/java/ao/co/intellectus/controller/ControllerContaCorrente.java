@@ -44,6 +44,7 @@ import ao.co.intellectus.repository.NumeroGeradoRepository;
 import ao.co.intellectus.repository.UsuarioRepository;
 import ao.co.intellectus.servico.GeradorDeArquivo;
 import ao.co.intellectus.servico.GerarNumeroDocumento;
+import ao.co.intellectus.util.FormataData;
 
 @RestController
 @RequestMapping("/contacorrente")
@@ -131,6 +132,8 @@ public class ControllerContaCorrente {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		String dataSistema = localDate.format(formatter);
 		
+		FormataData forma = new FormataData();
+		
 		Usuario usuario = this.usuarioRepo.findByUserName(hc.getUserName() != null ? hc.getUserName() : null);
 
 		HistoricoCredito hCredito = this.historicoCreditoRepository.findOne(hc.getId());
@@ -162,23 +165,26 @@ public class ControllerContaCorrente {
 					this.borderoRepository.save(bordero);
 				}
 				
-				String numero ="";
+				/*String numero ="";
 				
 				AnoLectivo anoActivo = anoLectivoRepository.buscarPorEstado();
 				String ano = String.valueOf(anoActivo.getAnoLectivo());
 				String anoSubstring = ano.substring(2,4);
-				Integer anoLimpo = Integer.parseInt(anoSubstring);
+				Integer anoLimpo = Integer.parseInt(anoSubstring);*/
 				
-				NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(2006);
+				String numero = "";
+
+				NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(10);
 				Long proximoNumero = numeroGerado.getProximoNumero();
+
+				numero = gerarNumeroDocService.gerarNumeroNotaCredito(numero, forma.anoLectivo(), proximoNumero);
 				
-				numero = gerarNumeroDocService.gerarNumeroNotaCredito(numero, anoLimpo, proximoNumero);
 				NotaCredito notaExiste = this.notaCreditoRepo.buscarNumeroNotaCredito(numero);
 				if (notaExiste != null) {
 					do {
 						proximoNumero++;
-						
-						numero = gerarNumeroDocService.gerarNumeroNotaCredito(numero, anoLimpo, proximoNumero);
+
+						numero = gerarNumeroDocService.gerarNumeroNotaCredito(numero, forma.anoLectivo(), proximoNumero);
 						notaExiste = this.notaCreditoRepo.buscarNumeroNotaCredito(numero);
 					} while (notaExiste != null);
 				}
@@ -194,10 +200,11 @@ public class ControllerContaCorrente {
 				NotaCredito notaCredito = new NotaCredito();
 				
 				notaCredito.setIdGuia(guiaCand);
+				notaCredito.setValor(guiaCand.getValor());
 				notaCredito.setNumeroNotaCredito(numero);
 				notaCredito.setTipoDoc(TipoDoc.FACTURA_RECIBO);
 				notaCredito.setDataEmissao(new Date());
-				notaCredito.setUsuarioEmitiu(usuario);
+				notaCredito.setUsuarioEmitiu(new Usuario(33));
 				notaCredito.setDataSistema(dataSistema);
 				notaCredito.setAlteracao(false);
 				

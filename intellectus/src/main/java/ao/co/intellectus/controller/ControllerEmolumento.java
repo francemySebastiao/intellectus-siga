@@ -89,18 +89,15 @@ public class ControllerEmolumento {
 		
 		EmolumentoHistorico eH;
 		for (Curso curso : cursos) {
-			for (Turno turno : Turno.values()) {
-		        eH = new EmolumentoHistorico();
-		        
-		        eH.setAnoLectivo(anoLectivo.get(0));
-		        eH.setCurso(curso);
-		        eH.setEmolumento(emolumentoSalvo);
-		        eH.setMoeda(moeda);
-		        eH.setValor(e.getValor());
-		        eH.setTurno(turno.getDescricao().toUpperCase());
-		        
-		        this.emolumentoHistoricoRepository.save(eH);
-		    }
+	        eH = new EmolumentoHistorico();
+	        
+	        eH.setAnoLectivo(anoLectivo.get(0));
+	        eH.setCurso(curso);
+	        eH.setEmolumento(emolumentoSalvo);
+	        eH.setMoeda(moeda);
+	        eH.setValor(e.getValor());
+	        
+	        this.emolumentoHistoricoRepository.save(eH);
 		}
 		
 		c.setResultado(null);

@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_C_Mestrado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="28c5f64d-db4e-46e5-8b0b-2ee12089ce3d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CopyOfIntellectus"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="numero_matricula" class="java.lang.Integer"/>
+	<parameter name="data" class="java.lang.String"/>
+	<parameter name="numero_pedido" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT *
+FROM "V_CERTIFICADO_MESTRADO"
+WHERE 
+	 NUMERO_DE_ALUNO = $P{numero_matricula}
+	 and N_DECLARACAO= $P{numero_pedido}]]>
+	</queryString>
+	<field name="N_DECLARACAO" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="N_DECLARACAO"/>
+	</field>
+	<field name="NUMERO_DE_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DE_ALUNO"/>
+		<property name="com.jaspersoft.studio.field.name" value="NUMERO_DE_ALUNO"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+		<property name="com.jaspersoft.studio.field.name" value="NOME"/>
+	</field>
+	<field name="SEXO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEXO"/>
+		<property name="com.jaspersoft.studio.field.name" value="SEXO"/>
+	</field>
+	<field name="PROVINCIA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVINCIA"/>
+		<property name="com.jaspersoft.studio.field.name" value="PROVINCIA"/>
+	</field>
+	<field name="PROVINCIA_CONCORDANCIA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVINCIA_CONCORDANCIA"/>
+		<property name="com.jaspersoft.studio.field.name" value="PROVINCIA_CONCORDANCIA"/>
+	</field>
+	<field name="MUNICIPIO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MUNICIPIO"/>
+		<property name="com.jaspersoft.studio.field.name" value="MUNICIPIO"/>
+	</field>
+	<field name="DATA_NASCIMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_NASCIMENTO"/>
+		<property name="com.jaspersoft.studio.field.name" value="DATA_NASCIMENTO"/>
+	</field>
+	<field name="NOME_DO_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DO_PAI"/>
+		<property name="com.jaspersoft.studio.field.name" value="NOME_DO_PAI"/>
+	</field>
+	<field name="NOME_DA_MAE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DA_MAE"/>
+		<property name="com.jaspersoft.studio.field.name" value="NOME_DA_MAE"/>
+	</field>
+	<field name="NUMERO_DOCUMENTO_IDENTIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DOCUMENTO_IDENTIFICACAO"/>
+		<property name="com.jaspersoft.studio.field.name" value="NUMERO_DOCUMENTO_IDENTIFICACAO"/>
+	</field>
+	<field name="DATA_EMISSAO_IDENTIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_EMISSAO_IDENTIDADE"/>
+		<property name="com.jaspersoft.studio.field.name" value="DATA_EMISSAO_IDENTIDADE"/>
+	</field>
+	<field name="DATA_VALIDADE_IDENTIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_VALIDADE_IDENTIDADE"/>
+		<property name="com.jaspersoft.studio.field.name" value="DATA_VALIDADE_IDENTIDADE"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+		<property name="com.jaspersoft.studio.field.name" value="CURSO"/>
+	</field>
+	<field name="ESPECIALIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ESPECIALIDADE"/>
+		<property name="com.jaspersoft.studio.field.name" value="ESPECIALIDADE"/>
+	</field>
+	<field name="DECRETO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DECRETO"/>
+		<property name="com.jaspersoft.studio.field.name" value="DECRETO"/>
+	</field>
+	<field name="coordenador_mestrado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="coordenador_mestrado"/>
+		<property name="com.jaspersoft.studio.field.name" value="coordenador_mestrado"/>
+	</field>
+	<field name="DECANO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DECANO"/>
+		<property name="com.jaspersoft.studio.field.name" value="DECANO"/>
+	</field>
+	<field name="CHEFE_SERVICOS_ACADEMICOS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CHEFE_SERVICOS_ACADEMICOS"/>
+		<property name="com.jaspersoft.studio.field.name" value="CHEFE_SERVICOS_ACADEMICOS"/>
+	</field>
+	<field name="REITOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REITOR"/>
+		<property name="com.jaspersoft.studio.field.name" value="REITOR"/>
+	</field>
+	<field name="ANO_CURRICULAR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ANO_CURRICULAR"/>
+		<property name="com.jaspersoft.studio.field.name" value="ANO_CURRICULAR"/>
+	</field>
+	<field name="CODIGO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CODIGO"/>
+		<property name="com.jaspersoft.studio.field.name" value="CODIGO"/>
+	</field>
+	<field name="DESIGNACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESIGNACAO"/>
+		<property name="com.jaspersoft.studio.field.name" value="DESIGNACAO"/>
+	</field>
+	<field name="C.H.T" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="C.H.T"/>
+		<property name="com.jaspersoft.studio.field.name" value="C.H.T"/>
+	</field>
+	<field name="U.C.(1)" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="U.C.(1)"/>
+		<property name="com.jaspersoft.studio.field.name" value="U.C.(1)"/>
+	</field>
+	<field name="CLASSIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CLASSIFICACAO"/>
+		<property name="com.jaspersoft.studio.field.name" value="CLASSIFICACAO"/>
+	</field>
+	<field name="SITUACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SITUACAO"/>
+		<property name="com.jaspersoft.studio.field.name" value="SITUACAO"/>
+	</field>
+	<field name="DATA_CONCLUSAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_CONCLUSAO"/>
+		<property name="com.jaspersoft.studio.field.name" value="DATA_CONCLUSAO"/>
+	</field>
+	<field name="MEDIA_FINAL" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="MEDIA_FINAL"/>
+		<property name="com.jaspersoft.studio.field.name" value="MEDIA_FINAL"/>
+	</field>
+	<field name="MEDIA_EXTENSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MEDIA_EXTENSO"/>
+	</field>
+	<variable name="C.H.T1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{C.H.T}]]></variableExpression>
+	</variable>
+	<variable name="U.C.(1)1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{U.C.(1)}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="318" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="53" y="270" width="50" height="24" uuid="08ae333d-c366-4129-9a95-381f3bd29fec">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Ano Curricular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="270" width="51" height="18" uuid="32a81665-1b5e-403a-b0a5-f2df1369a421"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="270" width="194" height="18" uuid="85b2fb2f-c5d0-44cb-a958-59fe7fcbf725"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DESIGNAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="270" width="43" height="18" uuid="d5032653-0112-45bd-aaf1-fda11e3b38d2"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[C.H.T.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="391" y="270" width="46" height="18" uuid="4d555ab2-f187-48f9-a2fa-983a4e4af4e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[U.C.( )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="437" y="270" width="63" height="18" uuid="40c9d7a2-9ca8-4043-8f25-dfe18ace628b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Classificação( )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="503" y="270" width="40" height="18" uuid="487226bb-4814-42fc-bcd1-c5e2fa8106e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Situação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="252" width="242" height="18" uuid="94b491d4-2b68-44c9-bd67-00cacd62dc5c"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="8" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[DISCIPLINA COM APROVEITAMENTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="54" y="141" width="481" height="108" isRemoveLineWhenBlank="true" uuid="ae292cb9-e3f7-4f8e-b548-dd49ea63e497">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+					<font fontName="Serif" size="11"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, certifica-se que "+"<b>"+$F{NOME}+"</b>"+", "+($F{SEXO}.equals("FEMININO")? "filha": $F{SEXO}.equals("MASCULINO")? "filho":"")+" de "+$F{NOME_DO_PAI}+" e de "+$F{NOME_DA_MAE}+", "+($F{SEXO}.equals("FEMININO")? "portadora do Bilhete de Identidade n.º ": $F{SEXO}.equals("MASCULINO")? "portador do Bilhete de Identidade n.º ": "")+$F{NUMERO_DOCUMENTO_IDENTIFICACAO}+", emitido aos "+$F{DATA_EMISSAO_IDENTIDADE}+" pelo arquivo de "+$F{MUNICIPIO}+", "+($F{SEXO}.equals("FEMININO")? "nascida a ": $F{SEXO}.equals("MASCULINO")? "nascido a ": "")+$F{DATA_NASCIMENTO}+", natural d"+$F{PROVINCIA_CONCORDANCIA}+"  "+$F{PROVINCIA}+", obteve aprovação nas seguintes disciplinas que correspondem ao plano curricular do curso de Mestrado em "+"<b>"+$F{CURSO}+"</b>"+ ($F{CURSO}.equals("Comunicação, Marketing e Publicidade")? ", ":",  na especialidade em "+"<b>"+$F{ESPECIALIDADE})+"</b>"+", aprovado pelo Decreto nº "+$F{DECRETO}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="412" y="272" width="20" height="6" uuid="e88392e7-9f05-4dbc-9540-4371173d5fd8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="4" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="272" width="20" height="6" uuid="07d7a58e-3c56-41ae-9cfa-ef9815cc4960">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="4" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[2]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="54" y="0" width="49" height="13" uuid="2e20ec00-8061-4de3-82eb-8afc8e39b533"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANO_CURRICULAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##" isBlankWhenNull="true">
+				<reportElement x="348" y="0" width="43" height="13" uuid="6e5d87e9-3469-4d9b-ac0a-e75dc7e74981"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{C.H.T}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="503" y="0" width="40" height="13" uuid="5242f352-861f-4db9-8b9c-5460d91d7e82"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="7"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SITUACAO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="0" width="49" height="13" uuid="78201445-b4ba-4bb9-89a7-a051dc9b9cdc"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##" isBlankWhenNull="true">
+				<reportElement x="391" y="0" width="46" height="13" uuid="7aade72f-2d72-413f-9233-ede7fa3579fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{U.C.(1)}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##" isBlankWhenNull="true">
+				<reportElement x="437" y="0" width="62" height="13" uuid="f98239ea-c211-4b8b-ae1d-672870bdcddd"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLASSIFICACAO}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="154" y="0" width="194" height="13" uuid="03907dbd-21d7-4b81-9dc1-51b2f2a59589">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESIGNACAO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="91" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="714" splitType="Immediate">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<line>
+				<reportElement x="41" y="265" width="481" height="1" forecolor="#FFFFFF" uuid="28b315b7-c7a4-4603-b11e-365c89d68190"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="53" y="52" width="479" height="13" uuid="e691bd31-6166-48a1-8583-befef51e7861"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[( )Escala: Suficiente(10 a 13), Bom (14 a 15), Bom com distinção(16 e 17) e Muito bom (18 a 20).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="53" y="39" width="479" height="13" uuid="591b35de-f186-4a18-9b2a-9e6ce5d4ae12"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[( )Cada Unidade de Crédito corresponde a 15 horas.]]></text>
+			</staticText>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="53" y="86" width="478" height="38" isRemoveLineWhenBlank="true" uuid="3510e640-803f-4ce4-b8d3-a29fa8a6976e"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Serif" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Mas certifica-se que concluiu o referido Mestrado aos "+$F{DATA_CONCLUSAO}+" com a média aritmetica de "+$F{MEDIA_FINAL}+" "+$F{MEDIA_EXTENSO}+" valores."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="41" y="330" width="259" height="18" isRemoveLineWhenBlank="true" uuid="8f666ab0-9852-4762-a9c9-014ddbdb01eb"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Serif" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Número de matrícula: "+ ($F{NUMERO_DE_ALUNO})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="363" width="478" height="66" uuid="71e86a07-d80b-4cf3-bf5e-e62e11570c3c"/>
+				<textElement markup="html">
+					<font fontName="Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Por ser verdade e ter sido pedido, mandou-se passar o presente Certificado, que vai assinado e autenticado com o carimbo a selo branco em uso nesta Universidade."+"</b>"+"<br/>"+"<br/>"+"<b>"+"Luanda, "+$P{data}+"."+"</b>"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="456" width="155" height="20" uuid="1a51d1e6-8b33-4529-aefd-e01b8cf3f6b9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[O Chefe dos Serviços Académicos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="541" width="168" height="20" uuid="df2a1c58-eec7-436f-b155-893c381ad728">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[O Reitor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="456" width="155" height="20" uuid="23d8c860-8512-45c7-9c3b-18971906d8b8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[O Decano]]></text>
+			</staticText>
+			<line>
+				<reportElement x="39" y="501" width="155" height="1" uuid="1fbc9e8d-c674-4546-8404-3444ca790932"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="363" y="501" width="155" height="1" uuid="11ed39ba-961a-48c7-96cd-fd5c347c042f"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="194" y="589" width="167" height="1" uuid="7783f0f1-8196-42a2-b7db-7db4ad3b87bc"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="39" y="501" width="156" height="18" isRemoveLineWhenBlank="true" uuid="af82dcae-eb47-41de-b43a-707d44bad1bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CHEFE_SERVICOS_ACADEMICOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="363" y="501" width="156" height="18" isRemoveLineWhenBlank="true" uuid="c29fabda-5d26-450e-902a-63a28415f81f"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DECANO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="195" y="589" width="166" height="18" isRemoveLineWhenBlank="true" uuid="9cd2d003-dbdf-489e-922b-2651fd076ae8"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{REITOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="0" width="43" height="18" uuid="31dd5c5b-48c9-4dd2-92ad-57979525d3c9"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{C.H.T1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="391" y="0" width="46" height="18" uuid="d96aa89c-7b11-4220-8612-4610def44187"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{U.C.(1)1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="303" y="0" width="45" height="18" uuid="39ca2eaf-46b9-4ae8-ad24-f235de12a2e6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TOTAL"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="55" y="42" width="11" height="8" uuid="b60b2334-4a27-4ce8-b4fa-2c28177fb979"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="55" width="11" height="8" uuid="5cb16da7-ba9f-429b-a207-cd6205ebca28"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[2]]></text>
+			</staticText>
+			<line>
+				<reportElement x="41" y="301" width="481" height="1" uuid="68afd2fd-3c02-4eee-8bb0-55a1ed315f23"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<componentElement>
+				<reportElement x="447" y="640" width="98" height="73" uuid="aad57be0-49c2-478b-b83d-f218df58a7e9"/>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<jr:codeExpression><![CDATA["https://validar.okayulatech.ao/?cod="+$P{numero_pedido}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

@@ -233,8 +233,7 @@ public class ControllerPedidoDocumento {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 		String dataSistema = localDate.format(formatter);
 		
-		Usuario usuario = this.usuarioRepository
-				.findByUserName(registro.getUserName() != null ? registro.getUserName() : null);
+		Usuario usuario = this.usuarioRepository.findByUserName(registro.getUserName() != null ? registro.getUserName() : null);
 		
 		
 		RegistroDocumentos rDocumentos = new RegistroDocumentos();

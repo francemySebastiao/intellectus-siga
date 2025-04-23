@@ -4,7 +4,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CopyOfMeu_PC_2019"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Qualidade_Geral"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="table">
 		<box>
@@ -26,11 +26,6 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="table 1">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
 	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -46,11 +41,6 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="table 2">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
 	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -61,57 +51,151 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
 	<subDataset name="Table Dataset 1" uuid="43f81030-4a13-4bf3-8b12-756eedd1150f">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Qualidade_Geral"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 		<parameter name="numero_guia" class="java.lang.String">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[SELECT
-     t_guia_pagamento."id" AS t_guia_pagamento_id,
-     t_guia_pagamento."numero_guia" AS t_guia_pagamento_numero_guia,
-     t_guia_pagamento."valor" AS t_guia_pagamento_valor,
-     t_guia_pagamento_historico."id" AS t_guia_pagamento_historico_id,
-     t_guia_pagamento_historico."obs" AS t_guia_pagamento_historico_obs,
-     t_guia_pagamento_historico."valor" AS t_guia_pagamento_historico_valor,
-     t_guia_pagamento_historico."codigo_emolumento" AS t_guia_pagamento_historico_codigo_emolumento,
-     t_guia_pagamento_historico."codigo_guia_pagamento" AS t_guia_pagamento_historico_codigo_guia_pagamento,
-     t_emolumento."id" AS t_emolumento_id,
-     t_emolumento."codigo" AS t_emolumento_codigo,
-     t_emolumento."emolumento" AS t_emolumento_emolumento,
-     t_moeda."designacao" AS t_moeda_designacao,
-     t_moeda."moeda" AS t_moeda_moeda,
-     t_moeda."status" AS t_moeda_status,
-     t_guia_pagamento."codigo_moeda" AS t_guia_pagamento_codigo_moeda,
-     t_moeda."id" AS t_moeda_id
-
-FROM
-     "dbo"."t_guia_pagamento" t_guia_pagamento INNER JOIN "dbo"."t_guia_pagamento_historico" t_guia_pagamento_historico ON t_guia_pagamento."id" = t_guia_pagamento_historico."codigo_guia_pagamento"
-     INNER JOIN "dbo"."t_emolumento" t_emolumento ON t_guia_pagamento_historico."codigo_emolumento" = t_emolumento."id"
-     INNER JOIN "dbo"."t_moeda" t_moeda ON t_guia_pagamento."codigo_moeda" = t_moeda."id"
-WHERE
-     t_guia_pagamento."numero_guia" = $P{numero_guia}]]>
+			<![CDATA[SELECT * FROM V_GUIA_PAGAMENTO_CREDITO 
+WHERE t_guia_pagamento_numero_guia = $P{numero_guia}]]>
 		</queryString>
-		<field name="t_guia_pagamento_id" class="java.lang.Integer"/>
-		<field name="t_guia_pagamento_numero_guia" class="java.lang.String"/>
-		<field name="t_guia_pagamento_valor" class="java.lang.Double"/>
-		<field name="t_guia_pagamento_historico_id" class="java.lang.Integer"/>
-		<field name="t_guia_pagamento_historico_obs" class="java.lang.String"/>
-		<field name="t_guia_pagamento_historico_valor" class="java.lang.Double"/>
-		<field name="t_guia_pagamento_historico_codigo_emolumento" class="java.lang.Integer"/>
-		<field name="t_guia_pagamento_historico_codigo_guia_pagamento" class="java.lang.Integer"/>
-		<field name="t_emolumento_id" class="java.lang.Integer"/>
-		<field name="t_emolumento_codigo" class="java.lang.Integer"/>
-		<field name="t_emolumento_emolumento" class="java.lang.String"/>
-		<field name="t_moeda_designacao" class="java.lang.String"/>
-		<field name="t_moeda_moeda" class="java.lang.String"/>
-		<field name="t_moeda_status" class="java.lang.Boolean"/>
-		<field name="t_guia_pagamento_codigo_moeda" class="java.lang.Integer"/>
-		<field name="t_moeda_id" class="java.lang.Integer"/>
+		<field name="t_guia_pagamento_id" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_id"/>
+		</field>
+		<field name="t_guia_pagamento_valor" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_valor"/>
+		</field>
+		<field name="t_guia_pagamento_codigo_aluno" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_codigo_aluno"/>
+		</field>
+		<field name="t_guia_pagamento_codigo_ano_lectivo" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_codigo_ano_lectivo"/>
+		</field>
+		<field name="t_guia_pagamento_numero_guia" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_numero_guia"/>
+		</field>
+		<field name="t_guia_pagamento_historico_obs" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_historico_obs"/>
+		</field>
+		<field name="t_guia_pagamento_historico_valor" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_historico_valor"/>
+		</field>
+		<field name="t_guia_pagamento_historico_codigo_aluno" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_historico_codigo_aluno"/>
+		</field>
+		<field name="t_guia_pagamento_historico_codigo_ano_lectivo" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_historico_codigo_ano_lectivo"/>
+		</field>
+		<field name="t_guia_pagamento_historico_codigo_emolumento" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_historico_codigo_emolumento"/>
+		</field>
+		<field name="t_guia_pagamento_historico_codigo_guia_pagamento" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_historico_codigo_guia_pagamento"/>
+		</field>
+		<field name="t_emolumento_emolumento" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_emolumento_emolumento"/>
+		</field>
+		<field name="t_aluno_nome" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome"/>
+		</field>
+		<field name="t_aluno_codigo_ano_lectivo_fim_curso" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_ano_lectivo_fim_curso"/>
+		</field>
+		<field name="t_aluno_codigo_instituicao" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_instituicao"/>
+		</field>
+		<field name="t_aluno_codigo_municipio_nascimento" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_municipio_nascimento"/>
+		</field>
+		<field name="t_aluno_codigo_municio_residencia" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_municio_residencia"/>
+		</field>
+		<field name="t_aluno_codigo_pais_nacionalidade" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_pais_nacionalidade"/>
+		</field>
+		<field name="t_aluno_codigo_pais_residencia" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_pais_residencia"/>
+		</field>
+		<field name="t_aluno_codigo_provincia_nascimento" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_provincia_nascimento"/>
+		</field>
+		<field name="t_aluno_codigo_provincia_residencia" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_provincia_residencia"/>
+		</field>
+		<field name="t_instituicao_id" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_instituicao_id"/>
+		</field>
+		<field name="t_instituicao_decreto_lei" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_instituicao_decreto_lei"/>
+		</field>
+		<field name="t_instituicao_descricao" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_instituicao_descricao"/>
+		</field>
+		<field name="t_instituicao_endereco" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_instituicao_endereco"/>
+		</field>
+		<field name="t_instituicao_grupo_owner" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_instituicao_grupo_owner"/>
+		</field>
+		<field name="t_matricula_ano_curricular" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_matricula_ano_curricular"/>
+		</field>
+		<field name="t_matricula_ano_lectivo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_matricula_ano_lectivo"/>
+		</field>
+		<field name="t_matricula_numero_de_aluno" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_matricula_numero_de_aluno"/>
+		</field>
+		<field name="t_matricula_codigo_aluno" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_matricula_codigo_aluno"/>
+		</field>
+		<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_matricula_codigo_ano_lectivo"/>
+		</field>
+		<field name="t_matricula_codigo_curso" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_matricula_codigo_curso"/>
+		</field>
+		<field name="t_matricula_codigo_turma_base" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_matricula_codigo_turma_base"/>
+		</field>
+		<field name="t_turma_id" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_turma_id"/>
+		</field>
+		<field name="t_turma_turma" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_turma_turma"/>
+		</field>
+		<field name="t_turma_turno" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_turma_turno"/>
+		</field>
+		<field name="t_curso_descricao" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_curso_descricao"/>
+		</field>
+		<field name="t_moeda_designacao" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_moeda_designacao"/>
+		</field>
+		<field name="t_aluno_numero_de_aluno" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_de_aluno"/>
+		</field>
+		<field name="t_curso_sigla" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_curso_sigla"/>
+		</field>
+		<field name="t_aluno_morada" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_aluno_morada"/>
+		</field>
+		<field name="t_instituicao_contribuinte" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="t_instituicao_contribuinte"/>
+		</field>
+		<field name="t_emolumento_codigo" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="t_emolumento_codigo"/>
+		</field>
+		<field name="t_guia_pagamento_data_emissao" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_data_emissao"/>
+		</field>
+		<field name="t_logo_marca_foto" class="java.lang.Object">
+			<property name="com.jaspersoft.studio.field.label" value="t_logo_marca_foto"/>
+		</field>
 		<variable name="Soma" class="java.lang.Double" calculation="Sum">
 			<variableExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></variableExpression>
 		</variable>
@@ -121,66 +205,8 @@ WHERE
 	</parameter>
 	<parameter name="nome" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-     t_guia_pagamento."id" AS t_guia_pagamento_id,
-     t_guia_pagamento."valor" AS t_guia_pagamento_valor,
-     t_guia_pagamento."codigo_aluno" AS t_guia_pagamento_codigo_aluno,
-     t_guia_pagamento."codigo_ano_lectivo" AS t_guia_pagamento_codigo_ano_lectivo,
-     t_guia_pagamento."numero_guia" AS t_guia_pagamento_numero_guia,
-     t_guia_pagamento_historico."obs" AS t_guia_pagamento_historico_obs,
-     t_guia_pagamento_historico."valor" AS t_guia_pagamento_historico_valor,
-     t_guia_pagamento_historico."codigo_aluno" AS t_guia_pagamento_historico_codigo_aluno,
-     t_guia_pagamento_historico."codigo_ano_lectivo" AS t_guia_pagamento_historico_codigo_ano_lectivo,
-     t_guia_pagamento_historico."codigo_emolumento" AS t_guia_pagamento_historico_codigo_emolumento,
-     t_guia_pagamento_historico."codigo_guia_pagamento" AS t_guia_pagamento_historico_codigo_guia_pagamento,
-     t_emolumento."emolumento" AS t_emolumento_emolumento,
-     t_aluno."nome" AS t_aluno_nome,
-     t_aluno."codigo_ano_lectivo_fim_curso" AS t_aluno_codigo_ano_lectivo_fim_curso,
-     t_aluno."codigo_instituicao" AS t_aluno_codigo_instituicao,
-     t_aluno."codigo_municipio_nascimento" AS t_aluno_codigo_municipio_nascimento,
-     t_aluno."codigo_municio_residencia" AS t_aluno_codigo_municio_residencia,
-     t_aluno."codigo_pais_nacionalidade" AS t_aluno_codigo_pais_nacionalidade,
-     t_aluno."codigo_pais_residencia" AS t_aluno_codigo_pais_residencia,
-     t_aluno."codigo_provincia_nascimento" AS t_aluno_codigo_provincia_nascimento,
-     t_aluno."codigo_provincia_residencia" AS t_aluno_codigo_provincia_residencia,
-     t_instituicao."id" AS t_instituicao_id,
-     t_instituicao."decreto_lei" AS t_instituicao_decreto_lei,
-     t_instituicao."descricao" AS t_instituicao_descricao,
-     t_instituicao."endereco" AS t_instituicao_endereco,
-     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
-     t_matricula."ano_curricular" AS t_matricula_ano_curricular,
-     t_matricula."ano_lectivo" AS t_matricula_ano_lectivo,
-     t_matricula."numero_de_aluno" AS t_matricula_numero_de_aluno,
-     t_matricula."codigo_aluno" AS t_matricula_codigo_aluno,
-     t_matricula."codigo_ano_lectivo" AS t_matricula_codigo_ano_lectivo,
-     t_matricula."codigo_curso" AS t_matricula_codigo_curso,
-     t_matricula."codigo_turma_base" AS t_matricula_codigo_turma_base,
-     t_turma."id" AS t_turma_id,
-     t_turma."turma" AS t_turma_turma,
-     t_turma."turno" AS t_turma_turno,
-     t_curso."descricao" AS t_curso_descricao,
-     t_moeda."designacao" AS t_moeda_designacao,
-     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
-     t_curso."sigla" AS t_curso_sigla,
-     t_aluno."morada" AS t_aluno_morada,
-     t_instituicao."contribuinte" AS t_instituicao_contribuinte,
-     t_emolumento."codigo" AS t_emolumento_codigo,
-     t_guia_pagamento."data_emissao" AS t_guia_pagamento_data_emissao,
-     t_logo_marca."foto" AS t_logo_marca_foto
-FROM
-     "dbo"."t_guia_pagamento" t_guia_pagamento INNER JOIN "dbo"."t_guia_pagamento_historico" t_guia_pagamento_historico ON t_guia_pagamento."id" = t_guia_pagamento_historico."codigo_guia_pagamento"
-     INNER JOIN "dbo"."t_emolumento" t_emolumento ON t_guia_pagamento_historico."codigo_emolumento" = t_emolumento."id"
-     INNER JOIN "dbo"."t_aluno" t_aluno ON t_guia_pagamento."codigo_aluno" = t_aluno."id"
-     INNER JOIN "dbo"."t_moeda" t_moeda ON t_guia_pagamento."codigo_moeda" = t_moeda."id"
-     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_aluno."codigo_instituicao" = t_instituicao."id"
-     INNER JOIN "dbo"."t_matricula" t_matricula ON t_aluno."id" = t_matricula."codigo_aluno"
-     INNER JOIN "dbo"."t_turma" t_turma ON t_matricula."codigo_turma_base" = t_turma."id"
-     INNER JOIN "dbo"."t_curso" t_curso ON t_matricula."codigo_curso" = t_curso."id",
-     "dbo"."t_logo_marca" t_logo_marca
-WHERE
-     t_guia_pagamento."numero_guia" = $P{numero_guia} 
-	 AND
-	 t_guia_pagamento.tipo_factura = 'FACTURA_CREDITO']]>
+		<![CDATA[SELECT * FROM V_GUIA_PAGAMENTO_CREDITO 
+WHERE t_guia_pagamento_numero_guia = $P{numero_guia}]]>
 	</queryString>
 	<field name="t_guia_pagamento_id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_id"/>
@@ -311,10 +337,10 @@ WHERE
 	<field name="t_emolumento_codigo" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="t_emolumento_codigo"/>
 	</field>
-	<field name="t_guia_pagamento_data_emissao" class="java.lang.String">
+	<field name="t_guia_pagamento_data_emissao" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_data_emissao"/>
 	</field>
-	<field name="t_logo_marca_foto" class="java.sql.Blob">
+	<field name="t_logo_marca_foto" class="java.lang.Object">
 		<property name="com.jaspersoft.studio.field.label" value="t_logo_marca_foto"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="dbo.t_logo_marca"/>
 	</field>
@@ -379,14 +405,6 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA["Guia N.º "+$F{t_guia_pagamento_numero_guia}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame">
-				<reportElement x="10" y="0" width="49" height="46" uuid="17ea3e59-67ae-49d6-9c77-d74eb6ddcc03"/>
-				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
-			</image>
-			<image scaleImage="FillFrame">
-				<reportElement x="419" y="0" width="49" height="47" uuid="4545fae6-003a-4477-a7a7-2a5e27cef4e5"/>
-				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -462,267 +480,139 @@ WHERE
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="24">
-			<componentElement>
-				<reportElement key="table 2" style="table 2" x="9" y="0" width="260" height="23" uuid="9c6e0817-fc29-43ff-8908-0ff625ab3cf9"/>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Table Dataset 1" uuid="121297cd-a3b1-4b79-8a61-341764423376">
-						<datasetParameter name="numero_guia">
-							<datasetParameterExpression><![CDATA[$F{t_guia_pagamento_numero_guia}]]></datasetParameterExpression>
-						</datasetParameter>
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:column width="207" uuid="4069432d-9048-4070-884b-81b53642535c">
-						<jr:tableHeader style="table 1" height="16" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="194" height="14" uuid="bcff9c33-d69e-4428-9765-1c634fa0c04c"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman" size="11" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Descrição]]></text>
-							</staticText>
-						</jr:tableHeader>
-						<jr:columnFooter height="72" rowSpan="1">
-							<box topPadding="0" bottomPadding="0"/>
-							<staticText>
-								<reportElement x="0" y="56" width="207" height="15" uuid="df696998-57eb-4741-b131-90445759b5d2"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
-									<font fontName="Times New Roman" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Total (kz.)]]></text>
-							</staticText>
-							<line>
-								<reportElement x="0" y="55" width="207" height="1" uuid="9229d915-ec01-4268-b58b-9f780df39ffa"/>
-							</line>
-						</jr:columnFooter>
-						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
-							<box>
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textField>
-								<reportElement x="21" y="2" width="173" height="12" uuid="6117c2df-7088-4d73-8d02-b549d23fa170"/>
-								<textElement verticalAlignment="Bottom">
-									<font fontName="Times New Roman"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_emolumento_emolumento}]]></textFieldExpression>
-							</textField>
-							<textField isBlankWhenNull="true">
-								<reportElement x="21" y="12" width="173" height="15" uuid="f00bf77a-5057-4bc3-b01d-f79ce893b20b"/>
-								<textElement verticalAlignment="Bottom">
-									<font fontName="Times New Roman" size="8" isBold="true"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_obs}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="83" uuid="b0c7d7ab-4fc6-4004-8882-5cdb4222f789">
-						<jr:tableHeader style="table 1" height="16" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="83" height="14" uuid="57cb6f10-fdb6-47d6-88c3-93041bb80fa2"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman" size="11" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Código]]></text>
-							</staticText>
-						</jr:tableHeader>
-						<jr:columnFooter height="72" rowSpan="1">
-							<line>
-								<reportElement x="0" y="55" width="83" height="1" uuid="8ff421e3-705e-448c-bcf1-c6b0dd7c9c6c"/>
-							</line>
-						</jr:columnFooter>
-						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
-							<box>
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textField>
-								<reportElement x="0" y="2" width="83" height="12" uuid="d968bb2f-42e7-491b-bb9f-3ec8b2c33a27"/>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Times New Roman"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_emolumento_codigo}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="80" uuid="6ece70eb-00a0-4f0e-84af-b7e380eb7a6b">
-						<jr:tableHeader style="table 1" height="16" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="79" height="14" uuid="96b952ab-7578-4d09-9f69-2a85968d6bc7"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman" size="11" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Importância]]></text>
-							</staticText>
-						</jr:tableHeader>
-						<jr:columnFooter height="72" rowSpan="1">
-							<box>
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textField pattern="#,##0.00 Akz">
-								<reportElement x="0" y="56" width="80" height="16" uuid="13b92036-9cc9-4126-8c06-830c0efdbe29"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
-							</textField>
-							<line>
-								<reportElement x="0" y="55" width="80" height="1" uuid="852277c3-6280-4127-a774-e94d946a5520"/>
-							</line>
-						</jr:columnFooter>
-						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
-							<textField pattern="#,##0.00 Akz">
-								<reportElement x="0" y="2" width="79" height="12" uuid="bb95fe87-33fe-452e-97be-9b57c8989d8a"/>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Times New Roman"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
-			<componentElement>
-				<reportElement key="table 2" style="table 2" x="418" y="0" width="260" height="23" uuid="d82fe7ed-40e2-4c1d-b667-611cab9526b3"/>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Table Dataset 1" uuid="9bc5f11c-c521-4c9a-b531-9952118b697a">
-						<datasetParameter name="numero_guia">
-							<datasetParameterExpression><![CDATA[$F{t_guia_pagamento_numero_guia}]]></datasetParameterExpression>
-						</datasetParameter>
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:column width="207" uuid="11bc7c4a-37c4-4b04-99c2-0b8b65565d80">
-						<jr:tableHeader style="table 1" height="16" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="194" height="14" uuid="38b7320e-ea66-4fc5-b1e4-e99995a42e3f"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman" size="11" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Descrição]]></text>
-							</staticText>
-						</jr:tableHeader>
-						<jr:columnFooter height="72" rowSpan="1">
-							<box topPadding="0" bottomPadding="0"/>
-							<staticText>
-								<reportElement x="0" y="56" width="207" height="15" uuid="1ac2b6c4-506c-4da6-a296-af4986650e84"/>
-								<textElement textAlignment="Right" verticalAlignment="Middle">
-									<font fontName="Times New Roman" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Total (kz.)]]></text>
-							</staticText>
-							<line>
-								<reportElement x="0" y="55" width="207" height="1" uuid="8187bc57-6677-43ae-9fe3-0e4f73c8dc10"/>
-							</line>
-						</jr:columnFooter>
-						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
-							<box>
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textField>
-								<reportElement x="21" y="2" width="173" height="12" uuid="4590a90a-9e74-40ac-9355-e98292efe7aa"/>
-								<textElement verticalAlignment="Bottom">
-									<font fontName="Times New Roman"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_emolumento_emolumento}]]></textFieldExpression>
-							</textField>
-							<textField isBlankWhenNull="true">
-								<reportElement x="21" y="12" width="173" height="15" uuid="feb95d6d-7d2e-4298-8438-3361d235cd65"/>
-								<textElement verticalAlignment="Bottom">
-									<font fontName="Times New Roman" size="8" isBold="true"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_obs}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="83" uuid="326d37d8-e471-47dd-91d2-a15e83f065e5">
-						<jr:tableHeader style="table 1" height="16" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="83" height="14" uuid="774b8e90-3987-4742-9b62-7a2052ff06de"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman" size="11" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Código]]></text>
-							</staticText>
-						</jr:tableHeader>
-						<jr:columnFooter height="72" rowSpan="1">
-							<line>
-								<reportElement x="0" y="55" width="83" height="1" uuid="81b33fee-f285-406f-aa74-d2f8501217a6"/>
-							</line>
-						</jr:columnFooter>
-						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
-							<box>
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textField>
-								<reportElement x="0" y="2" width="83" height="12" uuid="a798161f-9ffe-474a-85d4-d4db8fc85c27"/>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Times New Roman"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_emolumento_codigo}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="80" uuid="2c4f3028-5ff4-4924-8860-437f00ff506f">
-						<jr:tableHeader style="table 1" height="16" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="79" height="14" uuid="7fb9e4b7-8a78-4ab8-a9fe-a1d7f6c0422b"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman" size="11" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Importância]]></text>
-							</staticText>
-						</jr:tableHeader>
-						<jr:columnFooter height="72" rowSpan="1">
-							<box>
-								<pen lineWidth="1.0"/>
-								<topPen lineWidth="1.0"/>
-								<leftPen lineWidth="1.0"/>
-								<bottomPen lineWidth="1.0"/>
-								<rightPen lineWidth="1.0"/>
-							</box>
-							<textField pattern="#,##0 Kz">
-								<reportElement x="0" y="56" width="80" height="16" uuid="60e46f4a-e165-4ab7-8f7e-1436ce817792"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Times New Roman"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
-							</textField>
-							<line>
-								<reportElement x="0" y="55" width="80" height="1" uuid="137680b3-139f-4577-bb44-ebd28c1e9937"/>
-							</line>
-						</jr:columnFooter>
-						<jr:detailCell style="table 2_TD" height="27" rowSpan="1">
-							<textField pattern="#,##0 Kz">
-								<reportElement x="0" y="2" width="79" height="12" uuid="ad0ba073-94bf-4d4e-b731-8f6bbc0f55de"/>
-								<textElement textAlignment="Center" verticalAlignment="Bottom">
-									<font fontName="Times New Roman"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
+		<band height="31">
+			<staticText>
+				<reportElement x="9" y="1" width="70" height="30" uuid="4eaa1c93-858f-4d47-a97d-f882b42d5939"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="1" width="182" height="30" uuid="d87ac756-e712-4aa3-8e41-287f3c539424"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Emolumento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="1" width="120" height="30" uuid="9064e29f-b9a6-43c5-b421-1ad3761c925c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="1" width="70" height="30" uuid="f12617fd-401d-4e53-b19b-53110ca946fe"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="488" y="1" width="182" height="30" uuid="3e8f4e68-b6f8-4030-8fbe-6fee982d4302"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Emolumento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="670" y="1" width="120" height="30" uuid="8a937e48-db93-477e-93be-9346245c8dc7"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField>
+				<reportElement x="10" y="0" width="69" height="14" uuid="7f5f954d-760d-431d-8b3b-517e77ed5071">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b1fb513-e56a-41fe-bc66-6a61f93da132"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[" "+$F{t_guia_pagamento_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="181" height="14" uuid="3bc65adc-ad86-4c74-af14-3fcb1e2afd5c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="36015f73-6a08-4a39-b6f6-c608807e133d"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[" "+$F{t_emolumento_emolumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="0" width="120" height="14" uuid="65992406-a9fd-4fce-898e-c00298c8017d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e97d1be-9673-4d29-99d5-eedce27f75bc"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[" "+$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="14" width="372" height="1" uuid="b3b4a726-d7c9-4cec-b4cd-e9a72cf1f19b"/>
+			</line>
+			<textField>
+				<reportElement x="419" y="0" width="69" height="14" uuid="362fd98a-fac1-41cb-b859-c4c6e41e4106">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b1fb513-e56a-41fe-bc66-6a61f93da132"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[" "+$F{t_guia_pagamento_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="489" y="0" width="181" height="14" uuid="12bca910-6a36-45f2-a62f-3ecc12159b9a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="36015f73-6a08-4a39-b6f6-c608807e133d"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[" "+$F{t_emolumento_emolumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="670" y="0" width="120" height="14" uuid="57aa1cd6-937c-4cdf-ad86-a4d7b2780504">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e97d1be-9673-4d29-99d5-eedce27f75bc"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textFieldExpression><![CDATA[" "+$F{t_guia_pagamento_historico_valor}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="419" y="14" width="372" height="1" uuid="8d3d3f97-ad51-456c-88f6-3c8fa0e66715"/>
+			</line>
+		</band>
+	</detail>
 	<columnFooter>
 		<band height="153">
 			<line>
@@ -778,29 +668,19 @@ WHERE
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="22" y="72" width="359" height="20" uuid="c9230ed5-bc3e-4a92-b455-d7b5033b1847"/>
+				<reportElement x="22" y="53" width="359" height="20" uuid="c9230ed5-bc3e-4a92-b455-d7b5033b1847"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Times New Roman"/>
+					<font fontName="Times New Roman" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Obs: Este documento serve apenas para uso interno.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="430" y="72" width="360" height="20" uuid="29021c7d-2904-499c-84a4-8b48c722297e"/>
+				<reportElement x="430" y="53" width="360" height="20" uuid="29021c7d-2904-499c-84a4-8b48c722297e"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Times New Roman"/>
+					<font fontName="Times New Roman" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Obs: Este documento serve apenas para uso interno.]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="22" y="52" width="344" height="20" uuid="b6297a66-f70e-4ce3-a462-850b4b10cf06"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Emitido por : "+$P{nome}+", em "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_guia_pagamento_data_emissao})]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="430" y="52" width="344" height="20" uuid="30bdc220-9e2f-4d96-ba24-3718391027b8"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Emitido por : "+$P{nome}+", em "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_guia_pagamento_data_emissao})]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="22" y="32" width="344" height="20" uuid="095bd4ca-b581-4049-a456-78a905e777b6"/>
 				<textElement verticalAlignment="Middle"/>
@@ -810,6 +690,16 @@ WHERE
 				<reportElement x="430" y="32" width="344" height="20" uuid="6afed833-d967-481e-9132-92aaae45e8d2"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Ref. "+(new DecimalFormat("#,##0.00 Akz")).format($F{t_guia_pagamento_valor})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="73" width="344" height="20" uuid="89d40bac-789b-410a-82ac-d640bd962302"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Emitido Por: "+$P{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="73" width="344" height="20" uuid="5e9e7efc-b6d9-4fe9-829b-901477abc740"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Emitido Por: "+$P{nome}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
@@ -869,6 +759,14 @@ WHERE
 				</textElement>
 				<text><![CDATA[Zona de Certificação]]></text>
 			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="282" y="77" width="100" height="16" uuid="bfd3e859-1892-4920-b060-aa3652ae7b50"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="689" y="77" width="100" height="16" uuid="d60df017-edbb-431e-a830-d74da0c5a558"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

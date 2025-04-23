@@ -201,7 +201,7 @@ public class ControllerInscricaoExtraOrdinaria {
 
 		//Matricula matriculaPesquisa = matriculaRepository.findByAlunoAndAnoLectivo(aluno, anoLectivo);
 
-		Usuario usuarioInscrveu = this.usuarioRepository.findOne(
+		Usuario usuarioInscrveu = this.usuarioRepository.findByUserCode(
 				efetuarMatricula.getUsuarioInscreveu() != null ? efetuarMatricula.getUsuarioInscreveu() : null);
 
 		// findByAnoLectivoAndAlunoAndDisciplina
@@ -301,6 +301,9 @@ public class ControllerInscricaoExtraOrdinaria {
 				guia.setAnoLectivo(lectivoGuia.get(0));
 				guia.setValor(valorGuia);
 				guia.setDataVencimento(new Date());
+				if(usuarioInscrveu == null) {
+					guia.setUsuarioEmitiu(new Usuario(59));
+				}
 				guia.setUsuarioEmitiu(usuarioInscrveu);
 				guia.setDataSistema(dataSistema);
 				guia.setUltimaModificacao(new Date());
@@ -443,6 +446,9 @@ public class ControllerInscricaoExtraOrdinaria {
 				ied.setTipoProvaExtraOrdinaria(dec.getTipoProva());
 				ied.setProva(dec.getTipoProva());
 				ied.setTurma(turma);
+				if(usuarioInscrveu == null) {
+					ied.setUsuarioInscreveu(new Usuario(59));
+				}
 				ied.setUsuarioInscreveu(usuarioInscrveu);
 				this.inscricaoExtraOrdinaria.save(ied);
 

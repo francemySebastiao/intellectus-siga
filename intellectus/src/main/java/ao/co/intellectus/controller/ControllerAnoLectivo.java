@@ -286,6 +286,30 @@ public class ControllerAnoLectivo {
 				startCal.get(Calendar.DAY_OF_WEEK);
 			} while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
 			
+			do {
+				Integer semana = indice.get(startCal.getTime().toString().substring(0,3));
+				horarioCalendario=new HorarioCalendario();
+				
+				horarioCalendario.setAno(ano);
+				horarioCalendario.setAnoLectivo(anoLectivo);
+				horarioCalendario.setInstituicao(instituicao);
+				horarioCalendario.setTipoDia(primeiro);
+				horarioCalendario.setSemestre(Semestre.ANUAL);
+				horarioCalendario.setData(startCal.getTime());
+				horarioCalendario.setDiaSemanaNome(mapaSemana.get(startCal.getTime().toString().substring(0,3)));
+				horarioCalendario.setDiaSemana(indice.get(startCal.getTime().toString().substring(0,3)));
+				
+				//if(semana!=1 && semana!=7)
+					
+				horarioCalendario.setDiaUtil(semana!=1 && semana!=7 ? true:false);
+				horarioCalendario.setFinalDeSemana(semana==1 || semana==7 ? true:false);
+				
+				horarioCalendarioRepository.save(horarioCalendario);
+				i++;
+				startCal.add(Calendar.DAY_OF_MONTH, 1);
+				startCal.get(Calendar.DAY_OF_WEEK);
+			} while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
+			
 			
 			
 			startCal = Calendar.getInstance();
@@ -303,6 +327,30 @@ public class ControllerAnoLectivo {
 				horarioCalendario.setInstituicao(instituicao);
 				horarioCalendario.setTipoDia(primeiro);
 				horarioCalendario.setSemestre(Semestre.SEGUNDO);
+				horarioCalendario.setData(startCal.getTime());
+				horarioCalendario.setDiaSemanaNome(mapaSemana.get(startCal.getTime().toString().substring(0,3)));
+				horarioCalendario.setDiaSemana(indice.get(startCal.getTime().toString().substring(0,3)));
+				
+				//if(semana!=1 && semana!=7)
+					
+				horarioCalendario.setDiaUtil(semana!=1 && semana!=7 ? true:false);
+				horarioCalendario.setFinalDeSemana(semana==1 || semana==7 ? true:false);
+				
+				horarioCalendarioRepository.save(horarioCalendario);
+				i++;
+				startCal.add(Calendar.DAY_OF_MONTH, 1);
+				startCal.get(Calendar.DAY_OF_WEEK);
+			} while (startCal.getTimeInMillis() < endCal.getTimeInMillis());
+			
+			do {
+				Integer semana = indice.get(startCal.getTime().toString().substring(0,3));
+				horarioCalendario=new HorarioCalendario();
+				
+				horarioCalendario.setAno(ano);
+				horarioCalendario.setAnoLectivo(anoLectivo);
+				horarioCalendario.setInstituicao(instituicao);
+				horarioCalendario.setTipoDia(primeiro);
+				horarioCalendario.setSemestre(Semestre.ANUAL);
 				horarioCalendario.setData(startCal.getTime());
 				horarioCalendario.setDiaSemanaNome(mapaSemana.get(startCal.getTime().toString().substring(0,3)));
 				horarioCalendario.setDiaSemana(indice.get(startCal.getTime().toString().substring(0,3)));

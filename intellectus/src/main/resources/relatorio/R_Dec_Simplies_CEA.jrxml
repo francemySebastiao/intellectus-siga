@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Dec_Simplies" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="c50a7745-ad10-499a-86a7-b72f48669b29">
+	<property name="ireport.zoom" value="1.652892561983471"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="620"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Djanilson"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="codigo_dec" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="condicao" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     
+     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
+     t_matricula."numero_de_aluno" AS t_matricula_numero_de_aluno,
+     t_aluno."documento_indentificacao" AS t_aluno_documento_indentificacao,
+     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
+     t_aluno."numero_documento_identificacao" AS t_aluno_numero_documento_identificacao,
+     t_aluno."sexo" AS t_aluno_sexo,
+     t_aluno."nome" AS t_aluno_nome,
+     t_faculdade."faculdade" AS t_faculdade_faculdade,
+     t_registro_documentos."ano_declaracao" AS t_registro_documentos_ano_declaracao,
+     t_registro_documentos."numero_declaracao" AS t_registro_documentos_numero_declaracao,
+     t_curso."grau" AS t_curso_grau,
+     t_instituicao."id" AS t_instituicao_id,
+     t_curso."descricao",
+     t_instituicao."contribuinte" AS t_instituicao_contribuinte,
+chefe_servicos_academicos
+FROM
+     "dbo"."t_ano_lectivo" t_ano_lectivo INNER JOIN "dbo"."t_matricula" t_matricula ON t_ano_lectivo."id" = t_matricula."codigo_ano_lectivo"
+     INNER JOIN "dbo"."t_aluno" t_aluno ON t_matricula."codigo_aluno" = t_aluno."id"
+     INNER JOIN "dbo"."t_curso" t_curso ON t_matricula."codigo_curso" = t_curso."id"
+     INNER JOIN "dbo"."t_faculdade" t_faculdade ON t_curso."codigo_faculdade" = t_faculdade."id"
+     INNER JOIN "dbo"."t_provincia" t_provincia ON t_aluno."codigo_provincia_nascimento" = t_provincia."id"
+     INNER JOIN "dbo"."t_registro_documentos" t_registro_documentos ON t_aluno."id" = t_registro_documentos."codigo_aluno"
+     INNER JOIN "dbo"."t_declaracao_destino" t_declaracao_destino ON t_registro_documentos."codigo_declaracao_destino" = t_declaracao_destino."id",
+     "dbo"."t_instituicao" t_instituicao
+WHERE
+     t_registro_documentos."id" = $P{codigo_dec}
+     and t_matricula."anulado" = 0
+     and t_instituicao."id"=2]]>
+	</queryString>
+	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_ano_lectivo"/>
+	</field>
+	<field name="t_matricula_numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_numero_de_aluno"/>
+	</field>
+	<field name="t_aluno_documento_indentificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_documento_indentificacao"/>
+	</field>
+	<field name="t_aluno_numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_de_aluno"/>
+	</field>
+	<field name="t_aluno_numero_documento_identificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_documento_identificacao"/>
+	</field>
+	<field name="t_aluno_sexo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_sexo"/>
+	</field>
+	<field name="t_aluno_nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome"/>
+	</field>
+	<field name="t_faculdade_faculdade" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_faculdade"/>
+	</field>
+	<field name="t_registro_documentos_ano_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_registro_documentos_ano_declaracao"/>
+	</field>
+	<field name="t_registro_documentos_numero_declaracao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_registro_documentos_numero_declaracao"/>
+	</field>
+	<field name="t_curso_grau" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_curso_grau"/>
+	</field>
+	<field name="t_instituicao_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_id"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="t_instituicao_contribuinte" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_contribuinte"/>
+	</field>
+	<field name="chefe_servicos_academicos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="chefe_servicos_academicos"/>
+	</field>
+	<variable name="variable1" class="java.util.Date" calculation="System">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="217" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="177" width="548" height="33" uuid="4622b724-bfa4-47d7-a955-f8f8416f7848"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DECLARAÇÃO"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="512" splitType="Stretch">
+			<line>
+				<reportElement x="101" y="354" width="321" height="1" uuid="8f3e187c-ef85-444c-a4b1-8f7042192f59"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement x="101" y="355" width="321" height="19" uuid="0b21ba1d-7d58-4d9f-998a-b862b81da7ff"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Professor Doutor Juan Silvio Cabrera Albert"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="44" y="-6" width="448" height="233" uuid="2a5e305d-9aa4-4f27-8089-d56c955e1d07"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font fontName="SansSerif" size="12" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Juan Silvio Cabrera, Coordenador Adjunto dos Cursos de Estudos Avançados (CEA) do Instituto Politecnico Gregorio Semedo, declara que "+$F{t_aluno_nome}+($F{t_aluno_sexo}.equals("F")? ", portadora do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("M")? ", Portador do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("null")?"--": "--")+$F{t_aluno_numero_documento_identificacao}+" esta matriculado e frequenta, com o N.º "+$F{t_matricula_numero_de_aluno}+" no Programa de Curso de Estudos Avançados em "+$F{descricao}+", no ano lectivo "+$F{t_ano_lectivo_ano_lectivo}+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="267" width="372" height="20" uuid="c1e693da-ff64-472d-8109-d5c04b88d875">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Lubango ,"+$P{data}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="44" y="273" width="448" height="20" uuid="ee17963f-270b-4452-bf72-9ead4a5c7a50">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("2")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[USO INTERNO - SEM VALOR LEGAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="70" y="429" width="102" height="1" uuid="168b8cb7-f536-4a25-9c67-a358b4a88ec7"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="2" y="411" width="72" height="20" uuid="a1793b89-4351-4c84-acff-8090b5534965"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Elaborado por:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="361" y="432" width="149" height="17" uuid="3a08af7c-f5fa-4dca-9ef0-80affef51261"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["N.º Dec. "+$F{t_registro_documentos_numero_declaracao}+"/"+($F{t_ano_lectivo_ano_lectivo}.toString().substring(2))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="361" y="409" width="149" height="22" uuid="bd774e98-ce67-4b3e-856f-7200ebd4d4c7"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Contribuinte n.º "+$F{t_instituicao_contribuinte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="101" y="312" width="321" height="20" uuid="73b17b76-5434-492e-9cfe-6489f4adea98"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Coordenador de Cursos de Estudos Avançados]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnFooter>
+		<band height="46"/>
+	</columnFooter>
+</jasperReport>

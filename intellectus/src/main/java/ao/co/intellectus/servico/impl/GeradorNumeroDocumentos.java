@@ -42,7 +42,7 @@ public class GeradorNumeroDocumentos implements GerarNumeroDocumento {
 	public String gerarNumeroFacturaRecibo(String definitivo, Integer lectivo, Long proximoNumero) {
 		
 		if (proximoNumero >= 1 && proximoNumero <= 999999)
-			definitivo = "FR IGSL" + lectivo + "/" + proximoNumero;
+			definitivo = "FR IGSN" + lectivo + "/" + proximoNumero;
 		return definitivo;
 	}
 
@@ -51,7 +51,7 @@ public class GeradorNumeroDocumentos implements GerarNumeroDocumento {
 	public String gerarNumeroNotaCredito(String definitivo, Integer lectivo, Long proximoNumero) {
 		
 		if (proximoNumero >= 1 && proximoNumero <= 999999)
-			definitivo = "NC IGSL" + lectivo + "/" + proximoNumero;
+			definitivo = "NC IGSN" + lectivo + "/" + proximoNumero;
 		return definitivo;
 	}
 
@@ -60,7 +60,7 @@ public class GeradorNumeroDocumentos implements GerarNumeroDocumento {
 	public String gerarNumeroFactura(String definitivo, Integer lectivo, Long proximoNumero) {
 		
 		if (proximoNumero >= 1 && proximoNumero <= 999999)
-			definitivo = "FT IGSL" + lectivo + "/" + proximoNumero;
+			definitivo = "FT UGS" + lectivo + "/" + proximoNumero;
 		return definitivo;
 	}
 
@@ -69,7 +69,7 @@ public class GeradorNumeroDocumentos implements GerarNumeroDocumento {
 	public String gerarNumeroRecibo(String definitivo, Integer lectivo, Long proximoNumero) {
 		
 		if (proximoNumero >= 1 && proximoNumero <= 999999)
-			definitivo = "RG IGSL" + lectivo + "/" + proximoNumero;
+			definitivo = "RG UGS" + lectivo + "/" + proximoNumero;
 		return definitivo;
 	}
 }

@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlElement;
 public class Product {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name = "product_code")
 	private String productCode;

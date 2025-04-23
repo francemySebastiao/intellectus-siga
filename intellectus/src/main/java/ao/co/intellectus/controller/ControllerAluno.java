@@ -277,7 +277,7 @@ public class ControllerAluno {
 		
 		
 		
-		//BeanUtils.copyProperties(aluno, ac, "id", "cursoID", "DescricaoCurso");
+		BeanUtils.copyProperties(aluno, ac, "id", "cursoID", "DescricaoCurso");
 		ac.setId(Integer.parseInt(aluno.getNumeroDeAluno()));
 		ac.setCurso(aluno.getCurso().getId());
 		ac.setDescricaoCurso(aluno.getCurso().getPlano());
@@ -449,7 +449,7 @@ public class ControllerAluno {
 	     
 		List<AnoLectivo> anoLectivo = this.anoLectivoRepository.findByStatus(true);
 		// curso
-		Curso curso = repositoryCurso.findByIdAndStatus(aluno.getCurso(), true);
+		Curso curso = repositoryCurso.findById(aluno.getCurso());
 		//Curso curso = repositoryCurso.findById(aluno.getCurso());
 
 		// alunoPasquisado
@@ -507,7 +507,8 @@ public class ControllerAluno {
 		
 		List<Disciplina> disciplinaMestrado = new ArrayList<Disciplina>();
 		
-		HistoricoAluno hAluno;
+		List<HistoricoAluno> hAluno;
+		HistoricoAluno segundoRegistro;
 		if(!alunoPesquisado.isFimCurso()) {
 			
 			if(alunoPesquisado.getCurso().getGrau() == Grau.MESTRADO) {
@@ -582,12 +583,21 @@ public class ControllerAluno {
 					
 				int i = 0;	
 					for (Disciplina disciplina : disciplinaMestrado) {
-						
 						hAluno = historicoAlunoRepository.NumeroDeAlunoAndDisciplinaId(aluno.getNumeroDeAluno(), disciplina.getId());
-						hAluno.setAprovado(true);
-						hAluno.setSituacao(Situacao.APROVADO);
-						hAluno.setValidada(true);
-						historicoAlunoRepository.save(hAluno);
+						
+						if(hAluno.size() > 1) {
+							segundoRegistro = hAluno.get(1);
+							segundoRegistro.setAprovado(true);
+							segundoRegistro.setSituacao(Situacao.APROVADO);
+							segundoRegistro.setValidada(true);
+							historicoAlunoRepository.save(segundoRegistro);
+						}else {
+							segundoRegistro = hAluno.get(0);
+							segundoRegistro.setAprovado(true);
+							segundoRegistro.setSituacao(Situacao.APROVADO);
+							segundoRegistro.setValidada(true);
+							historicoAlunoRepository.save(segundoRegistro);
+						}
 						
 						i=i+1;
 					}

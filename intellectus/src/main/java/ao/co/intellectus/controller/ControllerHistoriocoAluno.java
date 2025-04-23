@@ -625,6 +625,7 @@ public class ControllerHistoriocoAluno {
 		ClassificacaoCliente classificacao;
 
 		for (HistoricoAluno ha : resultado) {
+			if (ha == null) continue; 
 
 			classificacao = new ClassificacaoCliente();
 
@@ -669,7 +670,7 @@ public class ControllerHistoriocoAluno {
 			classificacao.setTipoDisciplina(ha.getDisciplina().getTipo());
 
 			System.out.println("Aqui null " + ha.isSemFrequencia() + " / " + ha.getId());
-			classificacao.setSemFrequencia(ha.isSemFrequencia());
+			classificacao.setSemFrequencia(ha.isSemFrequencia()== null ? false : ha.isSemFrequencia());
 
 			classificacao.setValidada(ha.isValidada());
 
@@ -1471,6 +1472,7 @@ public class ControllerHistoriocoAluno {
 
 		// VALIDAÇÃO
 		//int totalValidadas = 0;
+		
 		if (classificar.isValidar()) {
 			for (ClassificacaoCliente classifique : als) {
 				HistoricoAluno hAluno = this.repositoryHistoricoAluno.findOne(classifique.getId());
@@ -1480,8 +1482,11 @@ public class ControllerHistoriocoAluno {
 				
 				
 				hAluno.setUltimaModificacao(new Date());
+				
 				this.repositoryHistoricoAluno.save(hAluno);
 				this.historicoAlunoService.gerarHistorico(hAluno);
+				// System.out.println("VALIDANDO NOTA: " + hAluno.getNotaFinalContinua());
+				System.out.println(hAluno);
 			}
 			c.setResultado(classificar);
 			c.setCodigo(ResponseCode.values()[0].getDescricao());
@@ -1489,7 +1494,6 @@ public class ControllerHistoriocoAluno {
 			//c.setMensagem("Foram validadas " + totalValidadas + " notas");
 			return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
 		}
-
 		if (prova != null) {
 
 			// BUSCA A INSTITUIÇÃO PARA CREDENCIAR O A INSTITUIÇÃO
@@ -1501,9 +1505,12 @@ public class ControllerHistoriocoAluno {
 					
 					//--------------------------------------------------------------------------------
 					HistoricoAluno hAluno = this.repositoryHistoricoAluno.findOne(classifique.getId());
+					// System.out.println("isValidada: " + hAluno.isValidada());
 					if(!hAluno.isValidada()) {
 						// PRIMEIRA AVALIAÇÃO
+						// System.out.println("Primeira prova: " + classificar.getProva());
 						if (classificar.getProva() == 1) {
+							// System.err.println("Primeira Avaliação: " + classifique.getPrimeiraAvaliacao());
 							hAluno.setAvaliacao1(classifique.getPrimeiraAvaliacao());
 							hAluno.setDataPrimeiraFrequencia(new Date());
 							hAluno.setUsuarioPrimeiraFrequencia(usuario);
@@ -1655,7 +1662,9 @@ public class ControllerHistoriocoAluno {
 								
 								// DEFINIR SITUAÇÃO DO ALUNO
 								if (classifique.getRecurso() != null) {
+									System.out.println("NOTA DE RECURSO " + classifique.getRecurso());
 									float mediaRoud = Math.round(classifique.getRecurso());
+									System.out.println("MEDIA ARREDONDADA " + mediaRoud);
 									definirSituacaoDisciplina(hAluno, mediaRoud);
 								}
 							}
@@ -1815,7 +1824,7 @@ public class ControllerHistoriocoAluno {
 					Float media;
 					// VALIDAR MÉDIA PARA DISCIPLINA DO PRIMEIRO SEMESTRE.
 					if (hAluno.getDisciplina().getTipo() == TipoDisciplina.PRIMEIRO_SEMESTRE || hAluno.getDisciplina().getTipo() == TipoDisciplina.SEGUNDO_SEMESTRE) {
-
+						System.out.println("ENTROU NO SEMESTRAL");
 						float comulativa = 0;
 						float notaPoderada = 0;
 
@@ -1847,6 +1856,9 @@ public class ControllerHistoriocoAluno {
 						media = comulativa / somaDePesos;
 
 						float mediaRoud = Math.round(media);
+						System.out.println("COMULATIVA " + comulativa);
+						System.out.println("SOMA DOS PESOS " + somaDePesos);
+						System.out.println("MEDIA " + media);
 
 						// NOTA FINAL CONTINUA
 						hAluno.setNotaFinalContinua(mediaRoud);
@@ -1861,10 +1873,14 @@ public class ControllerHistoriocoAluno {
 							hAluno.setAprovado(false);
 							hAluno.setNotaFinal(null);
 						}
+						
+						System.out.println("COMULATIVA " + comulativa);
+						System.out.println("SOMA DOS PESOS " + somaDePesos);
+						System.out.println("MEDIA " + media);
 					}
 
 					// VALIDAR MÉDIA PARA DISCIPLINA DA ANUAL
-					if (hAluno.getDisciplina().getTipo() == TipoDisciplina.ANUAL) {
+					/*if (hAluno.getDisciplina().getTipo() == TipoDisciplina.ANUAL) {
 						if (hAluno.getAvaliacao1() != null && hAluno.getAvaliacao2() != null
 								&& hAluno.getAvaliacao3() != null && hAluno.getAvaliacao4() != null) {
 							media = (hAluno.getAvaliacao1() + hAluno.getAvaliacao2() + hAluno.getAvaliacao3()
@@ -1885,11 +1901,11 @@ public class ControllerHistoriocoAluno {
 								hAluno.setNotaFinal(null);
 							}
 						}
-					}
+					}*/
 
 					// COLOCAR A VALIDAÇÃO DAS RECORRENCIAS...
 					// EXAME
-					if (classificar.getProva() == 10) {
+					/*if (classificar.getProva() == 10) {
 						hAluno.setNotaExame(classifique.getExame());
 						hAluno.setDataExame(new Date());
 						hAluno.setUsuarioExame(usuario);
@@ -1899,10 +1915,10 @@ public class ControllerHistoriocoAluno {
 							float mediaRoud = Math.round(classifique.getExame());
 							definirSituacaoDisciplina(hAluno, mediaRoud);
 						}
-					}
+					}*/
 
 					// EXAME ORAL
-					if (classificar.getProva() == 11) {
+					/*if (classificar.getProva() == 11) {
 						hAluno.setNotaExameOral(classifique.getExameOral());
 						hAluno.setDataExameOral(new Date());
 						hAluno.setUsuarioExameOral(usuario);
@@ -1912,10 +1928,10 @@ public class ControllerHistoriocoAluno {
 							float mediaRoud = Math.round(classifique.getExameOral());
 							definirSituacaoDisciplina(hAluno, mediaRoud);
 						}
-					}
+					}*/
 
 					// RECURSO
-					if (classificar.getProva() == 6) {
+					/*if (classificar.getProva() == 6) {
 						List<InscricaoExtraordinaria> pagouAProva = inscricaoExtraordinariaRepository.findByAnoLectivoAndAlunoAndDisciplinaAndGuiaPagamentoLiquidadaAndProva(hAluno.getAnoLectivo(), hAluno.getAluno(), hAluno.getDisciplina(), true,TipoProvaExtraOrdinaria.ER);
 						
 						Contador contador = this.contadorRepository.findOne(33);
@@ -1943,9 +1959,9 @@ public class ControllerHistoriocoAluno {
 								definirSituacaoDisciplina(hAluno, mediaRoud);
 							}
 						}
-					}
+					}*/
 					// RECURSO ORAL
-					if (classificar.getProva() == 9) {
+					/*if (classificar.getProva() == 9) {
 						hAluno.setNotaRecursoOral(classifique.getRecursoOral());
 						hAluno.setDataNotaRecursoOral(new Date());
 						hAluno.setUsuarioRecursoOral(usuario);
@@ -1955,10 +1971,10 @@ public class ControllerHistoriocoAluno {
 							float mediaRoud = Math.round(classifique.getRecursoOral());
 							definirSituacaoDisciplina(hAluno, mediaRoud);
 						}
-					}
+					}*/
 
 					// ÉPOCA ESPECIAL
-					if (classificar.getProva() == 12) {
+					/*if (classificar.getProva() == 12) {
 						List<InscricaoExtraordinaria> pagouAProva = inscricaoExtraordinariaRepository
 								.findByAnoLectivoAndAlunoAndDisciplinaAndGuiaPagamentoLiquidadaAndProva(
 										hAluno.getAnoLectivo(), hAluno.getAluno(), hAluno.getDisciplina(), true,
@@ -1974,9 +1990,9 @@ public class ControllerHistoriocoAluno {
 								definirSituacaoDisciplina(hAluno, mediaRoud);
 							}
 						}
-					}
+					}*/
 					// ORAL ÉPOCA ESPECIAL
-					if (classificar.getProva() == 13) {
+					/*if (classificar.getProva() == 13) {
 						hAluno.setNotaEpocaEspecialOral(classifique.getEpocaEspecialOral());
 						hAluno.setDataNotaEpocaEspecialOral(new Date());
 						hAluno.setUsuarioEspecialOral(usuario);
@@ -1986,9 +2002,9 @@ public class ControllerHistoriocoAluno {
 							float mediaRoud = Math.round(classifique.getEpocaEspecialOral());
 							definirSituacaoDisciplina(hAluno, mediaRoud);
 						}
-					}
+					}*/
 					// MELHORIA
-					if (classificar.getProva() == 22) {
+					/*if (classificar.getProva() == 22) {
 						hAluno.setMelhoriaNota(classifique.getMelhorNota());
 						hAluno.setDataMelhoria(new Date());
 						hAluno.setUsuarioMelhoria(usuario);
@@ -1998,10 +2014,10 @@ public class ControllerHistoriocoAluno {
 							float mediaRoud = Math.round(classifique.getMelhorNota());
 							definirSituacaoDisciplina(hAluno, mediaRoud);
 						}
-					}
+					}*/
 
 					// MELHORIA ORAL
-					if (classificar.getProva() == 23) {
+					/*if (classificar.getProva() == 23) {
 						// hAluno.setMelhoriaNota(melhoriaNota);
 						hAluno.setMelhoriaNotaOral(classifique.getMelhoriaOral());
 						hAluno.setDataMelhoriaOral(new Date());
@@ -2012,9 +2028,9 @@ public class ControllerHistoriocoAluno {
 							float mediaRoud = Math.round(classifique.getMelhoriaOral());
 							definirSituacaoDisciplina(hAluno, mediaRoud);
 						}
-					}
+					}*/
 					// VERÃO
-					if (classificar.getProva() == 23) {
+					/*if (classificar.getProva() == 23) {
 						hAluno.setNotaCursoDeVerao(classifique.getVerao());
 						hAluno.setDataNotaCursoVerao(new Date());
 						hAluno.setUsuarioCursoVerao(usuario);
@@ -2024,7 +2040,7 @@ public class ControllerHistoriocoAluno {
 							float mediaRoud = Math.round(classifique.getVerao());
 							definirSituacaoDisciplina(hAluno, mediaRoud);
 						}
-					}
+					}*/
 
 					// AVALIAR COM BASE A RECORRENCIA
 					hAluno.setUltimaModificacao(new Date());

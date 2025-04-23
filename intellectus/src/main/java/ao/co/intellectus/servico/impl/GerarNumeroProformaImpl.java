@@ -1,7 +1,8 @@
 package ao.co.intellectus.servico.impl;
 
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -11,11 +12,14 @@ import org.springframework.stereotype.Service;
 import ao.co.intellectus.model.AnoLectivo;
 import ao.co.intellectus.model.Guia;
 import ao.co.intellectus.model.GuiaCandidatura;
+import ao.co.intellectus.model.NotaCredito;
 import ao.co.intellectus.model.NumeroGerado;
+import ao.co.intellectus.model.enumeracao.TipoDoc;
 import ao.co.intellectus.model.enumeracao.TipoFatura;
 import ao.co.intellectus.repository.AnoLectivoRepository;
 import ao.co.intellectus.repository.GuiaCandidaturaRepository;
 import ao.co.intellectus.repository.GuiaPagamentoRepository;
+import ao.co.intellectus.repository.NotaCreditoRepository;
 import ao.co.intellectus.repository.NumeroGeradoRepository;
 import ao.co.intellectus.servico.GeradorDeArquivo;
 import ao.co.intellectus.servico.GerarGuiaService;
@@ -40,6 +44,9 @@ public class GerarNumeroProformaImpl implements GerarGuiaService{
 	private GerarNumeroDocumento gerarNumeroDocService;
 	@Autowired
 	private GeradorDeArquivo gerarDocService;
+	
+	@Autowired
+	private NotaCreditoRepository notaCreditoRepo;
 	
 	FormataData forma = new FormataData();
 
@@ -113,16 +120,26 @@ public class GerarNumeroProformaImpl implements GerarGuiaService{
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         //String dataSistema = sdf.format(guia.getDataLiquidacao());
 		
-		LocalDateTime localDate = LocalDateTime.now();
+		/*LocalDateTime localDate = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-		String dataSistema = localDate.format(formatter);
+		String dataSistema = localDate.format(formatter);*/
 		
-		String numero = "";
+		Instant instant = Instant.ofEpochMilli(guia.getDataLiquidacao().getTime());
+	    LocalDateTime dataLiquidacao = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+	    
+	    LocalDateTime horaAtual = LocalDateTime.now();
+	    
+	    LocalDateTime dataHoraCombinada = LocalDateTime.of(dataLiquidacao.toLocalDate(), horaAtual.toLocalTime());
+	    
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	    String dataHoraFormatada = dataHoraCombinada.format(formatter);
 
 		/*AnoLectivo anoActivo = anoLectivoRepository.buscarPorEstado();
 		String ano = String.valueOf(anoActivo.getAnoLectivo());
 		String anoSubstring = ano.substring(2, 4);
 		Integer anoLimpo = Integer.parseInt(anoSubstring);*/
+	    
+		String numero = "";
 
 		NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(7);
 		Long proximoNumero = numeroGerado.getProximoNumero();
@@ -130,31 +147,74 @@ public class GerarNumeroProformaImpl implements GerarGuiaService{
 		numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, forma.anoLectivo(), proximoNumero);
 
 		Guia FacturaReciboExiste = this.repository.findFacturaRecibo(numero);
-		GuiaCandidatura faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numero);
-		if (FacturaReciboExiste != null || faturaReciboCandidatura != null) {
+		//GuiaCandidatura faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numero);
+		if (FacturaReciboExiste != null ) {
 			do {
 				proximoNumero++;
 
 				numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, forma.anoLectivo(), proximoNumero);
 				FacturaReciboExiste = this.repository.findFacturaRecibo(numero);
-				faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numero);
-			} while (FacturaReciboExiste != null || faturaReciboCandidatura != null);
+				//faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numero);
+			} while (FacturaReciboExiste != null);
 		}
-		guia.setDataEmissaoFr(guia.getDataEmicao());
-		guia.setAcordo(false);
-		//guia.setDataSistemaFr(guia.getDataSistema());
-		//guia.setParaAcordoPagamento(false);
-		//guia.setGeradaOnline(false);
-		//guia.setGeradaReferencia(false);
-		//guia.setGerouCredito(false);
+
+		//guia.setDataEmissaoFr(guia.getDataLiquidacao());
+		//guia.setDataSistemaFr(dataHoraFormatada);
+		guia.setParaAcordoPagamento(false);
+		guia.setGeradaOnline(false);
+		guia.setGeradaReferencia(false);
+		guia.setGerouCredito(false);
 		guia.setNumeroFacturaRecibo(numero);
-		guia.setHashFacturaRecibo(numero);
-		guia.getDataLiquidacao();
-		guia.getId();
+		//guia.setTipoFactura(TipoFatura.FACTURA_RECIBO);
 
 		Guia guiaGuardada = this.repository.save(guia);
 		
 		this.gerarDocService.gerarFileFacturaReciboAluno(guiaGuardada);
+
+		numeroGerado.setUltimoNumero(proximoNumero);
+		numeroGerado.setProximoNumero(proximoNumero + 1);
+		this.numeroGeradoRepository.save(numeroGerado);
+		
+	}
+
+	@Override
+	public void gerarFileNotaCredito(NotaCredito notaCredito) {
+		
+		Instant instant = Instant.ofEpochMilli(notaCredito.getDataEmissao().getTime());
+	    LocalDateTime dataEmissao = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+	    
+	    LocalDateTime horaAtual = LocalDateTime.now();
+	    
+	    LocalDateTime dataHoraCombinada = LocalDateTime.of(dataEmissao.toLocalDate(), horaAtual.toLocalTime());
+	    
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+	    String dataHoraFormatada = dataHoraCombinada.format(formatter);
+
+		String numero = "";
+
+		NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(10);
+		Long proximoNumero = numeroGerado.getProximoNumero();
+
+		numero = gerarNumeroDocService.gerarNumeroNotaCredito(numero, forma.anoLectivo(), proximoNumero);
+
+		NotaCredito notaCreditoExiste = this.notaCreditoRepo.buscarNumeroNotaCredito(numero);
+		if (notaCreditoExiste != null) {
+			do {
+				proximoNumero++;
+
+				numero = gerarNumeroDocService.gerarNumeroNotaCredito(numero, forma.anoLectivo(), proximoNumero);
+				notaCreditoExiste = this.notaCreditoRepo.buscarNumeroNotaCredito(numero);
+
+			} while (notaCreditoExiste != null);
+		}
+
+		//notaCredito.setDataSistema(dataHoraFormatada);
+		notaCredito.setNumeroNotaCredito(numero);
+		//notaCredito.setTipoDoc(TipoDoc.FACTURA_RECIBO);
+
+		NotaCredito notaCreditoGuardada = this.notaCreditoRepo.save(notaCredito);
+		
+		this.gerarDocService.gerarFileNotaCredito(notaCreditoGuardada);
 
 		numeroGerado.setUltimoNumero(proximoNumero);
 		numeroGerado.setProximoNumero(proximoNumero + 1);

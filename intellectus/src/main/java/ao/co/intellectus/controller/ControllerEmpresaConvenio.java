@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ao.co.intellectus.DTO.AlunoResumoCliente;
+import ao.co.intellectus.DTO.BolseirosListaCliente;
 import ao.co.intellectus.DTO.ConvenioCliente;
 import ao.co.intellectus.model.Aluno;
 import ao.co.intellectus.model.AnoLectivo;
@@ -106,14 +107,19 @@ public class ControllerEmpresaConvenio {
 	@ResponseBody
 	public ResponseEntity<ResponseCliente> efetuarConvenio(@RequestBody ConvenioCliente convenio) {
         ResponseCliente c=new ResponseCliente();
-       
-        EmpresaConvenio empresa = this.convenioRepository.findOne(convenio.getEmpresa());
-        AnoLectivo ano = this.anoLectivo.findOne(convenio.getAnoLectivo());
         
+        EmpresaConvenio empresa = this.convenioRepository.findOne(convenio.getEmpresa());
+        ContaCorrenteEmpresa contaEmpresa = contaCorrenteEmpresaRepo.buscarEmpresa(convenio.getEmpresa());
+      
+        AnoLectivo ano = this.anoLectivo.findOne(convenio.getAnoLectivo());
         
         CreaditoDeAluno credito;
         List<AlunoResumoCliente> bolceiros = convenio.getBolseiros();
         
+        double somaValores = 0;
+		for (AlunoResumoCliente o : bolceiros) {
+			somaValores += o.getValorAdd();
+		}
         
         if(bolceiros.isEmpty()) {
         	c.setCodigo(ResponseCode.values()[2].getDescricao()); 
@@ -121,40 +127,58 @@ public class ControllerEmpresaConvenio {
     		return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
         }
         
-
-       
-        for (AlunoResumoCliente aluno : bolceiros) {
-        	if(!aluno.isStatus()) {
-        		
-        		credito=new CreaditoDeAluno();
-            	Aluno alunoPego = this.alunoRepository.findOne(aluno.getId());
-          
-            	System.out.println("Aluno " + alunoPego);
-            	ContaCorrenteAluno contaAluno = this.contaCorrenteRepository.findByAluno(alunoPego);
-            	
-            	credito.setAluno(alunoPego);
-            	credito.setNumeroDeAluno(Integer.parseInt(alunoPego.getNumeroDeAluno()));
-            	credito.setEmpresa(empresa);
-            	credito.setDataRegistro(new Date());
-            	credito.setAnoLectivo(ano);
-            	credito.setValor(aluno.getValorAdd());
-            	this.creditoAlunoRepository.save(credito);
-            	
-            	
-            	//ALTERAR OS DADOS DA CONTA CORRENTE
-            	double  valor = contaAluno.getValor() + aluno.getValorAdd();
-            	contaAluno.setValorAnterior(contaAluno.getValor());
-            	contaAluno.setValor(valor);
-            	this.contaCorrenteRepository.save(contaAluno);
-            	//SALVAR CONTA CORRENTE
-            	this.contaCorrenteRepository.save(contaAluno);
-            	
-        	}
-		}
         
-        c.setResultado(convenio);
-		c.setCodigo(ResponseCode.values()[0].getDescricao()); 
-	    c.setMensagem("Registro de crédito efetuado com sucesso111!");
-		return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
-	} 
+       
+        if(convenio.getValor() >= somaValores) {
+        	
+        	for (AlunoResumoCliente aluno : bolceiros) {
+            	if(!aluno.isStatus()) {
+            		
+            		credito=new CreaditoDeAluno();
+            		
+                	Aluno alunoPego = this.alunoRepository.findByNumeroDeAluno(aluno.getId().toString());
+                	
+                	ContaCorrenteAluno contaAluno = this.contaCorrenteRepository.findByAluno(alunoPego);
+                	
+                	credito.setAluno(alunoPego);
+                	credito.setNumeroDeAluno(Integer.parseInt(alunoPego.getNumeroDeAluno()));
+                	credito.setEmpresa(empresa);
+                	credito.setDataRegistro(new Date());
+                	credito.setAnoLectivo(ano);
+                	credito.setValor(aluno.getValorAdd());
+                	this.creditoAlunoRepository.save(credito);
+                	
+                	
+                	//ALTERAR OS DADOS DA CONTA CORRENTE
+                	double  valor = contaAluno.getValor() + aluno.getValorAdd();
+                	contaAluno.setValorAnterior(contaAluno.getValor());
+                	contaAluno.setValor(valor);
+                	contaAluno.setDataMovimento(new Date());
+                	this.contaCorrenteRepository.save(contaAluno);
+                	//SALVAR CONTA CORRENTE
+                	this.contaCorrenteRepository.save(contaAluno);
+                	
+            	}
+    		}
+        	
+        	double novoValor = 0.0;
+			double valorAntigo = contaEmpresa.getValor();
+			
+			novoValor = contaEmpresa.getValor() - somaValores;
+			contaEmpresa.setValorAnterior(valorAntigo);
+			contaEmpresa.setValor(novoValor);
+			
+			contaCorrenteEmpresaRepo.save(contaEmpresa);
+			
+			c.setResultado(convenio);
+    		c.setCodigo(ResponseCode.values()[0].getDescricao()); 
+    	    c.setMensagem("Registro de crédito efetuado com sucesso");
+    		return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
+    		
+        }
+        
+        c.setCodigo(ResponseCode.values()[3].getDescricao()); 
+	    c.setMensagem("O total distribuído deve ser igual ao valor depósito");
+		return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);	
+	}
 }

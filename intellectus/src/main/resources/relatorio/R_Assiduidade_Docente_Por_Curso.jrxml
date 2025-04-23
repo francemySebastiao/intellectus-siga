@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Assiduidade_Docente" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bdacf13-7dd7-4dc4-a1d1-22dd1e2cb0d2">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Qualidade_UGS"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -12,13 +11,16 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="data1" class="java.util.Date"/>
 	<parameter name="data2" class="java.util.Date"/>
 	<parameter name="id_curso" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[select * , LM.FOTO from V_LT_ASSIDUIDADE_DOCENTE, t_logo_marca LM
-WHERE  DIA_AULA BETWEEN  $P{data1} AND  $P{data2} 
-AND  CURSO_ID=$P{id_curso} 
+WHERE  DIA_AULA BETWEEN  $P{data1} AND  $P{data2}
+AND  CURSO_ID=$P{id_curso}
 ORDER BY 1]]>
 	</queryString>
 	<field name="DIA_AULA" class="java.sql.Date">
@@ -216,7 +218,7 @@ ORDER BY 1]]>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</line>
-			<image>
+			<image scaleImage="FillFrame">
 				<reportElement x="0" y="4" width="80" height="69" uuid="622c0ee4-f104-46c0-a0f9-9cd30eac1ba7"/>
 				<imageExpression><![CDATA[$F{foto}]]></imageExpression>
 			</image>

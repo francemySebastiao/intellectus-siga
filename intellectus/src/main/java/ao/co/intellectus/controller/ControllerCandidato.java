@@ -512,16 +512,17 @@ public class ControllerCandidato {
 			 */
 
 			// ínico de nova validação
+			System.out.println("instituicao " + instituicao.getDescricao());
 			if (instituicao != null) {
 				String descricao = instituicao.getDescricao();
 				if (descricao.equals("Universidade Gregório Semedo")) {
 					if (curso.getGrau() == Grau.LICENCIATURA) {
 						valorGuia = emolPag.getValor();
 						System.out.println("3 - Valor da guia" + valorGuia);
-					} else {
-						valorGuia = 0;
-						System.out.println("4 - Valor da guia" + valorGuia);
 					}
+				}else {
+					valorGuia = 0;
+					System.out.println("4 - Valor da guia" + valorGuia);
 				}
 			}
 
@@ -542,28 +543,19 @@ public class ControllerCandidato {
 			if (curso.getGrau() == Grau.POSGRADUACAO) {
 				emolumento = this.emolumentoRepositry.findByCodigo(6);
 				emolPag = this.emolumentoHistoricoRepository.findByEmolumentoAndCursoAndAnoLectivo(emolumento,
-						candidato.getCurso(), candidato.getAnoLectivo());
-//				System.out.println("Candidato--> " + candidato.getId());
-//				System.out.println("Emolumento vazio--> " + emolumento.getId());
-//				System.out.println("Candidato e Curso vazio--> " + candidato.getCurso().getId());
-//				
+						candidato.getCurso(), candidato.getAnoLectivo());				
 				valorGuia = 0;
 				System.out.println("6 - Valor da guia" + valorGuia);
-
-				// valorGuia = emolPag.getValor();
-
 			}
 
 			if (curso.getGrau() == Grau.MESTRADO) {
 				emolumento = this.emolumentoRepositry.findByCodigo(6);
 				emolPag = this.emolumentoHistoricoRepository.findByEmolumentoAndCursoAndAnoLectivo(emolumento,
 						candidato.getCurso(), candidato.getAnoLectivo());
-				// valorGuia = emolPag.getValor();
 				valorGuia = 0;
 				System.out.println("7 - Valor da guia" + valorGuia);
 
 			}
-			System.out.println("8 - Valor da guia" + valorGuia);
 			// gerar guia de candidatura.
 			GuiaCandidatura guia = new GuiaCandidatura(candidato, new Date(), valorGuia, new Date(), true);
 
@@ -1638,6 +1630,7 @@ public class ControllerCandidato {
 		Instituicao instituicao = this.instituicaoRepository.findOne(2);
 
 		Pais nacionalidade = this.paisReposiotry.findOne(c.getNacionalidade().getId());
+		Pais paisResidencia = this.paisReposiotry.findOne(1);
 		Provincia provinciaResidencia = c.getProvinciaResidencia() != null
 				? this.provinciaRepsitory.findOne(c.getProvinciaResidencia().getId())
 				: null;
@@ -1680,9 +1673,10 @@ public class ControllerCandidato {
 			aluno.setDataCadastro(new Date());
 			aluno.setDataCandidatura(c.getDataCandidatura());
 			aluno.setNacionalidade(nacionalidade);
-			aluno.setProvinciaResidencia(provinciaResidencia);
 			aluno.setProvincia(provincia);
 			aluno.setMunicipio(municipio);
+			aluno.setPaisDeResidencia(paisResidencia);
+			aluno.setProvinciaResidencia(provinciaResidencia);
 			aluno.setMunicipioResidencia(municipioResidencia);
 			aluno.setCopiaCertificado(false);
 			aluno.setCopiaDocumentoMilitar(false);

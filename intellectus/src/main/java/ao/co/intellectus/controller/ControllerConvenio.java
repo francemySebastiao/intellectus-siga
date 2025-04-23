@@ -29,14 +29,12 @@ import ao.co.intellectus.DTO.CreditosResumoCliente;
 import ao.co.intellectus.DTO.RegistroCreditoBolceiros;
 import ao.co.intellectus.model.Aluno;
 import ao.co.intellectus.model.AnoLectivo;
-import ao.co.intellectus.model.Banco;
-import ao.co.intellectus.model.Bordero;
 import ao.co.intellectus.model.ContaCorrenteAluno;
+import ao.co.intellectus.model.ContaCorrenteEmpresa;
 import ao.co.intellectus.model.CreaditoDeAluno;
 import ao.co.intellectus.model.EmpresaConvenio;
 import ao.co.intellectus.model.HistoricoCredito;
 import ao.co.intellectus.model.Instituicao;
-import ao.co.intellectus.model.Moeda;
 import ao.co.intellectus.model.NumeroGerado;
 import ao.co.intellectus.model.ProgHistoricoCrtBolseiro;
 import ao.co.intellectus.model.Usuario;
@@ -44,14 +42,12 @@ import ao.co.intellectus.model.reponse.ResponseCliente;
 import ao.co.intellectus.model.reponse.ResponseCode;
 import ao.co.intellectus.repository.AlunoRepository;
 import ao.co.intellectus.repository.AnoLectivoRepository;
-import ao.co.intellectus.repository.BancoRepository;
-import ao.co.intellectus.repository.BorderoRepository;
 import ao.co.intellectus.repository.ContaCorrenteRepository;
+import ao.co.intellectus.repository.ContaCorreteEmpresaRepository;
 import ao.co.intellectus.repository.CreditoAlunoRepository;
 import ao.co.intellectus.repository.EmpresaConvenioRepository;
 import ao.co.intellectus.repository.HistoricoCreditoRepository;
 import ao.co.intellectus.repository.InstituicaoRepository;
-import ao.co.intellectus.repository.MoedaRepository;
 import ao.co.intellectus.repository.NumeroGeradoRepository;
 import ao.co.intellectus.repository.ProgHistoricoCrtBolseiroRepository;
 import ao.co.intellectus.repository.UsuarioRepository;
@@ -76,12 +72,7 @@ public class ControllerConvenio {
 	private ContaCorrenteRepository contaCorrenteRepository;
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	@Autowired
-	private BorderoRepository borderoRepository;
-	@Autowired
-	private BancoRepository bancoRepository;
-	@Autowired
-	private MoedaRepository moedaRepository;
+	
 	@Autowired
 	private InstituicaoRepository instituicaoRepository;
 	@Autowired
@@ -90,25 +81,27 @@ public class ControllerConvenio {
 	private NumeroGeradoRepository numeroGeradoRepository;
 	@Autowired
 	private ProgHistoricoCrtBolseiroRepository progHistoricoBolseiroRepository;
+	@Autowired
+	private ContaCorreteEmpresaRepository contaCorrenteEmpresaRepo;
 	
 	@Transactional
-	@RequestMapping(value = "/registrarCredito", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/registrarCreditoEmpresaAluno", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	@CrossOrigin(origins = "*")
 	public ResponseEntity<ResponseCliente> buscar(@RequestBody RegistroCreditoBolceiros convenio) {
 		
-		
 		ResponseCliente c = new ResponseCliente();
 		
-			
+
 			System.out.println("Estou a bater aqui");
 			
 			EmpresaConvenio empresa = this.convenioRepository.findOne(convenio.getEmpresa());
+			ContaCorrenteEmpresa contaEmpresa = contaCorrenteEmpresaRepo.buscarEmpresa(convenio.getEmpresa());
 			
 			AnoLectivo ano          = this.anoLectivo.findOne(convenio.getAnoLectivo());
 			Usuario usuario         = this.usuarioRepository.findByUserName(convenio.getUserName() != null ? convenio.getUserName() : null);
-			Moeda moeda             = this.moedaRepository.findOne(3);
-			Banco banco             = this.bancoRepository.findOne(convenio.getBanco());
+			//Moeda moeda             = this.moedaRepository.findOne(3);
+			//Banco banco             = this.bancoRepository.findOne(convenio.getBanco());
 			
 			
 			Instituicao instituicao = this.instituicaoRepository.findOne(2);
@@ -129,15 +122,13 @@ public class ControllerConvenio {
 
 			String mensagem="";
 			Integer codigo=0;
-			if (convenio.getValor() == somaValores) {
+			if (convenio.getValor() >= somaValores) {
 
-				Bordero bordero;
 				Aluno alunoPego;
 				ContaCorrenteAluno conta;
 				Double valorAnterior;
 				for (BolseirosListaCliente bo : bolseiros) {
-					System.out.println("Entrou no for ");
-					System.out.println("Ole " + bo.getNumeroDeAluno());
+					
 					alunoPego = this.alunoRepository.findByNumeroDeAluno(bo.getNumeroDeAluno());
 					conta     = this.contaCorrenteRepository.findByAluno(alunoPego);
 
@@ -146,23 +137,9 @@ public class ControllerConvenio {
 					
 					conta.setValorAnterior(valorAnterior);
 					double valorSomado = bo.getValorAdd() + valorAnterior;
-					System.out.println("Valor add " + bo.getValorAdd());
+					
 					conta.setValor(valorSomado);
 					this.contaCorrenteRepository.save(conta);
-					System.out.println("Salvou a conta corrente");
-
-					// REGISTAR O BORDERO NA TABELA BORDERO
-					bordero = new Bordero();
-					bordero.setNumero(convenio.getNumeroBorderoux());
-					bordero.setAluno(alunoPego);
-					bordero.setBanco(banco);
-					bordero.setDataRegistro(new Date());
-					bordero.setDataDeposito(convenio.getDataDeposito());
-					bordero.setValor(bo.getValorAdd());
-					bordero.setMoeda(moeda);
-					// SALVAR BORDEREUX
-					Bordero borderoSalvo = this.borderoRepository.save(bordero);
-					System.out.println("Salvou o bordero");
 
 					// SALVA O HISTORICO DE ALUNO POR EMPRESA DOS CREDORA
 					credito = new CreaditoDeAluno();
@@ -172,10 +149,7 @@ public class ControllerConvenio {
 					credito.setDataRegistro(new Date());
 					credito.setAnoLectivo(ano);
 					credito.setValor(bo.getValorAdd());
-					credito.setDataDeposito(convenio.getDataDeposito());
-					credito.setBordero(convenio.getNumeroBorderoux());
-					credito.setMoeda(moeda);
-					credito.setBanco(banco);
+					credito.setDataDeposito(new Date());
 					
 					this.creditoAlunoRepository.save(credito);
 					
@@ -187,31 +161,25 @@ public class ControllerConvenio {
 					hCredito.setAluno(alunoPego);
 					hCredito.setNumeroDeAluno(Integer.parseInt(alunoPego.getNumeroDeAluno()));
 					hCredito.setAnoLectivo(ano);
-					hCredito.setBanco(banco);
-					hCredito.setBordero(borderoSalvo);
 					hCredito.setDataDepositoExterno(convenio.getDataDeposito());
 					hCredito.setBorderoExterno(convenio.getNumeroBorderoux());
 
 					float valor = (float) bo.getValorAdd();
 					hCredito.setValorDeposito(valor);
-					hCredito.setMoeda(banco.getMoeda());
+					//hCredito.setMoeda(banco.getMoeda());
 					if(usuario==null)
-						usuario=this.usuarioRepository.findOne(45);
+						usuario=this.usuarioRepository.findOne(12);
 					hCredito.setUsuarioEmitiu(usuario);
-					
-					System.out.println("Salvou o usuário ");
 
 					hCredito.setDataRegisto(new Date());
 					hCredito.setInstituicao(instituicao);
-					hCredito.setBordero(borderoSalvo);
+					
 					//GERAR O CÓDIGO DO BORDEREUX INTERNO
 					//-------------------------------------------------------------------------------------------------
 					String definitivo         = "";
 					Integer lectivo           = ano.getAnoLectivo();
 					NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(5);
 					Long proximoNumeroInteiro = numeroGerado.getProximoNumero();
-					
-					
 					
 					//metódo gerar numero de guia chamado
 					
@@ -246,6 +214,14 @@ public class ControllerConvenio {
 					
 				}
 				
+			double novoValor = 0.0;
+			double valorAntigo = contaEmpresa.getValor();
+			
+			novoValor = contaEmpresa.getValor() - somaValores;
+			contaEmpresa.setValorAnterior(valorAntigo);
+			contaEmpresa.setValor(novoValor);
+			
+			contaCorrenteEmpresaRepo.save(contaEmpresa);	
 				
 			}else {
 				codigo=3;

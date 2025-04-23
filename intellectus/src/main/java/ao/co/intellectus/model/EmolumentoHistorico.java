@@ -26,7 +26,7 @@ public class EmolumentoHistorico {
 	@JoinColumn(name="codigo_moeda")
 	private Moeda moeda;
 	private float valor;
-	private String turno;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -63,11 +63,4 @@ public class EmolumentoHistorico {
 	public void setValor(float valor) {
 		this.valor = valor;
 	}
-	public String getTurno() {
-		return turno;
-	}
-	public void setTurno(String turno) {
-		this.turno = turno;
-	}
-	
 }

@@ -169,6 +169,8 @@ public class ControllerDeclaracaoDestino {
 			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Dec_Simples_Pos.jasper");
 		} else if(aluno.getCurso().getGrau() == Grau.MESTRADO) {
 			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Declaracao_Simples_Mestrado.jasper");
+		}else if(aluno.getCurso().getGrau()== Grau.CEA) {
+			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Dec_Simplies_CEA.jasper");
 		}
 		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
@@ -251,6 +253,9 @@ public class ControllerDeclaracaoDestino {
 	@ResponseBody
 	@CrossOrigin(origins = "*")
 	public ResponseEntity<byte[]> certificadoFinal(@RequestParam Integer id, @RequestParam Integer numeroPedido,@RequestParam String condicao) throws Exception {
+		
+		System.out.println("ESTOU DENTO DA COISA..."+condicao);
+		
 		byte[] relatrio = servicoCertificadoFinal(id, numeroPedido, condicao);
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatrio);
 	}
@@ -299,7 +304,7 @@ public class ControllerDeclaracaoDestino {
 		}
 		
 		if(aluno.getCurso().getGrau()==Grau.MESTRADO) {
-			
+			System.out.println("IMPRESS#AO CERTIFICADO FINAL");
 			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Certificado_Final_Mestrado.jasper");
 		}
 		

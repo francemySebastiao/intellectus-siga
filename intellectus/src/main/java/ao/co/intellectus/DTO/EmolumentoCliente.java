@@ -7,6 +7,7 @@ public class EmolumentoCliente {
 	private double valor;
 	private Integer percentagemIva;
 	private String codigoIva;
+	private boolean propina;
 	
 	
 	public Integer getId() {
@@ -44,6 +45,12 @@ public class EmolumentoCliente {
 	}
 	public void setCodigoIva(String codigoIva) {
 		this.codigoIva = codigoIva;
+	}
+	public boolean isPropina() {
+		return propina;
+	}
+	public void setPropina(boolean propina) {
+		this.propina = propina;
 	}
 	
 	

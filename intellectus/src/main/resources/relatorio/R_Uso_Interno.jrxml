@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Certificado_Intermedio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="1a9393c7-bfd7-45c4-8a08-a36bcde105ba">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MSSQLSERVER"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="75"/>
+	<property name="ireport.y" value="49"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Qualidade_Reestruturação"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="264"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="729"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="529"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="457"/>
 	<parameter name="numero_matricula" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -15,242 +15,155 @@
 	<parameter name="data" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-     ci.codigo_disciplina id,
-     ci.numero as numero_de_aluno,
-     ci.nota_final,
-     ci.validacao,
-     ci.ano_curricular,
-     ci.disciplina,
-     ci."numero" AS V_CERTIFICADO_INTERMEDIO_numero,
-     t_aluno."id" AS t_aluno_id,
-     t_aluno."arquivo_identificacao" AS t_aluno_arquivo_identificacao,
-     t_aluno."atestado_medico" AS t_aluno_atestado_medico,
-     t_aluno."bairro" AS t_aluno_bairro,
-     t_aluno."data_emissao_identidade" AS t_aluno_data_emissao_identidade,
-     t_aluno."data_fim_do_curso" AS t_aluno_data_fim_do_curso,
-     t_aluno."data_inativo" AS t_aluno_data_inativo,
-     t_aluno."data_nascimento" AS t_aluno_data_nascimento,
-     t_aluno."documento_indentificacao" AS t_aluno_documento_indentificacao,
-     t_aluno."fim_curso" AS t_aluno_fim_curso,
-     t_aluno."media_final" AS t_aluno_media_final,
-     t_aluno."morada" AS t_aluno_morada,
-     t_aluno."nome" AS t_aluno_nome,
-     t_aluno."nome_da_mae" AS t_aluno_nome_da_mae,
-     t_aluno."nome_do_pai" AS t_aluno_nome_do_pai,
-     t_aluno."numero_de_aluno" AS t_aluno_numero_de_aluno,
-     t_aluno."numero_documento_identificacao" AS t_aluno_numero_documento_identificacao,
-     t_aluno."profissao_mae" AS t_aluno_profissao_mae,
-     t_aluno."profissao_pai" AS t_aluno_profissao_pai,
-     t_aluno."sexo" AS t_aluno_sexo,
-     t_curso."descricao" AS t_curso_descricao,
-     t_curso."grau" AS t_curso_grau,
-     t_curso."quantidade_cadeiras" AS t_curso_quantidade_cadeiras,
-     t_provincia."provincia" AS t_provincia_provincia,
-     t_municipio."descricao" AS t_municipio_descricao,
-     t_faculdade."cargo" AS t_faculdade_cargo,
-     t_faculdade."faculdade" AS t_faculdade_faculdade,
-     t_faculdade."responsavel" AS t_faculdade_responsavel,
-     t_faculdade."codigo_instituicao" AS t_faculdade_codigo_instituicao,
-     t_faculdade."cargo2" AS t_faculdade_cargo2,
-     t_faculdade."responsavel2" AS t_faculdade_responsavel2,
-     t_instituicao."chefe_servicos_academicos" AS t_instituicao_chefe_servicos_academicos,
-     t_instituicao."secretario_geral" AS t_instituicao_secretario_geral,
-     t_disciplina."ano_corricular" AS t_disciplina_ano_corricular,
-     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
-     ci."equivalencia" AS V_CERTIFICADO_INTERMEDIO_equivalencia,
-     ci."validacao" AS V_CERTIFICADO_INTERMEDIO_validacao,
-     ci."pode_equivalencia" AS V_CERTIFICADO_INTERMEDIO_pode_equivalencia,
-     ci."ano_curricular" AS V_CERTIFICADO_INTERMEDIO_ano_curricular,
-     ci."disciplina" AS V_CERTIFICADO_INTERMEDIO_disciplina,
-     ci."nota_final" AS V_CERTIFICADO_INTERMEDIO_nota_final,
-     ci."ano_lectivo" AS V_CERTIFICADO_INTERMEDIO_ano_lectivo,
-     t_municipio."concordancia" AS t_municipio_concordancia,
-     t_provincia."concordancia" AS t_provincia_concordancia,
-	 ci.validacao
+     *,
+     v_uso_interno."ID_ALUNO" AS v_uso_interno_ID_ALUNO,
+     v_uso_interno."ARQUIVO_IDENTIFICACAO" AS v_uso_interno_ARQUIVO_IDENTIFICACAO,
+     v_uso_interno."MORADA" AS v_uso_interno_MORADA,
+     v_uso_interno."ATESTADO_MEDICO" AS v_uso_interno_ATESTADO_MEDICO,
+     v_uso_interno."DATA_EMISSAO_DOCUMENTO" AS v_uso_interno_DATA_EMISSAO_DOCUMENTO,
+     v_uso_interno."DATA_FIM_CURSO" AS v_uso_interno_DATA_FIM_CURSO,
+     v_uso_interno."DATA_INATIVACAO" AS v_uso_interno_DATA_INATIVACAO,
+     v_uso_interno."TIPO_DOCUMENTO" AS v_uso_interno_TIPO_DOCUMENTO,
+     v_uso_interno."DATA_NASCIMENTO" AS v_uso_interno_DATA_NASCIMENTO,
+     v_uso_interno."FIM_CURSO" AS v_uso_interno_FIM_CURSO,
+     v_uso_interno."NOME" AS v_uso_interno_NOME,
+     v_uso_interno."MEDIA_FINAL" AS v_uso_interno_MEDIA_FINAL,
+     v_uso_interno."NOME_MAE" AS v_uso_interno_NOME_MAE,
+     v_uso_interno."NOME_PAI" AS v_uso_interno_NOME_PAI,
+     v_uso_interno."GENERO" AS v_uso_interno_GENERO,
+     v_uso_interno."NUMERO_IDENTIFICACAO" AS v_uso_interno_NUMERO_IDENTIFICACAO,
+     v_uso_interno."CURSO" AS v_uso_interno_CURSO,
+     v_uso_interno."GRAU_ACADEMICO" AS v_uso_interno_GRAU_ACADEMICO,
+     v_uso_interno."QUANTIDADE_CADEIRAS" AS v_uso_interno_QUANTIDADE_CADEIRAS,
+     v_uso_interno."PROVINCIA" AS v_uso_interno_PROVINCIA,
+     v_uso_interno."MUNICIPIO" AS v_uso_interno_MUNICIPIO,
+     v_uso_interno."CARGO_DECANO" AS v_uso_interno_CARGO_DECANO,
+     v_uso_interno."NOME_FACULDADE" AS v_uso_interno_NOME_FACULDADE,
+     v_uso_interno."NOME_DECANO" AS v_uso_interno_NOME_DECANO,
+     v_uso_interno."ID_INSTITUICAO" AS v_uso_interno_ID_INSTITUICAO,
+     v_uso_interno."CARGO_VICE_DECANO" AS v_uso_interno_CARGO_VICE_DECANO,
+     v_uso_interno."CHEFE_SERVICOS_ACADEMICOS" AS v_uso_interno_CHEFE_SERVICOS_ACADEMICOS,
+     v_uso_interno."SECRETARIO_GERAL" AS v_uso_interno_SECRETARIO_GERAL,
+     v_uso_interno."ID_DISCIPLINA" AS v_uso_interno_ID_DISCIPLINA,
+     v_uso_interno."NUMERO_ALUNO" AS v_uso_interno_NUMERO_ALUNO,
+     v_uso_interno."DISCIPLINA" AS v_uso_interno_DISCIPLINA,
+     v_uso_interno."VALIDADA" AS v_uso_interno_VALIDADA,
+     v_uso_interno."NOTA_FINAL" AS v_uso_interno_NOTA_FINAL,
+     v_uso_interno."ID_ANO_LECTIVO" AS v_uso_interno_ID_ANO_LECTIVO,
+     v_uso_interno."ANO_CURRICULAR" AS v_uso_interno_ANO_CURRICULAR,
+     v_uso_interno."ANO_LECTIVO" AS v_uso_interno_ANO_LECTIVO,
+     v_uso_interno."PODE_EQUIVALENCIA" AS v_uso_interno_PODE_EQUIVALENCIA,
+     v_uso_interno."EQUIVALENCIA" AS v_uso_interno_EQUIVALENCIA
 FROM
-     "dbo"."t_aluno" t_aluno
-	 INNER JOIN "dbo"."t_curso" t_curso ON t_aluno."codigo_curso" = t_curso."id"
-     INNER JOIN "dbo"."t_provincia" t_provincia ON t_aluno."codigo_provincia_nascimento" = t_provincia."id"
-     INNER JOIN "dbo"."t_municipio" t_municipio ON t_aluno."codigo_municipio_nascimento" = t_municipio."id"
-     INNER JOIN "V_CERTIFICADO_INTERMEDIO" ci ON t_aluno."numero_de_aluno" = ci."numero"
-     INNER JOIN "dbo"."t_disciplina" t_disciplina ON ci."codigo_disciplina" = t_disciplina."id"
-     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON ci."ano_lectivo" = t_ano_lectivo."id"
-     INNER JOIN "dbo"."t_faculdade" t_faculdade ON t_curso."codigo_faculdade" = t_faculdade."id"
-     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_faculdade."codigo_instituicao" = t_instituicao."id"
+     "v_uso_interno" v_uso_interno
 WHERE
-     t_aluno."numero_de_aluno" = $P{numero_matricula}
-ORDER BY
-     ci."ano_curricular" ASC, ci."disciplina"]]>
+     v_uso_interno."NUMERO_ALUNO" = $P{numero_matricula}
+     order by v_uso_interno."ANO_CURRICULAR" ASC]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer"/>
-	<field name="numero_de_aluno" class="java.lang.Integer"/>
-	<field name="nota_final" class="java.lang.Double"/>
-	<field name="validacao" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.label" value="validacao"/>
+	<field name="ID_ALUNO" class="java.lang.Long"/>
+	<field name="ARQUIVO_IDENTIFICACAO" class="java.lang.String"/>
+	<field name="ATESTADO_MEDICO" class="java.lang.Boolean"/>
+	<field name="MORADA" class="java.lang.String"/>
+	<field name="DATA_EMISSAO_DOCUMENTO" class="java.sql.Date"/>
+	<field name="DATA_FIM_CURSO" class="java.sql.Date"/>
+	<field name="DATA_INATIVACAO" class="java.sql.Date"/>
+	<field name="DATA_NASCIMENTO" class="java.sql.Date"/>
+	<field name="TIPO_DOCUMENTO" class="java.lang.String"/>
+	<field name="FIM_CURSO" class="java.lang.Boolean"/>
+	<field name="MEDIA_FINAL" class="java.math.BigDecimal"/>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="NOME_MAE" class="java.lang.String"/>
+	<field name="NOME_PAI" class="java.lang.String"/>
+	<field name="NUMERO_IDENTIFICACAO" class="java.lang.String"/>
+	<field name="GENERO" class="java.lang.String"/>
+	<field name="CURSO" class="java.lang.String"/>
+	<field name="GRAU_ACADEMICO" class="java.lang.String"/>
+	<field name="QUANTIDADE_CADEIRAS" class="java.lang.Integer"/>
+	<field name="PROVINCIA" class="java.lang.String"/>
+	<field name="MUNICIPIO" class="java.lang.String"/>
+	<field name="CARGO_DECANO" class="java.lang.String"/>
+	<field name="NOME_FACULDADE" class="java.lang.String"/>
+	<field name="NOME_DECANO" class="java.lang.String"/>
+	<field name="ID_INSTITUICAO" class="java.lang.Long"/>
+	<field name="CARGO_VICE_DECANO" class="java.lang.String"/>
+	<field name="CHEFE_SERVICOS_ACADEMICOS" class="java.lang.String"/>
+	<field name="SECRETARIO_GERAL" class="java.lang.String"/>
+	<field name="ID_DISCIPLINA" class="java.lang.Long"/>
+	<field name="NUMERO_ALUNO" class="java.lang.Long"/>
+	<field name="DISCIPLINA" class="java.lang.String"/>
+	<field name="NOTA_FINAL" class="java.lang.Double"/>
+	<field name="VALIDADA" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="VALIDADA"/>
 	</field>
-	<field name="ano_curricular" class="java.lang.Integer"/>
-	<field name="disciplina" class="java.lang.String"/>
-	<field name="V_CERTIFICADO_INTERMEDIO_numero" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_numero"/>
-	</field>
-	<field name="t_aluno_id" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_id"/>
-	</field>
-	<field name="t_aluno_arquivo_identificacao" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_arquivo_identificacao"/>
-	</field>
-	<field name="t_aluno_atestado_medico" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_atestado_medico"/>
-	</field>
-	<field name="t_aluno_bairro" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_bairro"/>
-	</field>
-	<field name="t_aluno_data_emissao_identidade" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_emissao_identidade"/>
-	</field>
-	<field name="t_aluno_data_fim_do_curso" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_fim_do_curso"/>
-	</field>
-	<field name="t_aluno_data_inativo" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_inativo"/>
-	</field>
-	<field name="t_aluno_data_nascimento" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_data_nascimento"/>
-	</field>
-	<field name="t_aluno_documento_indentificacao" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_documento_indentificacao"/>
-	</field>
-	<field name="t_aluno_fim_curso" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_fim_curso"/>
-	</field>
-	<field name="t_aluno_media_final" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_media_final"/>
-	</field>
-	<field name="t_aluno_morada" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_morada"/>
-	</field>
-	<field name="t_aluno_nome" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome"/>
-	</field>
-	<field name="t_aluno_nome_da_mae" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome_da_mae"/>
-	</field>
-	<field name="t_aluno_nome_do_pai" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome_do_pai"/>
-	</field>
-	<field name="t_aluno_numero_de_aluno" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_de_aluno"/>
-	</field>
-	<field name="t_aluno_numero_documento_identificacao" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_numero_documento_identificacao"/>
-	</field>
-	<field name="t_aluno_profissao_mae" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_profissao_mae"/>
-	</field>
-	<field name="t_aluno_profissao_pai" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_profissao_pai"/>
-	</field>
-	<field name="t_aluno_sexo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_sexo"/>
-	</field>
-	<field name="t_curso_descricao" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_curso_descricao"/>
-	</field>
-	<field name="t_curso_grau" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_curso_grau"/>
-	</field>
-	<field name="t_curso_quantidade_cadeiras" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_curso_quantidade_cadeiras"/>
-	</field>
-	<field name="t_provincia_provincia" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_provincia_provincia"/>
-	</field>
-	<field name="t_municipio_descricao" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_municipio_descricao"/>
-	</field>
-	<field name="t_faculdade_cargo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_cargo"/>
-	</field>
-	<field name="t_faculdade_faculdade" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_faculdade"/>
-	</field>
-	<field name="t_faculdade_responsavel" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_responsavel"/>
-	</field>
-	<field name="t_faculdade_codigo_instituicao" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_codigo_instituicao"/>
-	</field>
-	<field name="t_faculdade_cargo2" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_cargo2"/>
-	</field>
-	<field name="t_faculdade_responsavel2" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_faculdade_responsavel2"/>
-	</field>
-	<field name="t_instituicao_chefe_servicos_academicos" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_chefe_servicos_academicos"/>
-	</field>
-	<field name="t_instituicao_secretario_geral" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_secretario_geral"/>
-	</field>
-	<field name="t_disciplina_ano_corricular" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_disciplina_ano_corricular"/>
-	</field>
-	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_ano_lectivo"/>
-	</field>
-	<field name="V_CERTIFICADO_INTERMEDIO_equivalencia" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_equivalencia"/>
-	</field>
-	<field name="V_CERTIFICADO_INTERMEDIO_validacao" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_validacao"/>
-	</field>
-	<field name="V_CERTIFICADO_INTERMEDIO_pode_equivalencia" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_pode_equivalencia"/>
-	</field>
-	<field name="V_CERTIFICADO_INTERMEDIO_ano_curricular" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_ano_curricular"/>
-	</field>
-	<field name="V_CERTIFICADO_INTERMEDIO_disciplina" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_disciplina"/>
-	</field>
-	<field name="V_CERTIFICADO_INTERMEDIO_nota_final" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_nota_final"/>
-	</field>
-	<field name="V_CERTIFICADO_INTERMEDIO_ano_lectivo" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="V_CERTIFICADO_INTERMEDIO_ano_lectivo"/>
-	</field>
-	<field name="t_municipio_concordancia" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_municipio_concordancia"/>
-	</field>
-	<field name="t_provincia_concordancia" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_provincia_concordancia"/>
-	</field>
+	<field name="ID_ANO_LECTIVO" class="java.lang.Long"/>
+	<field name="EQUIVALENCIA" class="java.lang.Integer"/>
+	<field name="ANO_CURRICULAR" class="java.lang.Integer"/>
+	<field name="ANO_LECTIVO" class="java.lang.Integer"/>
+	<field name="PODE_EQUIVALENCIA" class="java.lang.Integer"/>
+	<field name="v_uso_interno_ID_ALUNO" class="java.lang.Long"/>
+	<field name="v_uso_interno_ARQUIVO_IDENTIFICACAO" class="java.lang.String"/>
+	<field name="v_uso_interno_MORADA" class="java.lang.String"/>
+	<field name="v_uso_interno_ATESTADO_MEDICO" class="java.lang.Boolean"/>
+	<field name="v_uso_interno_DATA_EMISSAO_DOCUMENTO" class="java.sql.Date"/>
+	<field name="v_uso_interno_DATA_FIM_CURSO" class="java.sql.Date"/>
+	<field name="v_uso_interno_DATA_INATIVACAO" class="java.sql.Date"/>
+	<field name="v_uso_interno_TIPO_DOCUMENTO" class="java.lang.String"/>
+	<field name="v_uso_interno_DATA_NASCIMENTO" class="java.sql.Date"/>
+	<field name="v_uso_interno_FIM_CURSO" class="java.lang.Boolean"/>
+	<field name="v_uso_interno_NOME" class="java.lang.String"/>
+	<field name="v_uso_interno_MEDIA_FINAL" class="java.math.BigDecimal"/>
+	<field name="v_uso_interno_NOME_MAE" class="java.lang.String"/>
+	<field name="v_uso_interno_NOME_PAI" class="java.lang.String"/>
+	<field name="v_uso_interno_GENERO" class="java.lang.String"/>
+	<field name="v_uso_interno_NUMERO_IDENTIFICACAO" class="java.lang.String"/>
+	<field name="v_uso_interno_CURSO" class="java.lang.String"/>
+	<field name="v_uso_interno_GRAU_ACADEMICO" class="java.lang.String"/>
+	<field name="v_uso_interno_QUANTIDADE_CADEIRAS" class="java.lang.Integer"/>
+	<field name="v_uso_interno_PROVINCIA" class="java.lang.String"/>
+	<field name="v_uso_interno_MUNICIPIO" class="java.lang.String"/>
+	<field name="v_uso_interno_CARGO_DECANO" class="java.lang.String"/>
+	<field name="v_uso_interno_NOME_FACULDADE" class="java.lang.String"/>
+	<field name="v_uso_interno_NOME_DECANO" class="java.lang.String"/>
+	<field name="v_uso_interno_ID_INSTITUICAO" class="java.lang.Long"/>
+	<field name="v_uso_interno_CARGO_VICE_DECANO" class="java.lang.String"/>
+	<field name="v_uso_interno_CHEFE_SERVICOS_ACADEMICOS" class="java.lang.String"/>
+	<field name="v_uso_interno_SECRETARIO_GERAL" class="java.lang.String"/>
+	<field name="v_uso_interno_ID_DISCIPLINA" class="java.lang.Long"/>
+	<field name="v_uso_interno_NUMERO_ALUNO" class="java.lang.Long"/>
+	<field name="v_uso_interno_DISCIPLINA" class="java.lang.String"/>
+	<field name="v_uso_interno_VALIDADA" class="java.lang.Boolean"/>
+	<field name="v_uso_interno_NOTA_FINAL" class="java.lang.Double"/>
+	<field name="v_uso_interno_ID_ANO_LECTIVO" class="java.lang.Long"/>
+	<field name="v_uso_interno_ANO_CURRICULAR" class="java.lang.Integer"/>
+	<field name="v_uso_interno_ANO_LECTIVO" class="java.lang.Integer"/>
+	<field name="v_uso_interno_PODE_EQUIVALENCIA" class="java.lang.Integer"/>
+	<field name="v_uso_interno_EQUIVALENCIA" class="java.lang.Integer"/>
 	<variable name="contador" class="java.lang.String" calculation="Count">
-		<variableExpression><![CDATA[$F{disciplina}]]></variableExpression>
+		<variableExpression><![CDATA[$F{DISCIPLINA}]]></variableExpression>
 	</variable>
 	<variable name="variable1" class="java.lang.Integer"/>
 	<group name="Historico" keepTogether="true">
-		<groupExpression><![CDATA[$F{ano_curricular}]]></groupExpression>
+		<groupExpression><![CDATA[$F{ANO_CURRICULAR}]]></groupExpression>
 		<groupHeader>
 			<band height="13" splitType="Immediate">
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="Historico">
-					<reportElement uuid="dcac2776-b90a-4f32-a43d-4f813f1d003d" x="41" y="0" width="93" height="13"/>
+					<reportElement x="41" y="0" width="93" height="13" uuid="dcac2776-b90a-4f32-a43d-4f813f1d003d"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="Serif" size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{t_disciplina_ano_corricular}+"º Ano"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ANO_CURRICULAR}+"º Ano"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 	</group>
 	<group name="segundo" keepTogether="true">
-		<groupExpression><![CDATA[$F{ano_curricular}]]></groupExpression>
+		<groupExpression><![CDATA[$F{ANO_CURRICULAR}]]></groupExpression>
 	</group>
 	<group name="terceiro">
-		<groupExpression><![CDATA[$F{ano_curricular}]]></groupExpression>
+		<groupExpression><![CDATA[$F{ANO_CURRICULAR}]]></groupExpression>
 	</group>
 	<group name="primeiro">
-		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupExpression><![CDATA[$F{ID_ALUNO}]]></groupExpression>
 	</group>
 	<group name="APP"/>
 	<background>
@@ -259,15 +172,15 @@ ORDER BY
 	<title>
 		<band height="124">
 			<textField>
-				<reportElement uuid="ab52c1e8-6421-4cfa-b016-e66ff2dd36f1" x="41" y="1" width="481" height="123"/>
+				<reportElement x="41" y="1" width="481" height="123" uuid="ab52c1e8-6421-4cfa-b016-e66ff2dd36f1"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
 					<font fontName="Serif" size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, instituída pelo Decreto Executivo n.º 23/07 de 07 de Maio, certifica-se que "+"<b>"+$F{t_aluno_nome}+"</b>"+", "+($F{t_aluno_sexo}.equals("F")? "filha": $F{t_aluno_sexo}.equals("M")? "filho": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "-sem informação-")+" de "+$F{t_aluno_nome_do_pai}+" e de "+$F{t_aluno_nome_da_mae}+", "+($F{t_aluno_sexo}.equals("F")? "portadora do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("M")? "portador do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "else SQL Query")+$F{t_aluno_numero_documento_identificacao}+", emitido aos "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_emissao_identidade})+" pelo arquivo de "+$F{t_municipio_descricao}+", "+($F{t_aluno_sexo}.equals("F")? "nascida a ": $F{t_aluno_sexo}.equals("M")? "nascido a ": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "-sem informação-")+" "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_nascimento})+", natural d"+$F{t_provincia_concordancia}+"  "+$F{t_provincia_provincia}+", obteve as seguintes classificações no curso de "+ ($F{t_curso_grau}.equals("LICENCIATURA")? "Licenciatura em ":"Mestrado em ")+"<b>"+$F{t_curso_descricao}+"<b>"+"."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, instituída pelo Decreto Executivo n.º 23/07 de 07 de Maio, certifica-se que "+"<b>"+$F{NOME}+"</b>"+", "+($F{GENERO}.equals("FEMININO")? "filha": $F{GENERO}.equals("MASCULINO")? "filho": $F{GENERO}.equals("ANUAL")?"-sem informação-": "")+" de "+$F{NOME_PAI}+" e de "+$F{NOME_MAE}+", "+($F{GENERO}.equals("F")? "portadora do Bilhete de Identidade n.º ": $F{GENERO}.equals("MASCULINO")? "portador do Bilhete de Identidade n.º ": $F{GENERO}.equals("ANUAL")?"Anual": "")+$F{NUMERO_IDENTIFICACAO}+", emitido aos "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DATA_EMISSAO_DOCUMENTO})+" pelo arquivo de "+$F{MUNICIPIO}+", "+($F{GENERO}.equals("FEMININO")? "nascida a ": $F{GENERO}.equals("MASCULINO")? "nascido a " : $F{GENERO}.equals("ANUAL")? "-sem informação-": "")+" "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DATA_NASCIMENTO})+", natural da "+$F{ARQUIVO_IDENTIFICACAO}+"  "+$F{PROVINCIA}+", obteve as seguintes classificações no curso de "+ ($F{GRAU_ACADEMICO}.equals("LICENCIATURA")? "Licenciatura em ":"Mestrado em ")+"<b>"+$F{CURSO}+"<b>"+"."]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="17b6f2ce-75ed-4c10-ac97-97315dcdcea2" x="34" y="-1" width="497" height="17"/>
+				<reportElement x="34" y="-1" width="497" height="17" uuid="17b6f2ce-75ed-4c10-ac97-97315dcdcea2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Serif" size="12" isBold="true"/>
 				</textElement>
@@ -281,64 +194,64 @@ ORDER BY
 	<detail>
 		<band height="13" splitType="Immediate">
 			<textField>
-				<reportElement uuid="27b8d369-544e-4a12-943e-9d32a3e199e5" x="41" y="0" width="259" height="13"/>
+				<reportElement x="41" y="0" width="259" height="13" uuid="27b8d369-544e-4a12-943e-9d32a3e199e5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Serif" size="9"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{disciplina}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DISCIPLINA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="##" isBlankWhenNull="true">
-				<reportElement uuid="565afd4a-5247-4092-b497-73b9b33e9284" x="301" y="0" width="76" height="13"/>
+				<reportElement x="301" y="0" width="76" height="13" uuid="565afd4a-5247-4092-b497-73b9b33e9284"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Serif" size="9"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[(new DecimalFormat("##")).format($F{nota_final})  +" "+(
-    $F{nota_final} == 1  ?
+				<textFieldExpression><![CDATA[(new DecimalFormat("##")).format($F{NOTA_FINAL})  +" "+(
+    $F{NOTA_FINAL} == 1  ?
     "(Um)" :
-    $F{nota_final} == 2 ?
+    $F{NOTA_FINAL} == 2 ?
     "(Dois)" :
-    $F{nota_final} == 3 ?
+    $F{NOTA_FINAL} == 3 ?
     "(Tres)" :
-    $F{nota_final} == 4 ?
+   $F{NOTA_FINAL} == 4 ?
     "(Quatro)" :
-    $F{nota_final} == 5 ?
+    $F{NOTA_FINAL} == 5 ?
     "(Cinco)" :
-    $F{nota_final} == 6 ?
+    $F{NOTA_FINAL} == 6 ?
     "(Seis)" :
-    $F{nota_final} == 7 ?
+    $F{NOTA_FINAL} == 7 ?
     "(Sete)" :
-    $F{nota_final} == 8 ?
+    $F{NOTA_FINAL} == 8 ?
     "(Oito)" :
-    $F{nota_final} == 9 ?
+    $F{NOTA_FINAL} == 9 ?
     "(Nove)" :
-    $F{nota_final} == 10 ?
+    $F{NOTA_FINAL} == 10 ?
     "(Dez)" :
-    $F{nota_final} == 11 ?
+    $F{NOTA_FINAL} == 11 ?
     "(Onze)" :
-    $F{nota_final} == 12 ?
+    $F{NOTA_FINAL} == 12 ?
     "(Doze)" :
-    $F{nota_final} == 13 ?
+    $F{NOTA_FINAL} == 13 ?
     "(Treze)" :
-    $F{nota_final} == 14 ?
+    $F{NOTA_FINAL} == 14 ?
     "(Catorze)" :
-    $F{nota_final} == 15 ?
+    $F{NOTA_FINAL} == 15 ?
     "(Quinze)" :
-    $F{nota_final} == 16 ?
+    $F{NOTA_FINAL} == 16 ?
     "(Dezasseis)" :
-    $F{nota_final} == 17 ?
+    $F{NOTA_FINAL} == 17 ?
     "(Dezassete)" :
-    $F{nota_final} == 18 ?
+   $F{NOTA_FINAL}== 18 ?
     "(Dezoito)" :
-    $F{nota_final} == 19?
+    $F{NOTA_FINAL} == 19?
     "(Dezanove)" :
-    $F{nota_final} == 20 ?
+    $F{NOTA_FINAL} == 20 ?
     "(Vinte)" :
     "Sem Nota")]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="336ee767-aecb-4adc-8abb-7a71a0129b00" x="377" y="0" width="43" height="13"/>
+				<reportElement x="377" y="0" width="43" height="13" uuid="336ee767-aecb-4adc-8abb-7a71a0129b00"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Serif" size="9"/>
 					<paragraph lineSpacing="Single"/>
@@ -346,20 +259,20 @@ ORDER BY
 				<text><![CDATA[Valores]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="47ccd505-8d2e-4fa9-bb72-0b051f6b691f" x="418" y="0" width="42" height="13"/>
+				<reportElement x="418" y="0" width="42" height="13" uuid="47ccd505-8d2e-4fa9-bb72-0b051f6b691f"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Serif" size="9"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{V_CERTIFICADO_INTERMEDIO_equivalencia}==1 ? "a)" :$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{v_uso_interno_EQUIVALENCIA}==1 ? "a)" :$F{ANO_LECTIVO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="58eb9b64-6ac5-445e-96ee-ae9183d14a1b" x="460" y="0" width="63" height="13"/>
+				<reportElement x="460" y="0" width="63" height="13" uuid="58eb9b64-6ac5-445e-96ee-ae9183d14a1b"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="Serif" size="9"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{validacao}.booleanValue()? "Validada" : "Não Validada"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VALIDADA}.booleanValue()? "Validada" : "Não Validada"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -369,26 +282,26 @@ ORDER BY
 	<summary>
 		<band height="387" splitType="Immediate">
 			<line>
-				<reportElement uuid="e22d7aea-57d7-4ac6-ac5a-2f981bab55ac" x="41" y="0" width="481" height="1"/>
+				<reportElement x="41" y="0" width="481" height="1" uuid="e22d7aea-57d7-4ac6-ac5a-2f981bab55ac"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement uuid="87a50482-6168-43af-ad68-b6d1a6611e0a" isPrintRepeatedValues="false" x="41" y="1" width="259" height="18" isRemoveLineWhenBlank="true"/>
+				<reportElement isPrintRepeatedValues="false" x="41" y="1" width="259" height="18" isRemoveLineWhenBlank="true" uuid="87a50482-6168-43af-ad68-b6d1a6611e0a"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Serif" size="10"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Número: "+ ($F{numero_de_aluno})]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Número: "+ ($F{NUMERO_ALUNO})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="aa207c25-8b0d-4157-9f21-7da0922c1342" x="41" y="19" width="481" height="111"/>
+				<reportElement x="41" y="19" width="481" height="111" uuid="aa207c25-8b0d-4157-9f21-7da0922c1342"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="html">
 					<font fontName="Serif" size="10"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Por ser verdade e ter sido pedido, mandei passar o presente Certificado, onde constam as classificações obtidas correspondentes à aprovação em "+$V{REPORT_COUNT}+" disciplinas, do total"+" de "+$F{t_curso_quantidade_cadeiras}+" que correspondem ao plano curricular, que vai assinado e autenticado com o carimbo a óleo em uso nesta Universidade."+"<br/>"+"<br/>"+"Luanda, "+$P{data}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Por ser verdade e ter sido pedido, mandei passar o presente Certificado, onde constam as classificações obtidas correspondentes à aprovação em "+$V{REPORT_COUNT}+" disciplinas, do total"+" de "+$F{QUANTIDADE_CADEIRAS}+" que correspondem ao plano curricular, que vai assinado e autenticado com o carimbo a óleo em uso nesta Universidade."+"<br/>"+"<br/>"+"Luanda, "+$P{data}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

@@ -69,4 +69,18 @@ public class Prova {
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
+
+	@Override
+	public String toString() {
+		return "Prova {" +
+				"id=" + id +
+				", prova='" + prova + '\'' +
+				", extraordinaria=" + extraordinaria +
+				", descricao='" + descricao + '\'' +
+				", descricaoPauta='" + descricaoPauta + '\'' +
+				", ordem=" + ordem +
+				", estado=" + estado +
+				", sigla='" + sigla + '\'' +
+				'}';
+	}
 }

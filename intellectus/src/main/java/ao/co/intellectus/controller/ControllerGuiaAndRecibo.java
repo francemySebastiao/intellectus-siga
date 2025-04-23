@@ -308,10 +308,10 @@ public class ControllerGuiaAndRecibo {
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatrio);
 	}
 
-	public byte[] servicoReciboPagamentoCredito(String numero_guia, String userName) throws JRException {
+	public byte[] servicoReciboPagamentoCredito(String codigoGuia, String userName) throws JRException {
 
 		Map<String, Object> paramets = new HashMap<>();
-		paramets.put("numero_guia", numero_guia);
+		paramets.put("numero_guia", codigoGuia);
 		paramets.put("nome", userName);
 		
 		InputStream inputStream = this.getClass().getResourceAsStream("/relatorio/R_Guia_Interno.jasper");

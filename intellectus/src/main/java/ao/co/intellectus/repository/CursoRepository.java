@@ -18,6 +18,8 @@ public interface CursoRepository extends JpaRepository<Curso,Long>{
     
     public Curso findByIdAndStatus(Integer id,boolean status);
     
+    //public Curso findByIdAndStatus(Integer id);
+    
     public Curso findById(Integer id);
     
     public List<Curso> findByStatus(boolean status);

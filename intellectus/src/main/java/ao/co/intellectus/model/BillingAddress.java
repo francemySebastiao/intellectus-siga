@@ -14,6 +14,7 @@ public class BillingAddress {
 	private String addressDetail;
 	private String city;
 	private String country;
+	private String numeroDeAluno;
 	
 
 
@@ -53,4 +54,12 @@ public class BillingAddress {
 		this.country = country;
 	}
 
+	public String getNumeroDeAluno() {
+		return numeroDeAluno;
+	}
+
+	public void setNumeroDeAluno(String numeroDeAluno) {
+		this.numeroDeAluno = numeroDeAluno;
+	}
+	
 }

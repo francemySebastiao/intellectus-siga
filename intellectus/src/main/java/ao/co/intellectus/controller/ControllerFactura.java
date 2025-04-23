@@ -265,7 +265,7 @@ public class ControllerFactura {
 			fEmpresa.setNumeroFactura(factura.getNuneroFactura());
 			fEmpresa.setDataLiquidacao(factura.getDataLiquidacao());
 			fEmpresa.setDataAnulacao(factura.getDataAnulacao());
-			fEmpresa.setValorFactura(factura.getValor());
+			fEmpresa.setValorFactura(FormataData.formatarValor(factura.getValor()));
 			fEmpresa.setLiquidacao(factura.getLiquidacao());
 			fEmpresa.setEstadoFactura(factura.getEstadoFactura().getDescricao());
 			fEmpresa.setDataEmissao(factura.getDataEmissao());
@@ -520,8 +520,8 @@ public class ControllerFactura {
 					.buscarEmpresa(factura.getEmpresaConvenio().getId());
 
 			contaPesquisada.setEmpresa(factura.getEmpresaConvenio());
-			contaPesquisada.setValorAnterior(contaPesquisada.getValor());
-			contaPesquisada.setValor(contaPesquisada.getValor() + liquidacao.getValorPago());
+			contaPesquisada.setValorAnterior(FormataData.formatarValor(contaPesquisada.getValor()));
+			contaPesquisada.setValor(FormataData.formatarValor(contaPesquisada.getValor() + liquidacao.getValorPago()));
 			contaPesquisada.setDataMovimento(new Date());
 			contaCorrenteEmpresaRepo.save(contaPesquisada);
 
@@ -637,7 +637,7 @@ public class ControllerFactura {
 		String anoSubstring = anoCivil.substring(2, 4);
 		Integer anoLimpo = Integer.parseInt(anoSubstring);*/
 
-		NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(2006);
+		NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(10);
 		Long proximoNumero = numeroGerado.getProximoNumero();
 
 		numero = gerarNumeroDocService.gerarNumeroNotaCredito(numero, forma.anoLectivo(), proximoNumero);

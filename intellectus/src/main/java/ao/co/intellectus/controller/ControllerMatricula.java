@@ -1,5 +1,6 @@
 package ao.co.intellectus.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ import ao.co.intellectus.model.TipoDeDeclaracao;
 import ao.co.intellectus.model.TipoInscricao;
 import ao.co.intellectus.model.Turma;
 import ao.co.intellectus.model.TurmaDisponivel;
+import ao.co.intellectus.model.Turno;
 import ao.co.intellectus.model.Usuario;
 import ao.co.intellectus.model.ccd.MatriculaCcd;
 import ao.co.intellectus.model.enumeracao.TipoFatura;
@@ -352,6 +354,11 @@ public class ControllerMatricula {
 		AlunoResumoCliente aluno;
 		List<AlunoResumoCliente> alunos = new ArrayList<AlunoResumoCliente>();
 		List<Matricula> matriculas = this.repositoryMatricula.findByEmpresaConvenioAndAnoLectivo(empresa, ano);
+		if(matriculas.isEmpty()) {
+			c.setCodigo(ResponseCode.values()[0].getDescricao());
+			c.setMensagem("Nenhum registro encontrado!");
+			return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
+		}
 		ConvenioCliente convenio = new ConvenioCliente();
 
 		for (Matricula matricula : matriculas) {
@@ -1359,6 +1366,102 @@ public class ControllerMatricula {
 			//verificado,inscritoOnline
 			matricula.setVerificado(false);
 			matricula.setInscritoOnline(false);
+			System.out.println("");
+			if(turmaBase.getTurno() == Turno.MANHA) {
+				
+				if(efetuarMatricula.getAnoMatricula() == 1 && efetuarMatricula.getTipoInscricao() == 1) {
+					System.out.println("Entrou aqui");
+					matricula.setCrescimentoPropina(0);
+					
+				}else if(efetuarMatricula.getAnoMatricula() == 2 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					System.out.println("Entrou aqui 2");
+					matricula.setCrescimentoPropina(3000);
+				}else if(efetuarMatricula.getAnoMatricula() == 3 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(3000);
+				}else if(efetuarMatricula.getAnoMatricula() == 4 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(3000);
+				}else if(efetuarMatricula.getAnoMatricula() == 5 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(15);
+				}
+				
+			}else if(turmaBase.getTurno() == Turno.TARDE) {
+				
+				if(efetuarMatricula.getAnoMatricula() == 1 && efetuarMatricula.getTipoInscricao() == 1) {
+					matricula.setCrescimentoPropina(-7000);
+					
+				}else if(efetuarMatricula.getAnoMatricula() == 2 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(-7000);
+				}else if(efetuarMatricula.getAnoMatricula() == 3 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(-7000);
+				}else if(efetuarMatricula.getAnoMatricula() == 4 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(-7000);
+				}else if(efetuarMatricula.getAnoMatricula() == 5 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(-7000);
+				}
+				
+			}else if(turmaBase.getTurno() == Turno.POSLABORAL) {
+				
+				if(efetuarMatricula.getAnoMatricula() == 1 && efetuarMatricula.getTipoInscricao() == 1) {
+					matricula.setCrescimentoPropina(0);
+					
+				}else if(efetuarMatricula.getAnoMatricula() == 2 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(3000);
+				}else if(efetuarMatricula.getAnoMatricula() == 3 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(3000);
+				}else if(efetuarMatricula.getAnoMatricula() == 4 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(3000);
+				}else if(efetuarMatricula.getAnoMatricula() == 5 
+						&& efetuarMatricula.getTipoInscricao() == 1 
+						|| efetuarMatricula.getTipoInscricao() == 2 
+						|| efetuarMatricula.getTipoInscricao() == 3) {
+					
+					matricula.setCrescimentoPropina(15);
+				}
+			}
+			
 			
 			Matricula matriculaFeita = repositoryMatricula.save(matricula);
 			this.matriculasService.gerarHistorico(matricula);

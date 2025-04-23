@@ -76,6 +76,7 @@ import ao.co.intellectus.servico.cafold.Conexao;
 import ao.co.intellectus.servico.cafold.GuiaService;
 import ao.co.intellectus.servico.guias.GuiaDeInscricao;
 import ao.co.intellectus.servico.guias.GuiaHistorico;
+import ao.co.intellectus.util.FormataData;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -120,6 +121,10 @@ public class ControllerGuiaMultaPlano {
 	private GeradorDeArquivo gerarDocService;
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	@Autowired
+	private ControllerGuia controllerGuia;
+	
+	FormataData forma = new FormataData();
 	
 	@RequestMapping(value = "/guiasAnuladas/{numero}", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -202,6 +207,7 @@ public class ControllerGuiaMultaPlano {
 	@CrossOrigin(origins = "*")
 	public ResponseEntity<ResponseCliente> processamento(@RequestBody MultaRetiradasCliente processamento) { 
 		ResponseCliente c=new ResponseCliente();
+		
 		
 		LocalDateTime localDate = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -302,28 +308,30 @@ public class ControllerGuiaMultaPlano {
 			}
 			
 			
-			String numero ="";
 			
-			AnoLectivo anoActivo = anoLectivoRepository.buscarPorEstado();
-			String ano = String.valueOf(anoActivo.getAnoLectivo());
-			String anoSubstring = ano.substring(2,4);
-			Integer anoLimpo = Integer.parseInt(anoSubstring);
 			
-			NumeroGerado numeroGeradoFP = this.numeroGeradoRepository.findOne(6);
+			String numero = controllerGuia.gerarNumeroPP(forma);
+			
+			//AnoLectivo anoActivo = anoLectivoRepository.buscarPorEstado();
+			//String ano = String.valueOf(forma.anoLectivo());
+			//String anoSubstring = ano.substring(2,4);
+			//Integer anoLimpo = Integer.parseInt(anoSubstring);
+			
+			/*NumeroGerado numeroGeradoFP = this.numeroGeradoRepository.findOne(6);
 			Long proximoNumero = numeroGeradoFP.getProximoNumero();
 			
 			//String numero = gerarNumeroDocService.geracaoNumero();
-			numero = gerarNumeroDocService.gerarNumeroFacturaProforma(numero, anoLimpo, proximoNumero);
+			numero = gerarNumeroDocService.gerarNumeroFacturaProforma(numero, forma.anoLectivo(), proximoNumero);
 			
 			Guia proformaExiste = this.guiaPagamentoRepository.findProforma(numero);
 			if (proformaExiste != null) {
 				do {
 					proximoNumero++;
 					
-					numero =  gerarNumeroDocService.gerarNumeroFacturaProforma(numero, anoLimpo, proximoNumero);
+					numero =  gerarNumeroDocService.gerarNumeroFacturaProforma(numero, forma.anoLectivo(), proximoNumero);
 					proformaExiste = this.guiaPagamentoRepository.findProforma(numero);
 				} while (proformaExiste != null);
-			}
+			}*/
 			
 			// setar o valor da guia
 			guiaSalva.setNumeroGuia(definitivo);
@@ -336,10 +344,6 @@ public class ControllerGuiaMultaPlano {
 			Guia guiaGuardada = this.guiaPagamentoRepository.save(guiaSalva);
 			
 			this.gerarDocService.gerarFileProformaAluno(guiaGuardada);
-			
-			numeroGeradoFP.setUltimoNumero(proximoNumero);
-			numeroGeradoFP.setProximoNumero(proximoNumero + 1);
-			this.numeroGeradoRepository.save(numeroGeradoFP);
 			
 			//guiaSalva.setNumeroGuia(definitivo);
 			

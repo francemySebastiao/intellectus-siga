@@ -21,6 +21,7 @@ public class GuiaDeInscricao {
 		guia.setAutomaticamente(true);
 		guia.setDataEmicao(new Date());
 		guia.setLiquidada(false);
+		guia.setAlterada(false);
 		guia.setAnoLectivo(anoLectivo);
 		guia.setValor(emoluHist.getValor());
 		guia.setDataVencimento(new Date());

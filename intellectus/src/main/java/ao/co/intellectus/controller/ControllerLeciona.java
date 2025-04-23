@@ -871,6 +871,30 @@ public class ControllerLeciona {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
+	
+	@GetMapping("/pauta/exame")
+	@ResponseBody
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<byte[]> pautaExame(@RequestParam Integer codigo_ano_lectivo,
+			@RequestParam Integer codigo_disciplina, @RequestParam Integer codigo_curso,
+			@RequestParam Integer codigo_turma, @RequestParam String ano_curricular) throws Exception {
+		byte[] relatrio = servicoExame(codigo_ano_lectivo, codigo_disciplina, codigo_curso, codigo_turma,
+				ano_curricular);
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatrio);
+	}
+
+	public byte[] servicoExame(Integer codigo_ano_lectivo, Integer codigo_disciplina, Integer codigo_curso,
+			Integer codigo_turma, String ano_curricular) throws JRException {
+		Map<String, Object> paramets = new HashMap<>();
+		paramets.put("codigo_ano_lectivo", codigo_ano_lectivo);
+		paramets.put("codigo_disciplina", codigo_disciplina);
+		paramets.put("codigo_curso", codigo_curso);
+		paramets.put("codigo_turma", codigo_turma);
+		paramets.put("ano_curricular", ano_curricular);
+		InputStream inputStream = this.getClass().getResourceAsStream("/relatorio/R_Pauta_Exame.jasper");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
+		return JasperExportManager.exportReportToPdf(jasperPrint);
+	}
 
 	@GetMapping("/pauta/recurso")
 	@ResponseBody

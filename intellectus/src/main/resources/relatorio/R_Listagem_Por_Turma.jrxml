@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Listagem_Por_Turma" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="02123143-37b1-4ca4-ba8f-f57b2f39ee88">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="codigo_ano" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -15,6 +18,7 @@
 	<parameter name="codigo_curso" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="codigo_ano_lectivo" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT
      t_ano_lectivo."ano_lectivo",
@@ -38,7 +42,7 @@ FROM
      LEFT OUTER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_matricula."codigo_ano_lectivo" = t_ano_lectivo."id",
      "dbo"."t_logo_marca" t_logo_marca
 WHERE
-     t_ano_lectivo."id" = 19
+     t_ano_lectivo."id" = 23
      and t_matricula."anulado" = 0
      and t_turma."id" = $P{codigo_turma}
      and t_curso."id" = $P{codigo_curso}
@@ -49,18 +53,45 @@ ORDER BY
      t_turma."turma" ASC,
      t_aluno."nome" ASC]]>
 	</queryString>
-	<field name="ano_lectivo" class="java.lang.Integer"/>
-	<field name="numero_de_aluno" class="java.lang.String"/>
-	<field name="sigla" class="java.lang.String"/>
-	<field name="descricao" class="java.lang.String"/>
-	<field name="nome" class="java.lang.String"/>
-	<field name="grupo_owner" class="java.lang.String"/>
-	<field name="turma" class="java.lang.String"/>
-	<field name="anulado" class="java.lang.Boolean"/>
-	<field name="codigo_turma" class="java.lang.Integer"/>
-	<field name="codigo_curso" class="java.lang.Integer"/>
-	<field name="t_logo_marca_foto" class="java.io.InputStream"/>
-	<field name="t_matricula_ano_curricular" class="java.lang.Integer"/>
+	<field name="ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_lectivo"/>
+	</field>
+	<field name="numero_de_aluno" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_de_aluno"/>
+	</field>
+	<field name="sigla" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sigla"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+	</field>
+	<field name="grupo_owner" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="grupo_owner"/>
+	</field>
+	<field name="turma" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="turma"/>
+	</field>
+	<field name="anulado" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="anulado"/>
+	</field>
+	<field name="codigo_turma" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_turma"/>
+	</field>
+	<field name="codigo_curso" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_curso"/>
+	</field>
+	<field name="COLUMN_11" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo_curso"/>
+	</field>
+	<field name="t_logo_marca_foto" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="t_logo_marca_foto"/>
+	</field>
+	<field name="t_matricula_ano_curricular" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="t_matricula_ano_curricular"/>
+	</field>
 	<group name="primeiro">
 		<groupExpression><![CDATA[$F{descricao}]]></groupExpression>
 		<groupHeader>

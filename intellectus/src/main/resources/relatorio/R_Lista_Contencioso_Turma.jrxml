@@ -1,101 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Lista_Contencioso_Turma" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9b0262b7-88ef-4f5c-93e3-8ad3fb68d4e1">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NOVA_VIDA"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="4"/>
 	<parameter name="cod_ano" class="java.lang.Integer"/>
 	<parameter name="cod_curso" class="java.lang.String"/>
 	<parameter name="cod_turma" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-     t_aluno."id" AS t_aluno_id,
-     t_aluno."nome" AS t_aluno_nome,
-     t_aluno."contencioso" AS t_aluno_contencioso,
-     t_aluno."codigo_curso" AS t_aluno_codigo_curso,
-     t_curso."descricao" AS t_curso_descricao,
-     t_matricula."codigo_ano_lectivo" AS t_matricula_codigo_ano_lectivo,
-     t_matricula."numero_de_aluno" AS t_matricula_numero_de_aluno,
-     t_matricula."semestre" AS t_matricula_semestre,
-     t_turma."turma" AS t_turma_turma,
-     t_matricula."ano_curricular" AS t_matricula_ano_curricular,
-     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
-     t_ano_lectivo."id" AS t_ano_lectivo_id,
-     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
-     t_logo_marca."foto" AS t_logo_marca_foto,
-     t_curso."grau" AS t_curso_grau
+     V_LISTAGEM_CONTENCIOSO."NUMERO_DE_ALUNO" AS V_LISTAGEM_CONTENCIOSO_NUMERO_DE_ALUNO,
+     V_LISTAGEM_CONTENCIOSO."NOME_ALUNO" AS V_LISTAGEM_CONTENCIOSO_NOME_ALUNO,
+     V_LISTAGEM_CONTENCIOSO."CONTENCIOSO" AS V_LISTAGEM_CONTENCIOSO_CONTENCIOSO,
+     V_LISTAGEM_CONTENCIOSO."CODIGO_CURSO" AS V_LISTAGEM_CONTENCIOSO_CODIGO_CURSO,
+     V_LISTAGEM_CONTENCIOSO."CURSO" AS V_LISTAGEM_CONTENCIOSO_CURSO,
+     V_LISTAGEM_CONTENCIOSO."SEMESTRE" AS V_LISTAGEM_CONTENCIOSO_SEMESTRE,
+     V_LISTAGEM_CONTENCIOSO."CODIGO_TURMA" AS V_LISTAGEM_CONTENCIOSO_CODIGO_TURMA,
+     V_LISTAGEM_CONTENCIOSO."TURMA" AS V_LISTAGEM_CONTENCIOSO_TURMA,
+     V_LISTAGEM_CONTENCIOSO."TOTAL_DIVIDA" AS V_LISTAGEM_CONTENCIOSO_TOTAL_DIVIDA,
+     V_LISTAGEM_CONTENCIOSO."ANO_CURRICULAR" AS V_LISTAGEM_CONTENCIOSO_ANO_CURRICULAR,
+     V_LISTAGEM_CONTENCIOSO."GRUPO_OWNER" AS V_LISTAGEM_CONTENCIOSO_GRUPO_OWNER,
+     V_LISTAGEM_CONTENCIOSO."CODIGO_ANO_LECTIVO" AS V_LISTAGEM_CONTENCIOSO_CODIGO_ANO_LECTIVO,
+     V_LISTAGEM_CONTENCIOSO."ANO_LECTIVO" AS V_LISTAGEM_CONTENCIOSO_ANO_LECTIVO,
+     V_LISTAGEM_CONTENCIOSO."LOGO_MARCA" AS V_LISTAGEM_CONTENCIOSO_LOGO_MARCA,
+     V_LISTAGEM_CONTENCIOSO."GRAU" AS V_LISTAGEM_CONTENCIOSO_GRAU
 FROM
-     "dbo"."t_curso" t_curso INNER JOIN "dbo"."t_aluno" t_aluno ON t_curso."id" = t_aluno."codigo_curso"
-     INNER JOIN "dbo"."t_matricula" t_matricula ON t_aluno."id" = t_matricula."codigo_aluno"
-     AND t_curso."id" = t_matricula."codigo_curso"
-     INNER JOIN "dbo"."t_turma" t_turma ON t_matricula."codigo_turma_base" = t_turma."id"
-     INNER JOIN "dbo"."t_ano_lectivo" t_ano_lectivo ON t_matricula."codigo_ano_lectivo" = t_ano_lectivo."id"
-     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_aluno."codigo_instituicao" = t_instituicao."id",
-     "dbo"."t_logo_marca" t_logo_marca
+     "dbo"."V_LISTAGEM_CONTENCIOSO" V_LISTAGEM_CONTENCIOSO
 WHERE
-     t_ano_lectivo."id" =  $P{cod_ano} 
-     and
-	  t_aluno."contencioso" = 1
-	  and t_aluno."codigo_curso"= $P{cod_curso} 
-	  and t_turma."turma"=  $P{cod_turma} 
-ORDER BY
-     t_curso."descricao" ASC]]>
+     V_LISTAGEM_CONTENCIOSO."CODIGO_ANO_LECTIVO" = $P{cod_ano}
+     and V_LISTAGEM_CONTENCIOSO."CODIGO_CURSO" = $P{cod_curso}
+     and V_LISTAGEM_CONTENCIOSO."CODIGO_TURMA" = $P{cod_turma}]]>
 	</queryString>
-	<field name="t_aluno_id" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_id"/>
-	</field>
-	<field name="t_aluno_nome" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome"/>
-	</field>
-	<field name="t_aluno_contencioso" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_contencioso"/>
-	</field>
-	<field name="t_aluno_codigo_curso" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_codigo_curso"/>
-	</field>
-	<field name="t_curso_descricao" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_curso_descricao"/>
-	</field>
-	<field name="t_matricula_codigo_ano_lectivo" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_matricula_codigo_ano_lectivo"/>
-	</field>
-	<field name="t_matricula_numero_de_aluno" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_matricula_numero_de_aluno"/>
-	</field>
-	<field name="t_matricula_semestre" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_matricula_semestre"/>
-	</field>
-	<field name="t_turma_turma" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_turma_turma"/>
-	</field>
-	<field name="t_matricula_ano_curricular" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_matricula_ano_curricular"/>
-	</field>
-	<field name="t_instituicao_grupo_owner" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_grupo_owner"/>
-	</field>
-	<field name="t_ano_lectivo_id" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_id"/>
-	</field>
-	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_ano_lectivo"/>
-	</field>
-	<field name="t_logo_marca_foto" class="java.lang.Object">
-		<property name="com.jaspersoft.studio.field.label" value="t_logo_marca_foto"/>
-	</field>
-	<field name="t_curso_grau" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_curso_grau"/>
-	</field>
+	<field name="V_LISTAGEM_CONTENCIOSO_NUMERO_DE_ALUNO" class="java.lang.String"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_NOME_ALUNO" class="java.lang.String"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_CONTENCIOSO" class="java.lang.Boolean"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_CODIGO_CURSO" class="java.lang.Integer"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_CURSO" class="java.lang.String"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_SEMESTRE" class="java.lang.String"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_CODIGO_TURMA" class="java.lang.Integer"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_TURMA" class="java.lang.String"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_TOTAL_DIVIDA" class="java.lang.String"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_ANO_CURRICULAR" class="java.lang.Integer"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_GRUPO_OWNER" class="java.lang.String"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_CODIGO_ANO_LECTIVO" class="java.lang.Integer"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_ANO_LECTIVO" class="java.lang.String"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_LOGO_MARCA" class="java.lang.Object"/>
+	<field name="V_LISTAGEM_CONTENCIOSO_GRAU" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="96" splitType="Stretch">
-			<image>
+			<image scaleImage="FillFrame">
 				<reportElement x="0" y="0" width="50" height="61" uuid="7c281be1-b767-4ebc-976a-1cbb9b70d031">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+				<imageExpression><![CDATA[$F{V_LISTAGEM_CONTENCIOSO_LOGO_MARCA}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="230" y="41" width="317" height="20" uuid="260e422d-deee-40f3-be76-0ec5cd292769"/>
@@ -113,14 +75,14 @@ ORDER BY
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Turma: "+$F{t_turma_turma}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Turma: "+$F{V_LISTAGEM_CONTENCIOSO_TURMA}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="4" y="56" width="379" height="16" uuid="acaa0dc2-4054-4269-867e-dbd9cbff235a"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Curso:  "+$F{t_curso_descricao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Curso:  "+$F{V_LISTAGEM_CONTENCIOSO_CURSO}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="476" y="12" width="71" height="1" uuid="1c14b431-cc83-4bc7-8841-73b8d81ecf96"/>
@@ -139,7 +101,7 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{t_curso_grau}.equals("LICENCIATURA") ? "Licenciatura" : "Mestrado"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_LISTAGEM_CONTENCIOSO_GRAU}.equals("LICENCIATURA") ? "Licenciatura" : "Mestrado"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="452" y="8" width="24" height="9" uuid="29245ba3-5298-466c-a6d2-d78f8d641ac0"/>
@@ -208,7 +170,7 @@ ORDER BY
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{t_ano_lectivo_ano_lectivo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_LISTAGEM_CONTENCIOSO_ANO_LECTIVO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -232,7 +194,7 @@ ORDER BY
 				<text><![CDATA[Nome Completo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="310" y="0" width="137" height="17" uuid="31e323d8-f0c6-4c8d-b165-348a8536025b"/>
+				<reportElement x="310" y="0" width="73" height="17" uuid="31e323d8-f0c6-4c8d-b165-348a8536025b"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Times New Roman" isBold="true"/>
 				</textElement>
@@ -241,23 +203,34 @@ ORDER BY
 			<line>
 				<reportElement x="-1" y="16" width="557" height="1" uuid="dc0566fa-4e40-4d57-b002-f44e115e436e"/>
 			</line>
+			<staticText>
+				<reportElement x="430" y="2" width="89" height="14" uuid="68f6b3f9-0a2e-41ea-a074-20442c9b4440"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor em Dívida]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
 				<reportElement x="40" y="0" width="270" height="20" uuid="6a2902c0-5059-457b-9329-8a54a5a9f36f"/>
-				<textFieldExpression><![CDATA[$F{t_aluno_nome}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_LISTAGEM_CONTENCIOSO_NOME_ALUNO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="310" y="1" width="70" height="19" uuid="90521e57-7191-4353-a5eb-52dd1cc6ef5e"/>
+				<reportElement x="310" y="1" width="73" height="19" uuid="90521e57-7191-4353-a5eb-52dd1cc6ef5e"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{t_matricula_numero_de_aluno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_LISTAGEM_CONTENCIOSO_NUMERO_DE_ALUNO}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="1" width="23" height="19" uuid="9d623fe8-5d9d-48c3-9cb1-4a7f59d63f81"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 Akz">
+				<reportElement x="430" y="0" width="100" height="20" uuid="9c3307c0-9611-4d46-94a3-1dfc130d0135"/>
+				<textFieldExpression><![CDATA[$F{V_LISTAGEM_CONTENCIOSO_TOTAL_DIVIDA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -265,7 +238,7 @@ ORDER BY
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="41" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<line>
 				<reportElement x="0" y="0" width="555" height="1" uuid="f7bcd483-0ef3-4727-bd46-ed0b63d8a22b"/>
 			</line>
@@ -279,7 +252,7 @@ ORDER BY
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MMMMM dd, yyyy">
-				<reportElement x="7" y="11" width="100" height="30" uuid="4ae3c530-bb75-4aaa-9ddf-c0eb1fbed760"/>
+				<reportElement x="4" y="1" width="163" height="19" uuid="4ae3c530-bb75-4aaa-9ddf-c0eb1fbed760"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>

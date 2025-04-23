@@ -22,9 +22,9 @@ public class ConexaoService {
 
 	public Connection getConexaoLocal() throws ClassNotFoundException, SQLException {
 		driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		URL   = "jdbc:sqlserver://127.0.0.1:1433;databaseName=siga_intellectus";
+		URL   = "jdbc:sqlserver://localhost:1433;databaseName=siga_intellectus";
 		USER  = "sa";
-		SENHA = "Brasilangola@2310"; 
+		SENHA = "lazaro4321DCBA:_"; 
 		Class.forName(driver);
 		return DriverManager.getConnection(URL, USER, SENHA);
 	}

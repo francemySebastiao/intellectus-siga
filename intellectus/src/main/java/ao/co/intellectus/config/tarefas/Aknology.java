@@ -43,6 +43,7 @@ import ao.co.intellectus.repository.PagamentosRemotoRepository;
 import ao.co.intellectus.repository.UsuarioRepository;
 import ao.co.intellectus.servico.GeradorDeArquivo;
 import ao.co.intellectus.servico.GerarNumeroDocumento;
+import ao.co.intellectus.util.FormataData;
 
 @Singleton
 @Component
@@ -60,8 +61,8 @@ public class Aknology {
 	private BancoRepository bancorepository;
 	@Autowired
 	private MoedaRepository moedarepository;
-	@Autowired
-	private AnoLectivoRepository anoLectivo;
+	//@Autowired
+	//private AnoLectivoRepository anoLectivo;
 	@Autowired
 	private NumeroGeradoRepository numeroGeradoRepository;
 	@Autowired
@@ -83,10 +84,10 @@ public class Aknology {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
-		ResponseEntity<RetornoPagamentos> responseEntity = rest.exchange(baseUrl + "/fila-de-pagamentos?unidade=0010",
+		ResponseEntity<RetornoPagamentos> responseEntity = rest.exchange(baseUrl + "/fila-de-pagamentos?unidade=0030",
 				HttpMethod.GET, requestEntity, RetornoPagamentos.class);
 
-		Usuario usuario = this.usuarioRepository.findOne(47);
+		Usuario usuario = this.usuarioRepository.findOne(981);
 
 		if (responseEntity.getBody() != null) {
 
@@ -110,8 +111,9 @@ public class Aknology {
 				pagamento.setTelefone(paga.getCustom_fields().getMobile());
 				pagamento.setUnidade(paga.getCustom_fields().getUnidade());
 				PagamentosRemoto salvo = this.pagamentoRemotoRepository.save(pagamento);
-
+			
 				Guia guiaPaga = guiaPagamentoRepo.findByNumeroGuia(paga.getCustom_fields().getGuia());
+
 
 				if (guiaPaga != null) {
 
@@ -127,7 +129,7 @@ public class Aknology {
 						
 						gerarFacturaRecibo(salva);
 
-						Banco ba = bancorepository.BuscarID(21);
+						Banco ba = bancorepository.BuscarID(20);
 						Moeda moeda = moedarepository.buscarID(3);
 
 						Bordero b = new Bordero();
@@ -147,7 +149,7 @@ public class Aknology {
 				if (salvo != null) {
 
 					ResponseEntity<RetornoPagamentos> responseEntity1 = rest.exchange(
-							baseUrl + "/remover-da-fila/" + paga.getId() + "?unidade=0010", HttpMethod.DELETE,
+							baseUrl + "/remover-da-fila/" + paga.getId() + "?unidade=0030", HttpMethod.DELETE,
 							requestEntity, RetornoPagamentos.class);
 				}
 			}
@@ -155,6 +157,8 @@ public class Aknology {
 	}
 
 	private void gerarFacturaRecibo(Guia guia) {
+		
+		FormataData forma = new FormataData();
 
 		java.time.LocalDateTime localDate = java.time.LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -162,23 +166,23 @@ public class Aknology {
 
 		String numero = "";
 
-		AnoLectivo anoActivo = anoLectivo.buscarPorEstado();
-		String ano = String.valueOf(anoActivo.getAnoLectivo());
-		String anoSubstring = ano.substring(2, 4);
-		Integer anoLimpo = Integer.parseInt(anoSubstring);
+		//AnoLectivo anoActivo = anoLectivo.buscarPorEstado();
+		//String ano = String.valueOf(anoActivo.getAnoLectivo());
+		//String anoSubstring = ano.substring(2, 4);
+		//Integer anoLimpo = Integer.parseInt(anoSubstring);
 
 		NumeroGerado numeroGeradoFR = this.numeroGeradoRepository.findOne(7);
 		Long proximoNumero = numeroGeradoFR.getProximoNumero();
 
 		// String numero = gerarNumeroDocService.geracaoNumero();
-		numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, anoLimpo, proximoNumero);
+		numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, forma.anoLectivo(), proximoNumero);
 
 		Guia proformaExiste = this.guiaPagamentoRepo.findFacturaRecibo(numero);
 		if (proformaExiste != null) {
 			do {
 				proximoNumero++;
 
-				numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, anoLimpo, proximoNumero);
+				numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, forma.anoLectivo(), proximoNumero);
 				proformaExiste = this.guiaPagamentoRepo.findFacturaRecibo(numero);
 			} while (proformaExiste != null);
 		}

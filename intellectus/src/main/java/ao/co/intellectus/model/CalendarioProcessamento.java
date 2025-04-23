@@ -28,8 +28,8 @@ public class CalendarioProcessamento {
 	private float totalPago;
 	private float totalAberto;
 	private boolean processado;
-    @JoinColumn(name="processada_referencias")
-	private boolean processadoReferencias;
+    /*@JoinColumn(name="processada_referencias")
+	private boolean processadoReferencias;*/
 	@ManyToOne
 	@JoinColumn(name="codigo_ano_lectivo")
 	private AnoLectivo anoLectivo;
@@ -120,12 +120,12 @@ public class CalendarioProcessamento {
 	public void setMesAProcessar(boolean mesAProcessar) {
 		this.mesAProcessar = mesAProcessar;
 	}
-	public boolean isProcessadoReferencias() {
+	/*public boolean isProcessadoReferencias() {
 		return processadoReferencias;
 	}
 	public void setProcessadoReferencias(boolean processadoReferencias) {
 		this.processadoReferencias = processadoReferencias;
-	}
+	}*/
 	
 	
 }

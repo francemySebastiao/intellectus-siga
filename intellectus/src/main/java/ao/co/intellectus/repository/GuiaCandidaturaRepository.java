@@ -56,5 +56,8 @@ public interface GuiaCandidaturaRepository extends JpaRepository<GuiaCandidatura
 	
 	@Query(value="SELECT * from V_NUMERO_FACTURA WHERE N_FACTURA_PROFORMA =:documento", nativeQuery=true)
 	public GuiaCandidatura buscarDocumento(@Param("documento") String documento);
+	
+	@Query(value="SELECT * FROM T_GUIA_CANDIDATURA WHERE DATA_LIQUIDACAO BETWEEN :data1 AND :data2 AND LIQUIDADA = 1 AND TIPO_FACTURA = 'FACTURA_RECIBO'", nativeQuery=true)
+	public List<GuiaCandidatura> BUSCAR_NUMBER_OF_ENTRIES(@Param("data1") String data1, @Param("data2") String data2);
 
 }

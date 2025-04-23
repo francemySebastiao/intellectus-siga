@@ -13,6 +13,9 @@ public interface SalesInvoiceRepository extends JpaRepository<SalesInvoices, Str
 	@Query(value="SELECT * FROM V_SALES_INVOICE WHERE DATA_EMISSAO BETWEEN :data1 AND :data2",nativeQuery=true)
 	public List<SalesInvoices> buscarSalesInvoces(@Param("data1") String data1, @Param("data2") String data2);
 	
-	@Query(value="SELECT * FROM V_SALES_INVOICE WHERE DATA_EMISSAO BETWEEN :data1 AND :data2 AND ANULADO = 0",nativeQuery=true)
+	@Query(value="SELECT * FROM V_SALES_INVOICE WHERE DATA_EMISSAO BETWEEN :data1 AND :data2 AND ANULADO = 1",nativeQuery=true)
 	public List<SalesInvoices> buscarDebits(@Param("data1") String data1, @Param("data2") String data2);
+	
+	@Query(value="SELECT * FROM V_SALES_INVOICE WHERE DATA_EMISSAO BETWEEN :data1 AND :data2 AND ANULADO = 0",nativeQuery=true)
+	public List<SalesInvoices> buscarCredit(@Param("data1") String data1, @Param("data2") String data2);
 }

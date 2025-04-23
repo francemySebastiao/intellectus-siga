@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Certificado_Intermedio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="1a9393c7-bfd7-45c4-8a08-a36bcde105ba">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="20"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="numero_matricula" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="condicao" class="java.lang.String"/>
+	<parameter name="data" class="java.lang.String"/>
+	<parameter name="numero_pedido" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select  
+
+ 
+
+		RD.numero_declaracao NumeroPedido
+		,A.NOME,
+		A.SEXO,
+		A.NOME_DO_PAI,
+		A.NOME_DA_MAE,
+		A.NUMERO_DOCUMENTO_IDENTIFICACAO,
+		A.DATA_EMISSAO_IDENTIDADE,
+		A.ARQUIVO_IDENTIFICACAO,
+		A.DATA_NASCIMENTO,
+		PV.PROVINCIA,
+		CS.GRAU,
+		CS.DESCRICAO ESPECIALIDADE,
+		 CASE
+				WHEN CS.ID IN (23,24) THEN 'Engenharia Informática'
+				WHEN CS.ID IN (21,22) THEN 'Direito'
+				WHEN CS.ID IN (25,26) THEN 'Gestão de Recursos Humanos'
+				WHEN CS.ID IN (27) THEN 'Comunicação, Marketing e Publicidade'
+				WHEN CS.ID IN (28,29,30) THEN 'Gestão de Empresas'
+		ELSE
+		CS.DESCRICAO
+		END CURSO_real,
+		V.DISCIPLINA,
+		V.NOTA_FINAL,
+		A.NUMERO_DE_ALUNO,
+		FD.CARGO,
+		FD.FACULDADE NOME,
+		FD.TITULO,
+		FD.RESPONSAVEL,
+		V.TOTAL_DISCIPLINAS,
+		V.ano_curricular,
+		V.ano_lectivo,
+		A.DATA_FIM_DO_CURSO,
+		CASE
+                --WHEN AN.MEDIA_FINAL IS NULL THEN '---'
+	            WHEN A.MEDIA_FINAL = 0 THEN '(Zero)'
+                WHEN A.MEDIA_FINAL = 1 THEN '(Um)'
+                WHEN A.MEDIA_FINAL = 2 THEN '(Dois)'
+                WHEN A.MEDIA_FINAL = 3 THEN '(Três)'
+                WHEN A.MEDIA_FINAL = 4 THEN '(Quatro)'
+                WHEN A.MEDIA_FINAL = 5 THEN '(Cinco)'
+                WHEN A.MEDIA_FINAL = 6 THEN '(Seis)'
+                WHEN A.MEDIA_FINAL = 7 THEN '(Sete)'
+                WHEN A.MEDIA_FINAL = 8 THEN '(Oito)'
+                WHEN A.MEDIA_FINAL = 9 THEN '(Nove)'
+                WHEN A.MEDIA_FINAL = 10 THEN '(Dez)'
+                WHEN A.MEDIA_FINAL = 11 THEN '(Onze)'
+                WHEN A.MEDIA_FINAL = 12 THEN '(Doze)'
+                WHEN A.MEDIA_FINAL = 13 THEN '(Treze)'
+                WHEN A.MEDIA_FINAL = 14 THEN '(Catorze)'
+                WHEN A.MEDIA_FINAL = 15 THEN '(Quinze)'
+                WHEN A.MEDIA_FINAL = 16 THEN '(Dezasseis)'
+                WHEN A.MEDIA_FINAL = 17 THEN '(Dezassete)'
+                WHEN A.MEDIA_FINAL = 18 THEN '(Dezoito)'
+                WHEN A.MEDIA_FINAL = 19 THEN '(Dezanove)'
+                WHEN A.MEDIA_FINAL = 20 THEN '(Vinte)'	
+		END MEDIA_EXTENSO
+		,CONCAT(DBO.NumeroPorExtenso(DAY(A.data_fim_do_curso),MONTH(A.data_fim_do_curso)),' de ',DBO.AnoPorExtenso(YEAR(A.data_fim_do_curso))) DATA_CONCLUSAO
+		 from V_CERTIFICADO_INTERMEDIO V inner join t_aluno A ON (V.NUMERO = A.NUMERO_DE_ALUNO)
+										 INNER JOIN t_registro_documentos  RD ON (RD.CODIGO_ALUNO = A.ID)
+										  INNER JOIN T_PROVINCIA PV ON (PV.ID = A.CODIGO_PROVINCIA_NASCIMENTO)
+										  INNER JOIN T_CURSO CS      ON (CS.ID = A.CODIGO_CURSO)
+										  INNER JOIN T_FACULDADE FD  ON (FD.ID = CS.CODIGO_FACULDADE)
+
+										  where 
+										  CS.GRAU='CESE'
+										  AND A.NUMERO_DE_ALUNO= $P{numero_matricula} 
+										  AND RD.numero_declaracao= $P{numero_pedido}
+										  order by V.ano_curricular]]>
+	</queryString>
+	<field name="NumeroPedido" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NumeroPedido"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="SEXO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SEXO"/>
+	</field>
+	<field name="NOME_DO_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DO_PAI"/>
+	</field>
+	<field name="NOME_DA_MAE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DA_MAE"/>
+	</field>
+	<field name="NUMERO_DOCUMENTO_IDENTIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DOCUMENTO_IDENTIFICACAO"/>
+	</field>
+	<field name="DATA_EMISSAO_IDENTIDADE" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_EMISSAO_IDENTIDADE"/>
+	</field>
+	<field name="ARQUIVO_IDENTIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ARQUIVO_IDENTIFICACAO"/>
+	</field>
+	<field name="DATA_NASCIMENTO" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_NASCIMENTO"/>
+	</field>
+	<field name="PROVINCIA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVINCIA"/>
+	</field>
+	<field name="GRAU" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="GRAU"/>
+	</field>
+	<field name="ESPECIALIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ESPECIALIDADE"/>
+	</field>
+	<field name="CURSO_real" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO_real"/>
+	</field>
+	<field name="DISCIPLINA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DISCIPLINA"/>
+	</field>
+	<field name="NOTA_FINAL" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="NOTA_FINAL"/>
+	</field>
+	<field name="NUMERO_DE_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DE_ALUNO"/>
+	</field>
+	<field name="CARGO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CARGO"/>
+	</field>
+	<field name="COLUMN_18" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="TITULO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TITULO"/>
+	</field>
+	<field name="RESPONSAVEL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="RESPONSAVEL"/>
+	</field>
+	<field name="TOTAL_DISCIPLINAS" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="TOTAL_DISCIPLINAS"/>
+	</field>
+	<field name="ano_curricular" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_curricular"/>
+	</field>
+	<field name="ano_lectivo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="ano_lectivo"/>
+	</field>
+	<field name="DATA_FIM_DO_CURSO" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_FIM_DO_CURSO"/>
+	</field>
+	<field name="MEDIA_EXTENSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MEDIA_EXTENSO"/>
+	</field>
+	<field name="DATA_CONCLUSAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_CONCLUSAO"/>
+	</field>
+	<variable name="contador" class="java.lang.String" calculation="Count">
+		<variableExpression><![CDATA[$F{DISCIPLINA}]]></variableExpression>
+	</variable>
+	<group name="Ano">
+		<groupExpression><![CDATA[$F{ano_curricular}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement x="34" y="0" width="46" height="20" uuid="cafb569e-e853-421d-bf27-9922cf54a7be"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Serif" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ano_curricular}+"º"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="275">
+			<textField>
+				<reportElement x="34" y="164" width="487" height="111" uuid="eb6897ca-8c66-4631-8d8d-ef2e468c69ae"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, instituída pelo Decreto n.º 23/07, de 7 de Maio, certifica-se que "+"<b>"+$F{NOME}+"</b>"+", "+($F{SEXO}.equals("F")? "filha": $F{SEXO}.equals("M")? "filho": $F{SEXO}.equals("ANUAL")?"Anual": "-sem informação-")+" de "+$F{NOME_DO_PAI}+" e de "+$F{NOME_DA_MAE}+($F{SEXO}.equals("F")? ", nascida a ": $F{SEXO}.equals("M")? ", nascido a ": $F{SEXO}.equals("ANUAL")?"Anual": "-sem informação-")+" "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DATA_NASCIMENTO})+", natural de "+$F{PROVINCIA}+($F{SEXO}.equals("F")? ", portadora do Bilhete de Identidade n.º ": $F{SEXO}.equals("M")? ", portador do Bilhete de Identidade n.º ": $F{SEXO}.equals("ANUAL")?"Anual": "else SQL Query")+$F{NUMERO_DOCUMENTO_IDENTIFICACAO}+", emitido aos "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DATA_EMISSAO_IDENTIDADE})+" pelo arquivo de "+$F{ARQUIVO_IDENTIFICACAO}+", obteve aprovação nas seguintes disciplinas que constituem o curso de Estudos Tecnológicos em "+$F{CURSO_real}+":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="150" width="487" height="24" uuid="a9d4aa5a-f68c-47a7-a38d-177cac34cdd1"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CERTIFICADO FINAL"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="14" splitType="Prevent">
+			<textField>
+				<reportElement x="34" y="0" width="313" height="14" uuid="27b8d369-544e-4a12-943e-9d32a3e199e5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DISCIPLINA}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<textField pattern="##" isBlankWhenNull="true">
+					<reportElement x="348" y="0" width="96" height="14" uuid="565afd4a-5247-4092-b497-73b9b33e9284"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="Serif" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(new DecimalFormat("##")).format($F{NOTA_FINAL})  +" "+(
+    $F{NOTA_FINAL} == 1  ?
+    "(Um)" :
+    $F{NOTA_FINAL} == 2 ?
+    "(Dois)" :
+   $F{NOTA_FINAL} == 3 ?
+    "(Tres)" :
+    $F{NOTA_FINAL} == 4 ?
+    "(Quatro)" :
+    $F{NOTA_FINAL} == 5 ?
+    "(Cinco)" :
+    $F{NOTA_FINAL} == 6 ?
+    "(Seis)" :
+    $F{NOTA_FINAL} == 7 ?
+    "(Sete)" :
+    $F{NOTA_FINAL} == 8 ?
+    "(Oito)" :
+    $F{NOTA_FINAL} == 9 ?
+    "(Nove)" :
+    $F{NOTA_FINAL} == 10 ?
+    "(Dez)" :
+    $F{NOTA_FINAL} == 11 ?
+    "(Onze)" :
+    $F{NOTA_FINAL} == 12 ?
+    "(Doze)" :
+    $F{NOTA_FINAL} == 13 ?
+    "(Treze)" :
+    $F{NOTA_FINAL} == 14 ?
+    "(Catorze)" :
+    $F{NOTA_FINAL} == 15 ?
+    "(Quinze)" :
+    $F{NOTA_FINAL} == 16 ?
+    "(Dezasseis)" :
+    $F{NOTA_FINAL} == 17 ?
+    "(Dezassete)" :
+    $F{NOTA_FINAL} == 18 ?
+    "(Dezoito)" :
+    $F{NOTA_FINAL} == 19?
+    "(Dezanove)" :
+    $F{NOTA_FINAL} == 20 ?
+    "(Vinte)" :
+    "Sem Nota")]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<staticText>
+				<reportElement x="441" y="0" width="45" height="14" uuid="336ee767-aecb-4adc-8abb-7a71a0129b00"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<text><![CDATA[Valores]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="486" y="0" width="53" height="14" uuid="f32b63d8-568a-49d2-a183-32cf25e79391"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ano_lectivo} == 23 ? "2023/2024" : $F{ano_lectivo} == 22 ? "2022/2023" :$F{ano_lectivo} == 21 ? "2021/2022" :$F{ano_lectivo} == 20 ? "2020" : $F{ano_lectivo} == 19 ? "2019" : $F{ano_lectivo} == 18 ? "2018" : ""
+]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="473">
+			<textField>
+				<reportElement x="156" y="366" width="241" height="21" uuid="8141aaf5-933d-4c5e-9def-b795ab5c9b6c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TITULO}+" "+$F{RESPONSAVEL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="156" y="366" width="241" height="1" uuid="8e311aef-3816-45e3-8037-b9e91dcebe86"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement mode="Transparent" x="171" y="303" width="216" height="33" uuid="061deb44-9234-484f-b1cc-8c172ef34e76"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="89" width="487" height="42" uuid="b008809d-dd1e-4d55-a6a7-9b077061cb6b"/>
+				<textElement textAlignment="Justified" markup="html">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Por ser verdade e ter sido pedido, mandou-se passar o presente Certificado, que vai assinado e autenticado com o selo branco em uso nesta Universidade."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="34" y="132" width="358" height="20" uuid="662b9b2c-31ab-4ddf-a28a-1931a7245c26">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Serif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Luanda, "+$P{data}+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="34" y="68" width="265" height="18" isRemoveLineWhenBlank="true" uuid="50da271e-3b2c-41d3-8dbb-d2d8389ea421"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Serif" size="10"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Numero de Matrícula: "+$F{NUMERO_DE_ALUNO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="34" y="67" width="485" height="1" uuid="bfa17d43-0b79-4ec9-8235-77a9eef862b6"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="33" y="10" width="487" height="42" uuid="bdba2eea-7750-4e9c-8000-f0c70ef2b612"/>
+				<textElement textAlignment="Justified" markup="html">
+					<font fontName="Serif" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Mais se certifica que concluiu o referido curso aos "+$F{DATA_CONCLUSAO}+" com a média final de "+$F{MEDIA_EXTENSO}+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="19" y="243" width="241" height="21" uuid="1ae9bf92-de18-46b2-b90e-67ce050bab93"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TITULO}+" "+$F{RESPONSAVEL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="19" y="243" width="241" height="1" uuid="df9dea4d-44c0-41d4-b6ab-f4ee95452d59"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement mode="Transparent" x="34" y="180" width="216" height="33" uuid="af94ba9c-e558-4d02-9a56-87602ef9bbf8"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["O Chefe dos Serviços Académicos"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="290" y="243" width="241" height="1" uuid="497179e8-3abb-429a-bc8d-3d0dbdf53bd6"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement mode="Transparent" x="305" y="180" width="216" height="33" uuid="4d0f794b-c7ae-46d2-94bc-3c93ab27a1f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["O Director de Cooperação e Extensão"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="431" width="218" height="21" uuid="65b56bf0-7ae6-4b95-ad90-ffebaf62f827">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Documento n.º "+$F{NumeroPedido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="452" width="218" height="21" uuid="913f992d-74d8-415b-ab55-6b06f06ba630">
+					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Emitido por: _________________________________________"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

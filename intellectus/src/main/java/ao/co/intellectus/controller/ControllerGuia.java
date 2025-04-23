@@ -971,16 +971,24 @@ public class ControllerGuia {
 			gCliente = new GuiaCliente();
 			gCliente.setLiquidada(guia.isLiquidada());
 			BeanUtils.copyProperties(guia, gCliente, "Aluno", "AnoLectivo");
+			
+			NotaCredito notaCredito = this.notaCreditoRepo.buscarGuiaPagamento(Long.parseLong(guia.getId().toString()));
 
 			gCliente.setAnulada(guia.isAnulada());
 			gCliente.setAcordo(guia.isAcordo());
 			gCliente.setLiquidada(guia.isLiquidada());
+			gCliente.setLiquidacaoCredito(guia.isLiquidacaoCredito());
 			gCliente.setAlterada(guia.isAlterada());
 			gCliente.setAnoLectivo(guia.getAnoLectivo().getAnoLectivo());
 			gCliente.setAnoLectivoDescricao(guia.getAnoLectivo().getAnoLectivoDescricao());
 			gCliente.setNumero(guia.getNumeroGuia());
 			gCliente.setNumeroProforma(guia.getNumeroFacturaProforma());
 			gCliente.setNumeroFacturaRecibo(guia.getNumeroFacturaRecibo());
+			
+			if (notaCredito != null) {
+			    gCliente.setNumeroNotaCredito(notaCredito.getNumeroNotaCredito());
+			}
+			
 			gCliente.setMotivoAnulacaoGuia(guia.getMotivoAnulacaoGuia());
 			gCliente.setMotivoAnulacaoRecibo(guia.getMotivoAnulacaoRecibo());
 
@@ -1120,7 +1128,7 @@ public class ControllerGuia {
 		guiaAlunos.setInativo(alunoEncontrado.isInactivo());
 		guiaAlunos.setFoto(alunoFoto.getFoto());
 		guiaAlunos.setGrau(alunoEncontrado.getCurso().getGrau().getDescricao());
-		
+		//guiaAlunos.setTurno(mm.getTurmaBase().getTurno());
 
 		if (mm != null) {
 			if (mm.getEmpresaConvenio() != null) {
@@ -1451,7 +1459,7 @@ public class ControllerGuia {
 				} else {
 					valorPagar = liquidacao.getValorDeposito();
 				}
-				if (valorPagar == guia.getValor()) {
+				if (valorPagar == FormataData.formatarValor(guia.getValor())) {
 					if (liquidacao.isLiquidacaoCredito()) {
 						Banco banco = this.bancoRepository.findOne(15);
 						Bordero bordero = new Bordero();
@@ -1474,31 +1482,7 @@ public class ControllerGuia {
 						this.borderoRepository.save(bordero);
 					}
 
-					String numero = "";
-
-					/*AnoLectivo anoActivo = anoLectivoRepository.buscarPorEstado();
-					String ano = String.valueOf(anoActivo.getAnoLectivo());
-					String anoSubstring = ano.substring(2, 4);
-					Integer anoLimpo = Integer.parseInt(anoSubstring);*/
-					
-
-					NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(7);
-					Long proximoNumero = numeroGerado.getProximoNumero();
-
-					// String numero = gerarNumeroDocService.geracaoNumero();
-					numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, forma.anoLectivo(), proximoNumero);
-
-					Guia FacturaReciboExiste = this.repository.findFacturaRecibo(numero);
-					GuiaCandidatura faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numero);
-					if (FacturaReciboExiste != null || faturaReciboCandidatura != null) {
-						do {
-							proximoNumero++;
-
-							numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, forma.anoLectivo(), proximoNumero);
-							FacturaReciboExiste = this.repository.findFacturaRecibo(numero);
-							faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numero);
-						} while (FacturaReciboExiste != null || faturaReciboCandidatura != null);
-					}
+					String numero = gerarNumeroFR(forma);
 
 					guia.setLiquidada(true);
 					guia.setDataLiquidacao(new Date());
@@ -1512,10 +1496,6 @@ public class ControllerGuia {
 					// guia.set
 					GuiaCandidatura guiaCand = this.guiaCandidaturaRepository.save(guia);
 					this.gerarDocService.gerarFileFacturaReciboCandidato(guiaCand);
-
-					numeroGerado.setUltimoNumero(proximoNumero);
-					numeroGerado.setProximoNumero(proximoNumero + 1);
-					this.numeroGeradoRepository.save(numeroGerado);
 
 					c.setResultado(guiaCand.getNumeroFacturaRecibo());
 					c.setCodigo(ResponseCode.values()[0].getDescricao());
@@ -1531,82 +1511,7 @@ public class ControllerGuia {
 				// BUSCAR A GUIA A SER LIQUIDADA.
 				Guia guia = this.repository.findOne(liquidacao.getId());
 
-				// Gerar numero FacturaRecibo
-				String numeroFR = "";
-
-				/*AnoLectivo anoActivoFR = anoLectivoRepository.buscarPorEstado();
-				String anoFR = String.valueOf(anoActivoFR.getAnoLectivo());
-				String anoSubstringFR = anoFR.substring(2, 4);
-				Integer anoLimpoFR = Integer.parseInt(anoSubstringFR);*/
-
-				NumeroGerado numeroGeradoFR = this.numeroGeradoRepository.findOne(7);
-				Long proximoNumeroFR = numeroGeradoFR.getProximoNumero();
-
-				// String numero = gerarNumeroDocService.geracaoNumero();
-				numeroFR = gerarNumeroDocService.gerarNumeroFacturaRecibo(numeroFR, forma.anoLectivo(), proximoNumeroFR);
-
-				Guia facturaReciboExiste = this.repository.findFacturaRecibo(numeroFR);
-				GuiaCandidatura faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numeroFR);
-				if (facturaReciboExiste != null || faturaReciboCandidatura != null) {
-					do {
-						proximoNumeroFR++;
-
-						numeroFR = gerarNumeroDocService.gerarNumeroFacturaRecibo(numeroFR, forma.anoLectivo(),
-								proximoNumeroFR);
-						facturaReciboExiste = this.repository.findFacturaRecibo(numeroFR);
-						faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numeroFR);
-					} while (facturaReciboExiste != null || faturaReciboCandidatura != null);
-				}
 				// -----------------------------------------------------------------------------------------------------
-
-				// Gerar numero proforma
-				String numero = "";
-
-				/*AnoLectivo anoActivo = anoLectivoRepository.buscarPorEstado();
-				String ano = String.valueOf(anoActivo.getAnoLectivo());
-				String anoSubstring = ano.substring(2, 4);
-				Integer anoLimpo = Integer.parseInt(anoSubstring);*/
-
-				NumeroGerado numeroGeradoFP = this.numeroGeradoRepository.findOne(6);
-				Long proximoNumero = numeroGeradoFP.getProximoNumero();
-
-				// String numero = gerarNumeroDocService.geracaoNumero();
-				numero = gerarNumeroDocService.gerarNumeroFacturaProforma(numero, forma.anoLectivo(), proximoNumero);
-
-				Guia proformaExiste = this.repository.findProforma(numero);
-				GuiaCandidatura proformaCandidatura = this.guiaCandidaturaRepository.buscarProforma(numero);
-				if (proformaExiste != null || proformaCandidatura != null) {
-					do {
-						proximoNumero++;
-
-						numero = gerarNumeroDocService.gerarNumeroFacturaProforma(numero, forma.anoLectivo(), proximoNumero);
-						proformaExiste = this.repository.findProforma(numero);
-						proformaCandidatura = this.guiaCandidaturaRepository.buscarProforma(numero);
-					} while (proformaExiste != null || proformaCandidatura != null);
-				}
-				
-				/*String definitivoEx = "";
-
-				AnoLectivo anoActivoEx = anoLectivoRepository.buscarPorEstado();
-				Integer anoLimpoEx = anoActivoEx.getAnoLectivo();
-				NumeroGerado numeroGeradoEx = this.numeroGeradoRepository.findOne(3);
-				Long proximoNumeroEx = numeroGeradoEx.getProximoNumero();
-
-				// String numero = gerarNumeroDocService.geracaoNumero();
-				definitivoEx = gerarNumeroGuia(definitivoEx, anoLimpoEx, proximoNumeroEx);
-
-				Guia borderouxExiste = this.repository.findByNumeroGuia(definitivoEx);
-				
-				if (borderouxExiste != null) {
-					do {
-						proximoNumeroEx++;
-
-						definitivoEx = gerarNumeroGuia(definitivoEx, anoLimpoEx, proximoNumeroEx);
-						borderouxExiste = this.repository.findByNumeroGuia(definitivoEx);
-						
-					} while (borderouxExiste != null);
-				}*/
-				
 
 				List<GuiaPagamentoHistorico> aNMatricula = this.historicoGuiaRepository.findByGuiaAndEmolumento(guia,
 						emolumentoAnulacao);
@@ -1622,10 +1527,6 @@ public class ControllerGuia {
 				}
 				// BUSCA A CONTA CORRENTE DO ALUNO.
 				ContaCorrenteAluno contaCorrente = this.contaConrrenteRepository.findByAluno(guia.getAluno());
-
-				// PARA LIQUIDAR COM PARTE CREDITO
-				// casou
-				//double valorParte = contaCorrente.getValor() + liquidacao.getValorDeposito();
 
 				// BUSCA O QUE A GUIA TEM DE SUPPLEMNTO
 				double retornoMetodoMulta = getWorkingDaysBetweenTwoDates(guia.getDataVencimento(),
@@ -1658,15 +1559,10 @@ public class ControllerGuia {
 						guia.setUsuarioLiquidou(usuario);
 						guia.setDataEmissaoFr(new Date());
 						guia.setUltimaModificacao(new Date());
-						//guia.setNumeroGuia(definitivoEx);
 						guia.setTipoFactura(TipoFatura.FACTURA_CREDITO);
 						guia.setDataSistemaFr(dataSistemaFR);
 						guia.setLiquidacaoCredito(true);
-						Guia guiaSalva = this.repository.save(guia);
-
-						//numeroGeradoEx.setUltimoNumero(proximoNumeroEx);
-						//numeroGeradoEx.setProximoNumero(proximoNumeroEx + 1);
-						//this.numeroGeradoRepository.save(numeroGeradoEx);
+						this.repository.save(guia);
 
 						Banco banco = this.bancoRepository.findByBanco("Valor em Crédito");
 
@@ -1722,6 +1618,9 @@ public class ControllerGuia {
 						
 						if(multa > 0) {
 							
+							// Gerar numero proforma
+							String numero = gerarNumeroPP(forma);
+							
 							GuiaPagamentoHistorico guiaHistorico = new GuiaPagamentoHistorico();
 							Guia gMulta = new Guia();
 							gMulta.setAluno(aluno);
@@ -1738,6 +1637,7 @@ public class ControllerGuia {
 							gMulta.setParaAcordoPagamento(false);
 							gMulta.setAnulada(false);
 							gMulta.setLiquidada(false);
+							gMulta.setLiquidacaoCredito(false);
 							gMulta.setGerouCredito(false);
 							gMulta.setGeradaReferencia(false);
 							gMulta.setGeradaOnline(false);
@@ -1749,10 +1649,6 @@ public class ControllerGuia {
 							Guia guiaSava = this.repository.save(gMulta);
 
 							this.gerarDocService.gerarFileProformaAluno(guiaSava);
-
-							numeroGeradoFP.setUltimoNumero(proximoNumero);
-							numeroGeradoFP.setProximoNumero(proximoNumero + 1);
-							this.numeroGeradoRepository.save(numeroGeradoFP);
 
 							// AUTOMAÇÃO PARA A GERAÇÃO DO NUMERO DA GUIA
 							String definitivo = "";
@@ -1815,6 +1711,8 @@ public class ControllerGuia {
 				} else {
 					// 002
 					// LIQUIDAÇÃO NORMAL, VALOR NORMAL DEPOSITADO...
+					
+					String numeroFR = gerarNumeroFR(forma);
 
 					if (liquidacao.getValorDeposito() == valorMulta) {
 
@@ -1847,10 +1745,6 @@ public class ControllerGuia {
 						Guia guiaSalva = this.repository.save(guia);
 
 						this.gerarDocService.gerarFileFacturaReciboAluno(guiaSalva);
-
-						numeroGeradoFR.setUltimoNumero(proximoNumeroFR);
-						numeroGeradoFR.setProximoNumero(proximoNumeroFR + 1);
-						this.numeroGeradoRepository.save(numeroGeradoFR);
 						
 
 						// RETIR DO CONTENCIOSO
@@ -1862,6 +1756,9 @@ public class ControllerGuia {
 						gerarHistorico(guia);
 						
 						if(multa > 0) {
+							
+							// Gerar numero proforma
+							String numero = gerarNumeroPP(forma);
 							
 							GuiaPagamentoHistorico guiaHistorico = new GuiaPagamentoHistorico();
 							Guia gMulta = new Guia();
@@ -1891,10 +1788,6 @@ public class ControllerGuia {
 							Guia guiaSava = this.repository.save(gMulta);
 
 							this.gerarDocService.gerarFileProformaAluno(guiaSava);
-
-							numeroGeradoFP.setUltimoNumero(proximoNumero);
-							numeroGeradoFP.setProximoNumero(proximoNumero + 1);
-							this.numeroGeradoRepository.save(numeroGeradoFP);
 
 							// AUTOMAÇÃO PARA A GERAÇÃO DO NUMERO DA GUIA
 							String definitivo = "";
@@ -1961,6 +1854,58 @@ public class ControllerGuia {
 			return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
 		}
 	}
+	
+	@Transactional
+	public String gerarNumeroFR(FormataData forma) {
+	    String numeroFR;
+	    NumeroGerado numeroGeradoFR = this.numeroGeradoRepository.findOne(7);
+	    Long proximoNumeroFR = numeroGeradoFR.getProximoNumero();
+
+	    numeroFR = gerarNumeroDocService.gerarNumeroFacturaRecibo("", forma.anoLectivo(), proximoNumeroFR);
+
+	    Guia facturaReciboExiste = this.repository.findFacturaRecibo(numeroFR);
+	    GuiaCandidatura faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numeroFR);
+	    if (facturaReciboExiste != null || faturaReciboCandidatura != null) {
+	        do {
+	            proximoNumeroFR++;
+	            numeroFR = gerarNumeroDocService.gerarNumeroFacturaRecibo("", forma.anoLectivo(), proximoNumeroFR);
+	            facturaReciboExiste = this.repository.findFacturaRecibo(numeroFR);
+	            faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarRecibo(numeroFR);
+	        } while (facturaReciboExiste != null || faturaReciboCandidatura != null);
+	    }
+
+	    numeroGeradoFR.setUltimoNumero(proximoNumeroFR);
+	    numeroGeradoFR.setProximoNumero(proximoNumeroFR + 1);
+	    this.numeroGeradoRepository.save(numeroGeradoFR);
+
+	    return numeroFR;
+	}
+	
+	@Transactional
+	public String gerarNumeroPP(FormataData forma) {
+	    String numeroPP;
+	    NumeroGerado numeroGeradoPP = this.numeroGeradoRepository.findOne(6);
+	    Long proximoNumeroPP = numeroGeradoPP.getProximoNumero();
+
+	    numeroPP = gerarNumeroDocService.gerarNumeroFacturaProforma("", forma.anoLectivo(), proximoNumeroPP);
+
+	    Guia facturaReciboExiste = this.repository.buscarProforma(numeroPP);
+	    GuiaCandidatura faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarProforma(numeroPP);
+	    if (facturaReciboExiste != null || faturaReciboCandidatura != null) {
+	        do {
+	        	proximoNumeroPP++;
+	            numeroPP = gerarNumeroDocService.gerarNumeroFacturaProforma("", forma.anoLectivo(), proximoNumeroPP);
+	            facturaReciboExiste = this.repository.buscarProforma(numeroPP);
+	            faturaReciboCandidatura = this.guiaCandidaturaRepository.buscarProforma(numeroPP);
+	        } while (facturaReciboExiste != null || faturaReciboCandidatura != null);
+	    }
+
+	    numeroGeradoPP.setUltimoNumero(proximoNumeroPP);
+	    numeroGeradoPP.setProximoNumero(proximoNumeroPP + 1);
+	    this.numeroGeradoRepository.save(numeroGeradoPP);
+
+	    return numeroPP;
+	}
 
 	@SuppressWarnings("unused")
 	public Date dataCredito(Aluno aluno, float valorGuia) {
@@ -2012,7 +1957,7 @@ public class ControllerGuia {
 	@Transactional
 	private void gerarHistorico(Guia guia) {
 		GuiaAudit audit = new GuiaAudit();
-		BeanUtils.copyProperties(guia, audit);
+		BeanUtils.copyProperties(guia, audit, "gerouCredito", "paraAcordoPagamento");
 		this.guiaAuditRepository.save(audit);
 	}
 
@@ -2114,6 +2059,7 @@ public class ControllerGuia {
 			emolumentoCliente.setId(histEmolumento.getEmolumento().getId());
 			emolumentoCliente.setPercentagemIva(histEmolumento.getEmolumento().getPercentagemIva());
 			emolumentoCliente.setCodigoIva(histEmolumento.getEmolumento().getCodigoIva());
+			emolumentoCliente.setPropina(histEmolumento.getEmolumento().isPropina());
 
 			AlunoEmolumento alunoEmolumento = new AlunoEmolumento();
 
@@ -2229,6 +2175,7 @@ public class ControllerGuia {
 			double valorComIva = 0;
 			double valorImposto = 0;
 			double valorTotalIvaDesconto = 0;
+			double novoValorPropina = 0;
 
 			for (EmolumentoDescCliente emluCliente : cEmolumento) {
 				guiaHistorico = new GuiaPagamentoHistorico();
@@ -2237,25 +2184,66 @@ public class ControllerGuia {
 				guiaHistorico.setEmolumento(emolumento);
 				guiaHistorico.setGuia(guiaSava);
 				guiaHistorico.setDesconto(emluCliente.getValorDesconto());
+				
+				if(matricula != null && matricula.getPercentagemDesconto() > 0 && emluCliente.isPropina()) {
+					Integer percentagem = matricula.getPercentagemDesconto();
+					if(percentagem > 0) {
+						
+						novoValorPropina = emluCliente.getValor() + (matricula.getCrescimentoPropina());
+						
+						valorImposto = (novoValorPropina * emluCliente.getPercentagemIva()) / 100;
+						
+						valorComIva = novoValorPropina + valorImposto;
+					
+						
+						desconto = (novoValorPropina * percentagem) / 100;
+						
+						valorTotalIvaDesconto = (valorComIva - desconto);
+						
+						
+						
+						guiaHistorico.setDesconto(FormataData.formatarValor(desconto));
+						guiaHistorico.setValorTotal(FormataData.formatarValor(valorTotalIvaDesconto));
+					}
+				}else if(matricula != null && emluCliente.isPropina()) {
+					
+					novoValorPropina = emluCliente.getValor() + (matricula.getCrescimentoPropina());
+					
+					valorImposto = (novoValorPropina * emluCliente.getPercentagemIva()) / 100;
+					valorComIva = novoValorPropina + valorImposto;
 
-				valorImposto = (emluCliente.getValor() * emluCliente.getPercentagemIva()) / 100;
-				valorComIva = emluCliente.getValor() + valorImposto;
+					valorTotalIvaDesconto = (valorComIva - (novoValorPropina * emolumento.getPercentagemDesconto()) / 100);
+					desconto = (novoValorPropina * emolumento.getPercentagemDesconto()) / 100;
 
-				valorTotalIvaDesconto = (valorComIva
-						- (emluCliente.getValor() * emolumento.getPercentagemDesconto()) / 100);
-				desconto = (emluCliente.getValor() * emolumento.getPercentagemDesconto()) / 100;
+					if (desconto > 0) {
+						guiaHistorico.setDesconto(FormataData.formatarValor(desconto));
+						guiaHistorico.setValorTotal(FormataData.formatarValor(valorTotalIvaDesconto));
+					} else {
+						valorTotalIvaDesconto = (valorComIva - emluCliente.getValorDesconto());
+						guiaHistorico.setDesconto(FormataData.formatarValor(emluCliente.getValorDesconto()));
+						guiaHistorico.setValorTotal(FormataData.formatarValor(valorTotalIvaDesconto));
+					}
+				}else {
+					
+					valorImposto = (emluCliente.getValor() * emluCliente.getPercentagemIva()) / 100;
+					valorComIva = emluCliente.getValor() + valorImposto;
 
-				if (desconto > 0) {
-					guiaHistorico.setDesconto(FormataData.formatarValor(desconto));
-					guiaHistorico.setValorTotal(FormataData.formatarValor(valorTotalIvaDesconto));
-				} else {
+					valorTotalIvaDesconto = (valorComIva - (emluCliente.getValor() * emolumento.getPercentagemDesconto()) / 100);
+					desconto = (emluCliente.getValor() * emolumento.getPercentagemDesconto()) / 100;
 
-					valorTotalIvaDesconto = (valorComIva - emluCliente.getValorDesconto());
-					guiaHistorico.setDesconto(FormataData.formatarValor(emluCliente.getValorDesconto()));
-					guiaHistorico.setValorTotal(FormataData.formatarValor(valorTotalIvaDesconto));
+					if (desconto > 0) {
+						guiaHistorico.setDesconto(FormataData.formatarValor(desconto));
+						guiaHistorico.setValorTotal(FormataData.formatarValor(valorTotalIvaDesconto));
+					} else {
+
+						valorTotalIvaDesconto = (valorComIva - emluCliente.getValorDesconto());
+						guiaHistorico.setDesconto(FormataData.formatarValor(emluCliente.getValorDesconto()));
+						guiaHistorico.setValorTotal(FormataData.formatarValor(valorTotalIvaDesconto));
+					}
 				}
 
-				guiaHistorico.setValor(emluCliente.getValor());
+				
+				guiaHistorico.setValor(valorTotalIvaDesconto);
 				guiaHistorico.setAluno(aluno);
 				guiaHistorico.setNumeroDeAluno(aluno.getNumeroDeAluno());
 				guiaHistorico.setAnoLectivo(anoInscricao);
@@ -2983,9 +2971,10 @@ public class ControllerGuia {
 		
 		String numero = "";
 
-		NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(2006);
+		NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(10);
 		Long proximoNumero = numeroGerado.getProximoNumero();
 
+		
 		numero = gerarNumeroDocService.gerarNumeroNotaCredito(numero, forma.anoLectivo(), proximoNumero);
 
 		NotaCredito notaExiste = this.notaCreditoRepo.buscarNumeroNotaCredito(numero);
@@ -3121,12 +3110,9 @@ public class ControllerGuia {
 				List<GuiaPagamentoHistorico> gCreditos = this.historicoGuiaRepository.findByGuia(guia);
 				double valorSomarConta = 0;
 				for (GuiaPagamentoHistorico gp : gCreditos) {
-					if (gp.getValor() < 0) {
-						valorSomarConta += gp.getValor() * -1;
-
-					} else {
-
+					if (gp.getValor() > 0) {
 						valorSomarConta += gp.getValor();
+
 					}
 				}
 

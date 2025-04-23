@@ -89,7 +89,7 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 			GuiaCandidatura proforma;
 			Guia prof;
 
-			String pp = "PP IGSL"+ ano +"/" + ultimoNumero;
+			String pp = "PP IGSN"+ ano +"/" + ultimoNumero;
 			proforma = guiaCandidaturaRepo.buscarProforma(pp);
 			prof = guiaPagamentoRepo.findProforma(pp);
 			List<GuiaCandidaturaHistorico> guiaCandHist = guiaCandHisRepo.buscarIdGuia(guia.getId());
@@ -152,8 +152,6 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 		
 		FormataData forma = new FormataData();
 		Integer ano = forma.anoLectivo();
-		
-		System.err.println("Bleza");
 
 		try {
 
@@ -169,14 +167,10 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 			GuiaCandidatura proforma;
 			Guia prof;
 
-			System.out.println("Ultimo número " + ultimoNumero);
-			String pp = "PP IGSL" + ano + "/" + ultimoNumero;
-			System.out.println("AQui estamos todos " + pp);
+			String pp = "PP UGS" + ano + "/" + ultimoNumero;
 			proforma = guiaCandidaturaRepo.buscarProforma(pp);
 			prof = guiaPagamentoRepo.findProforma(pp);
 			List<GuiaPagamentoHistorico> guiaPagHist = guiaPagHistRepo.buscarIdGuia(guia.getId());
-			
-			System.out.println("Sextou");
 
 			double valorBruto = 0.0;
 			for (GuiaPagamentoHistorico PagHist : guiaPagHist) {
@@ -252,7 +246,7 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 			GuiaCandidatura facturaRecibo;
 			Guia factRecibo;
 
-			String fr = "FR IGSL" + ano + "/" + ultimoNumero;
+			String fr = "FR UGS" + ano + "/" + ultimoNumero;
 			facturaRecibo = guiaCandidaturaRepo.buscarRecibo(fr);
 			factRecibo = guiaPagamentoRepo.findFacturaRecibo(fr);
 			List<GuiaCandidaturaHistorico> guiaCandHist = guiaCandHisRepo.buscarIdGuia(guia.getId());
@@ -336,12 +330,12 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 			Long proximoNumero = numeroGerado.getProximoNumero();
 
 			String facturaReciboPesquisa = "";
-			GuiaCandidatura facturaRecibo;
+			//GuiaCandidatura facturaRecibo;
 			Guia factRecibo;
 			HistoricoCreditoEmpresa historicoCredito;
 
-			String fr = "FR  IGSL" + ano + "/" + ultimoNumero;
-			facturaRecibo = guiaCandidaturaRepo.buscarRecibo(fr);
+			String fr = "FR IGSN" + ano + "/" + ultimoNumero;
+			//facturaRecibo = guiaCandidaturaRepo.buscarRecibo(fr);
 			factRecibo = guiaPagamentoRepo.findFacturaRecibo(fr);
 			historicoCredito = historicoCreditoRepo.findFacturaRecibo(fr);
 			List<GuiaPagamentoHistorico> guiaPagHist = guiaPagHistRepo.buscarIdGuia(guia.getId());
@@ -352,7 +346,7 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 				valorBruto += PagHist.getValorTotal();
 			}
 
-			if (facturaRecibo == null && factRecibo == null && historicoCredito == null) {
+			if (factRecibo == null && historicoCredito == null) {
 
 				if (proximoNumero == 1) {
 
@@ -371,11 +365,7 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 				}
 			} else {
 
-				if (facturaRecibo != null) {
-
-					facturaReciboPesquisa = facturaRecibo.getHashFacturaRecibo();
-
-				} else if (factRecibo != null) {
+				 if (factRecibo != null) {
 
 					facturaReciboPesquisa = factRecibo.getHashFacturaRecibo();
 
@@ -428,7 +418,7 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 			Long ultimoNumero = numeroGerado.getUltimoNumero();
 			Long proximoNumero = numeroGerado.getProximoNumero();
 
-			String nc = "NC IGSL"+ ano +"/" + ultimoNumero;
+			String nc = "NC IGSN"+ ano +"/" + ultimoNumero;
 			NotaCredito notaCredito = notaCreditoRepo.buscarNumeroNotaCredito(nc);
 			
 			if(notaCredito == null) {
@@ -490,7 +480,7 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 			Long ultimoNumero = numeroGerado.getUltimoNumero();
 			Long proximoNumero = numeroGerado.getProximoNumero();
 
-			String ft = "FT IGSL"+ ano +"/" + ultimoNumero;
+			String ft = "FT UGS"+ ano +"/" + ultimoNumero;
 			Factura facturaPesquisca = facturaRepo.buscarNumeroFactura(ft);
 			List<FacturaDetalhe> factDetalhe = facturaDetalheRepo.buscarIdFactura(factura.getId());
 
@@ -565,7 +555,7 @@ public class GerarArquivoTxT implements GeradorDeArquivo {
 			Guia factRecibo;
 			HistoricoCreditoEmpresa historicoCredito;
 
-			String fr = "FR IGSL"+ ano +"/" + ultimoNumero;
+			String fr = "FR UGS"+ ano +"/" + ultimoNumero;
 			facturaRecibo = guiaCandidaturaRepo.buscarRecibo(fr);
 			factRecibo = guiaPagamentoRepo.findFacturaRecibo(fr);
 			historicoCredito = historicoCreditoRepo.findFacturaRecibo(fr);

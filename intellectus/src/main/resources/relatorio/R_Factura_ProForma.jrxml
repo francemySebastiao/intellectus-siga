@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Factura_ProForma_1.1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b536ea5b-c73d-44af-828a-f7adb10d7f28">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Qualidade"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -12,12 +11,15 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="numero_factura" class="java.lang.String"/>
 	<parameter name="condicao" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT *
 FROM "V_GUIA_PAGAMENTO_CT"
-WHERE 
+WHERE
 	 "V_GUIA_PAGAMENTO_CT"."N_FACTURA" =  $P{numero_factura}]]>
 	</queryString>
 	<field name="CODIGO" class="java.lang.Integer">
@@ -171,7 +173,7 @@ WHERE
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Telef. +244 930 839 537 Fax.]]></text>
+				<text><![CDATA[Telef. +244 931 213 054 - 936 563 54 Fax.]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="226" y="70" width="175" height="13" uuid="a6d6487e-30ac-472d-b44c-9868fd99d4fd">
@@ -274,7 +276,7 @@ WHERE
 				<textElement>
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Telef. +244 930 839 537 Fax.]]></text>
+				<text><![CDATA[Telef. +244 931 213 054 - 936 563 54 Fax.]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="626" y="70" width="175" height="13" uuid="ad861d4c-222d-416e-895e-c03c3acd6385">
@@ -339,7 +341,7 @@ WHERE
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["FACTURA PROFORMA Nº: "+$F{N_FACTURA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["FACTURA PRÓ-FORMA Nº: "+$F{N_FACTURA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="625" y="147" width="175" height="23" uuid="ac7560ea-7f10-43c1-b9da-571c4972c3a7"/>
@@ -355,7 +357,7 @@ WHERE
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["FACTURA PROFORMA Nº: "+$F{N_FACTURA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["FACTURA PRÓ-FORMA Nº: "+$F{N_FACTURA}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="178" width="398" height="1" uuid="7f317ecb-1d37-4fa0-af73-55a947e2687a">

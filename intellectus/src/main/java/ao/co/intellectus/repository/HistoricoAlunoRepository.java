@@ -98,7 +98,7 @@ public interface HistoricoAlunoRepository extends CrudRepository<HistoricoAluno,
 	@Query(value="SELECT * FROM T_HISTORICO_ALUNO WHERE CODIGO_ANO_LECTIVO =:codigoAnoLectivo AND CODIGO_CURSO =:codigoCurso AND CODIGO_DISCIPLINA =:codigoDisciplina AND CODIGO_TURMA =:codigoTurma   ",nativeQuery=true)
 	public List<HistoricoAluno> validarNotas(@Param("codigoAnoLectivo") Integer codigoAnoLectivo, @Param("codigoCurso")Integer codigoCurso, @Param("codigoDisciplina")Integer codigoDisciplina, @Param("codigoTurma")Integer codigoTurma);
 	
-	public HistoricoAluno NumeroDeAlunoAndDisciplinaId(String numeroDeAluno,Integer codigoDisciplina);
+	public List<HistoricoAluno> NumeroDeAlunoAndDisciplinaId(String numeroDeAluno,Integer codigoDisciplina);
 	
 	@Query(value="SELECT * FROM T_HISTORICO_ALUNO WHERE NUMERO_DE_ALUNO =:numeroAluno AND NOTA_FINAL IS NULL",nativeQuery=true)
 	public List<HistoricoAluno> disciplinaNotaNull(@Param("numeroAluno") String numeroAluno);

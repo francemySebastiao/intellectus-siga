@@ -4,9 +4,9 @@ public class AlunoResumoCliente {
 	private Integer id;
 	private String nome;
 	private String curso;
-	private Integer valorAdd;
-	private Integer valor;
-	private Integer valorDesconto;
+	private double valorAdd;
+	private double valor;
+	private double valorDesconto;
 	private Integer quantidade;
 	private String descricao;
 	
@@ -44,27 +44,27 @@ public class AlunoResumoCliente {
 		this.status = status;
 	}
 
-	public Integer getValorAdd() {
+	public double getValorAdd() {
 		return valorAdd;
 	}
 
-	public void setValorAdd(Integer valorAdd) {
+	public void setValorAdd(double valorAdd) {
 		this.valorAdd = valorAdd;
 	}
 
-	public Integer getValor() {
+	public double getValor() {
 		return valor;
 	}
 
-	public void setValor(Integer valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
-	public Integer getValorDesconto() {
+	public double getValorDesconto() {
 		return valorDesconto;
 	}
 
-	public void setValorDesconto(Integer valorDesconto) {
+	public void setValorDesconto(double valorDesconto) {
 		this.valorDesconto = valorDesconto;
 	}
 

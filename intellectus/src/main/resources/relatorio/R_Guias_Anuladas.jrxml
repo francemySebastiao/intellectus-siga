@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Recibos_Anulados" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="99ed7415-a1e2-49fb-af79-cc8dea5ee8d0">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MeuPC"/>
@@ -11,82 +10,40 @@
 	<parameter name="condicao" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-     t_guia_pagamento."bordero" AS t_guia_pagamento_bordero,
-     t_guia_pagamento."data_liquidacao" AS t_guia_pagamento_data_liquidacao,
-     t_guia_pagamento."liquidada" AS t_guia_pagamento_liquidada,
-     t_guia_pagamento."numero_de_aluno" AS t_guia_pagamento_numero_de_aluno,
-     t_guia_pagamento."numero_guia" AS t_guia_pagamento_numero_guia,
-     t_guia_pagamento."referencia" AS t_guia_pagamento_referencia,
-     t_guia_pagamento."valor" AS t_guia_pagamento_valor,
-     t_ano_lectivo."ano_lectivo" AS t_ano_lectivo_ano_lectivo,
-     t_logo_marca."foto" AS t_logo_marca_foto,
-     t_guia_pagamento."anulada" AS t_guia_pagamento_anulada,
-     t_guia_pagamento."data_anulada" AS t_guia_pagamento_data_anulada,
-     t_aluno."nome" AS t_aluno_nome,
-     t_instituicao."grupo_owner" AS t_instituicao_grupo_owner,
-     t_guia_pagamento."motivo_anulacao_recibo" AS t_guia_pagamento_motivo_anulacao_recibo,
-     t_guia_pagamento."motivo_anulacao_guia" AS t_guia_pagamento_motivo_anulacao_guia,
-     (SELECT NAME FROM T_USUARIO WHERE ID = t_guia_pagamento.codigo_usuario_anulou) USUARIO_ANULOU
-     
+     V_DOCUMENTOS_ANULADOS."DATA_ANULADA" AS V_DOCUMENTOS_ANULADOS_DATA_ANULADA,
+     V_DOCUMENTOS_ANULADOS."USUARIO_ANULOU" AS V_DOCUMENTOS_ANULADOS_USUARIO_ANULOU,
+     V_DOCUMENTOS_ANULADOS."UTILIZADOR_ANULOU" AS V_DOCUMENTOS_ANULADOS_UTILIZADOR_ANULOU,
+     V_DOCUMENTOS_ANULADOS."N_DOCUMENTO" AS V_DOCUMENTOS_ANULADOS_N_DOCUMENTO,
+     V_DOCUMENTOS_ANULADOS."MOTIVO" AS V_DOCUMENTOS_ANULADOS_MOTIVO,
+     V_DOCUMENTOS_ANULADOS."EMOLUMENTO" AS V_DOCUMENTOS_ANULADOS_EMOLUMENTO,
+     V_DOCUMENTOS_ANULADOS."NOME" AS V_DOCUMENTOS_ANULADOS_NOME,
+     V_DOCUMENTOS_ANULADOS."VALOR" AS V_DOCUMENTOS_ANULADOS_VALOR,
+     V_DOCUMENTOS_ANULADOS."NOME_INSTITUICAO" AS V_DOCUMENTOS_ANULADOS_NOME_INSTITUICAO,
+     V_DOCUMENTOS_ANULADOS."INSTITUICAO_ID" AS V_DOCUMENTOS_ANULADOS_INSTITUICAO_ID,
+     V_DOCUMENTOS_ANULADOS."LOGO_MARCA" AS V_DOCUMENTOS_ANULADOS_LOGO_MARCA,
+     V_DOCUMENTOS_ANULADOS."NUMERO_DE_ALUNO" AS V_DOCUMENTOS_ANULADOS_NUMERO_DE_ALUNO,
+     V_DOCUMENTOS_ANULADOS."ANO_LECTIVO" AS V_DOCUMENTOS_ANULADOS_ANO_LECTIVO,
+     V_DOCUMENTOS_ANULADOS."GRUPO_OWNER" AS V_DOCUMENTOS_ANULADOS_GRUPO_OWNER
 FROM
-     "dbo"."t_ano_lectivo" t_ano_lectivo INNER JOIN "dbo"."t_guia_pagamento" t_guia_pagamento ON t_ano_lectivo."id" = t_guia_pagamento."codigo_ano_lectivo"
-     INNER JOIN "dbo"."t_aluno" t_aluno ON t_guia_pagamento."codigo_aluno" = t_aluno."id"
-     INNER JOIN "dbo"."t_instituicao" t_instituicao ON t_aluno."codigo_instituicao" = t_instituicao."id",
-     "dbo"."t_logo_marca" t_logo_marca
-WHERE
-     t_guia_pagamento."data_anulada" BETWEEN $P{data1} and $P{data2}
-     and t_guia_pagamento."anulada" = 1
-ORDER BY
-     t_guia_pagamento."anulada" ASC]]>
+     "dbo"."V_DOCUMENTOS_ANULADOS" V_DOCUMENTOS_ANULADOS
+
+where V_DOCUMENTOS_ANULADOS."DATA_ANULADA" between $P{data1} and $P{data2}
+order by V_DOCUMENTOS_ANULADOS."NOME"]]>
 	</queryString>
-	<field name="t_guia_pagamento_bordero" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_bordero"/>
-	</field>
-	<field name="t_guia_pagamento_data_liquidacao" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_data_liquidacao"/>
-	</field>
-	<field name="t_guia_pagamento_liquidada" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_liquidada"/>
-	</field>
-	<field name="t_guia_pagamento_numero_de_aluno" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_numero_de_aluno"/>
-	</field>
-	<field name="t_guia_pagamento_numero_guia" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_numero_guia"/>
-	</field>
-	<field name="t_guia_pagamento_referencia" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_referencia"/>
-	</field>
-	<field name="t_guia_pagamento_valor" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_valor"/>
-	</field>
-	<field name="t_ano_lectivo_ano_lectivo" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="t_ano_lectivo_ano_lectivo"/>
-	</field>
-	<field name="t_logo_marca_foto" class="java.lang.Object">
-		<property name="com.jaspersoft.studio.field.label" value="t_logo_marca_foto"/>
-	</field>
-	<field name="t_guia_pagamento_anulada" class="java.lang.Boolean">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_anulada"/>
-	</field>
-	<field name="t_guia_pagamento_data_anulada" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_data_anulada"/>
-	</field>
-	<field name="t_aluno_nome" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_aluno_nome"/>
-	</field>
-	<field name="t_instituicao_grupo_owner" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_grupo_owner"/>
-	</field>
-	<field name="t_guia_pagamento_motivo_anulacao_recibo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_motivo_anulacao_recibo"/>
-	</field>
-	<field name="t_guia_pagamento_motivo_anulacao_guia" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="t_guia_pagamento_motivo_anulacao_guia"/>
-	</field>
-	<field name="USUARIO_ANULOU" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="USUARIO_ANULOU"/>
-	</field>
+	<field name="V_DOCUMENTOS_ANULADOS_DATA_ANULADA" class="java.sql.Date"/>
+	<field name="V_DOCUMENTOS_ANULADOS_USUARIO_ANULOU" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_UTILIZADOR_ANULOU" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_N_DOCUMENTO" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_MOTIVO" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_EMOLUMENTO" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_NOME" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_VALOR" class="java.math.BigDecimal"/>
+	<field name="V_DOCUMENTOS_ANULADOS_NOME_INSTITUICAO" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_INSTITUICAO_ID" class="java.lang.Long"/>
+	<field name="V_DOCUMENTOS_ANULADOS_LOGO_MARCA" class="java.lang.Object"/>
+	<field name="V_DOCUMENTOS_ANULADOS_NUMERO_DE_ALUNO" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_ANO_LECTIVO" class="java.lang.String"/>
+	<field name="V_DOCUMENTOS_ANULADOS_GRUPO_OWNER" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -101,31 +58,31 @@ ORDER BY
 			</textField>
 			<image scaleImage="FillFrame">
 				<reportElement x="233" y="0" width="69" height="65" uuid="06694c34-9fd9-4f0b-98bd-69f2e995a006"/>
-				<imageExpression><![CDATA[$F{t_logo_marca_foto}]]></imageExpression>
+				<imageExpression><![CDATA[$F{V_DOCUMENTOS_ANULADOS_LOGO_MARCA}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="0" y="65" width="554" height="31" uuid="2a6ae2d8-37d9-4d1b-b425-6271d5b0b2d5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="20"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Lista de Documentos Anulados - Guias"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Lista de Documentos Anulados - Factura/Recibo"]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="28" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="10" width="121" height="18" uuid="833f94fd-29cf-4f4a-a497-0797041c0ef2"/>
+				<reportElement x="0" y="9" width="121" height="18" uuid="833f94fd-29cf-4f4a-a497-0797041c0ef2"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Guias Anuladas]]></text>
+				<text><![CDATA[Factura/Recibo]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="27" width="555" height="1" uuid="38423110-defe-4540-b3a2-bfe281b144b7"/>
 			</line>
 			<staticText>
-				<reportElement x="131" y="10" width="86" height="18" uuid="077a1d5e-6cd7-4e0b-8bf8-f51c1b98b0b9"/>
+				<reportElement x="131" y="9" width="86" height="18" uuid="077a1d5e-6cd7-4e0b-8bf8-f51c1b98b0b9"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
@@ -151,23 +108,23 @@ ORDER BY
 		<band height="53" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement x="131" y="0" width="86" height="20" uuid="c3016340-9c61-4221-a9de-9a5d757d133e"/>
-				<textFieldExpression><![CDATA[$F{t_guia_pagamento_numero_de_aluno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_DOCUMENTOS_ANULADOS_NUMERO_DE_ALUNO}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="121" height="20" uuid="00506057-64c6-473e-a3f7-b424b83906f6"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{t_guia_pagamento_numero_guia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_DOCUMENTOS_ANULADOS_N_DOCUMENTO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="233" y="0" width="100" height="20" uuid="dbc26697-aa73-4cfd-8e78-86fb382cd256"/>
-				<textFieldExpression><![CDATA[$F{t_guia_pagamento_data_anulada}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_DOCUMENTOS_ANULADOS_DATA_ANULADA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="333" y="0" width="221" height="51" uuid="b4739a62-3015-4e34-9c6b-dc19fd74bcc7"/>
 				<textElement>
-					<font fontName="Times New Roman" size="10"/>
+					<font fontName="Times New Roman" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{t_guia_pagamento_motivo_anulacao_guia}+"/"+$F{USUARIO_ANULOU}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_DOCUMENTOS_ANULADOS_MOTIVO}+"/"+$F{V_DOCUMENTOS_ANULADOS_USUARIO_ANULOU}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="50" width="555" height="1" uuid="d92276b8-12ac-4af7-a0ce-ea60adf976ad"/>
@@ -180,11 +137,11 @@ ORDER BY
 	<pageFooter>
 		<band height="24" splitType="Stretch">
 			<textField pattern="">
-				<reportElement x="0" y="3" width="434" height="20" uuid="63a70102-fe5f-418a-8142-3d5ef38377ba"/>
+				<reportElement x="0" y="3" width="554" height="20" uuid="63a70102-fe5f-418a-8142-3d5ef38377ba"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{t_instituicao_grupo_owner}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{V_DOCUMENTOS_ANULADOS_GRUPO_OWNER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="434" y="3" width="80" height="20" uuid="95894dd3-0ebb-4923-ba8c-b1e2b0e76b7b"/>

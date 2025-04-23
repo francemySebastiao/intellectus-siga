@@ -1519,7 +1519,7 @@ public class ControllerSituacaoAcademica {
 		if (condicao.equals("2")) {
 			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Uso_Interno.jasper");
 		} else {
-			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Certificado_Intermedio_Mestrado.jasper");
+			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Certificado_Intermedio_1Ano_Mestrado.jasper");
 		}
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
 
@@ -2154,7 +2154,7 @@ public class ControllerSituacaoAcademica {
 					custom_fields.setGuia(guia.getNumeroGuia());
 					// novos campos
 					custom_fields.setNumeroDeAluno(guia.getAluno().getNumeroDeAluno());
-					custom_fields.setUnidade("0010");
+					custom_fields.setUnidade("0020");
 					custom_fields.setInst_description(instituicao.getSigla());
 					
 					unidade.setCustom_fields(custom_fields);

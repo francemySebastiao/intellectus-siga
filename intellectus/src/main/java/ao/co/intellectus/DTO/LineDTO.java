@@ -14,7 +14,7 @@ public class LineDTO {
 	private List<OrderReferenceDTO> originationOn;
 	private String productCode;
 	private String productDescription;
-	private BigDecimal quantity;
+	private Integer quantity;
 	private String unitOfMeasure;
 	private BigDecimal unitPrice;
 	private String taxPointDate;
@@ -59,10 +59,10 @@ public class LineDTO {
 	}
 	
 	@XmlElement(name = "Quantity")
-	public BigDecimal getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(BigDecimal quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 	

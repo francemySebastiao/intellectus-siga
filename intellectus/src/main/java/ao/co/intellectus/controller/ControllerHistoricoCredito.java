@@ -39,7 +39,6 @@ import ao.co.intellectus.model.ContaCorrenteAluno;
 import ao.co.intellectus.model.ContaCorrenteCandidato;
 import ao.co.intellectus.model.Emolumento;
 import ao.co.intellectus.model.Guia;
-import ao.co.intellectus.model.GuiaCandidatura;
 import ao.co.intellectus.model.GuiaPagamentoHistorico;
 import ao.co.intellectus.model.HistoricoCredito;
 import ao.co.intellectus.model.Instituicao;
@@ -56,7 +55,6 @@ import ao.co.intellectus.repository.CandidatoRepository;
 import ao.co.intellectus.repository.ContaCorrenteCandidatoRepository;
 import ao.co.intellectus.repository.ContaCorrenteRepository;
 import ao.co.intellectus.repository.EmolumentoRepository;
-import ao.co.intellectus.repository.GuiaCandidaturaRepository;
 import ao.co.intellectus.repository.GuiaPagamentoRepository;
 import ao.co.intellectus.repository.HistoricoCreditoRepository;
 import ao.co.intellectus.repository.HistoricoGuiaPagamentoRepository;
@@ -64,7 +62,6 @@ import ao.co.intellectus.repository.InstituicaoRepository;
 import ao.co.intellectus.repository.NumeroGeradoRepository;
 import ao.co.intellectus.repository.UsuarioRepository;
 import ao.co.intellectus.servico.GeradorDeArquivo;
-import ao.co.intellectus.servico.GerarNumeroDocumento;
 import ao.co.intellectus.servico.cafold.Conexao;
 import ao.co.intellectus.servico.cafold.GuiaService;
 import ao.co.intellectus.util.FormataData;
@@ -107,12 +104,14 @@ public class ControllerHistoricoCredito {
 	private HistoricoGuiaPagamentoRepository historicoGuiaRepository;
 	@Autowired
 	private GuiaService guiaService;
-	@Autowired
-	private GerarNumeroDocumento gerarNumeroDocService;
+	//@Autowired
+	//private GerarNumeroDocumento gerarNumeroDocService;
 	@Autowired
 	private GeradorDeArquivo gerarDocService;
+	//@Autowired
+	//private GuiaCandidaturaRepository guiaCandidaturaRepo;
 	@Autowired
-	private GuiaCandidaturaRepository guiaCandidaturaRepo;
+    private ControllerGuia controllerGuia;
 	
 	@RequestMapping(value = "/salvar", method = RequestMethod.POST)
 	@CrossOrigin(origins = "*")
@@ -409,48 +408,21 @@ public class ControllerHistoricoCredito {
 			this.guiaService.gerarHistoricoAudit(guiaHistorico);
 			
 			
-			String numero ="";
+			String numeroFR = controllerGuia.gerarNumeroFR(forma);
 			
-			/*AnoLectivo anoActivo = anoLectivoRepository.buscarPorEstado();
-			String ano = String.valueOf(anoActivo.getAnoLectivo());
-			String anoSubstring = ano.substring(2,4);
-			Integer anoLimpo = Integer.parseInt(anoSubstring);*/
 			
-			NumeroGerado numeroGeradoFR = this.numeroGeradoRepository.findOne(7);
-			Long proximoNumero = numeroGeradoFR.getProximoNumero();
-			
-			//String numero = gerarNumeroDocService.geracaoNumero();
-			numero = gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, forma.anoLectivo(), proximoNumero);
-			
-			Guia proformaExiste = this.guiaRepository.findFacturaRecibo(numero);
-			GuiaCandidatura proformaGuiaExistente = guiaCandidaturaRepo.buscarRecibo(numero);
-			if (proformaExiste != null || proformaGuiaExistente != null) {
-				do {
-					proximoNumero++;
-					
-					numero =  gerarNumeroDocService.gerarNumeroFacturaRecibo(numero, forma.anoLectivo(), proximoNumero);
-					proformaExiste = this.guiaRepository.findFacturaRecibo(numero);
-					proformaGuiaExistente = guiaCandidaturaRepo.buscarRecibo(numero);
-				} while (proformaExiste != null || proformaGuiaExistente != null);
-			}
 			
 			// setar o valor da guia
-			guiaSava.setNumeroFacturaRecibo(numero);
+			guiaSava.setNumeroFacturaRecibo(numeroFR);
+			guiaSava.setTipoFactura(TipoFatura.FACTURA_RECIBO);
+			guiaSava.setValor(FormataData.formatarValor(valorGuia));
+			guiaSava.setUltimaModificacao(new Date());
+			
 			Guia guiaGuardada = this.guiaRepository.save(guiaSava);
 			
 			this.gerarDocService.gerarFileFacturaReciboAluno(guiaGuardada);
 			
-			numeroGeradoFR.setUltimoNumero(proximoNumero);
-			numeroGeradoFR.setProximoNumero(proximoNumero + 1);
-			this.numeroGeradoRepository.save(numeroGeradoFR);
-			
-			guiaGuardada.setTipoFactura(TipoFatura.FACTURA_RECIBO);
-			
-			guiaGuardada.setValor(FormataData.formatarValor(valorGuia));
-			guiaGuardada.setUltimaModificacao(new Date());
-			this.guiaRepository.save(guiaGuardada);
-			
-			return numero;
+			return numeroFR;
 		
 	}
 	
@@ -526,32 +498,37 @@ public class ControllerHistoricoCredito {
 			hCredito.setInativo(aluno.isInactivo());
 			hCredito.setSaldoAtual(conta.getValor());
 			List<HistoricoCredito> histoco = this.historicoCreditoRepository.findByAluno(aluno);
+			
 			CreditosResumoCliente credito;
 			for (HistoricoCredito historicoCredito : histoco) {
 				credito=new CreditosResumoCliente();
 				
 				BeanUtils.copyProperties(historicoCredito, credito,"aluno","instituicao","moeda","anoLectivo","bordero","banco");
 				
-				credito.setId(historicoCredito.getId());
-				//credito.setNumeroFR(historicoCredito.getNumeroFacturaRecibo());
-				credito.setMotivoAnulacao(historicoCredito.getMotivoDeAnulacao());
-				credito.setAnulado(historicoCredito.isAnulado());
-				credito.setPodeAnular(historicoCredito.isPodeAnular());
-				if(historicoCredito.getBanco()!=null)
-				credito.setBanco(historicoCredito.getBanco().getBanco());
-				credito.setAnoLectivo(historicoCredito.getAnoLectivo().getAnoLectivo());
-				credito.setAnoLectivoDescricao(historicoCredito.getAnoLectivo().getAnoLectivoDescricao());
-				credito.setBorderoExterno(historicoCredito.getBorderoExterno());
-				if(historicoCredito.getMoeda()!=null)
-				credito.setMoeda(historicoCredito.getMoeda().getDesignacao());
-				creditos.add(credito);
+				if(historicoCredito.getBorderoExterno() != null) {
+				
+					System.out.println("BORDERO " + historicoCredito.getBorderoExterno());
+					Guia guia = guiaRepository.findByBordero(historicoCredito.getBorderoExterno());
+					
+					if(guia != null) {
+						credito.setNumeroFR(guia.getNumeroFacturaRecibo());
+					}
+					credito.setId(historicoCredito.getId());
+					credito.setMotivoAnulacao(historicoCredito.getMotivoDeAnulacao());
+					credito.setAnulado(historicoCredito.isAnulado());
+					credito.setPodeAnular(historicoCredito.isPodeAnular());
+					if(historicoCredito.getBanco()!=null)
+					credito.setBanco(historicoCredito.getBanco().getBanco());
+					credito.setAnoLectivo(historicoCredito.getAnoLectivo().getAnoLectivo());
+					credito.setAnoLectivoDescricao(historicoCredito.getAnoLectivo().getAnoLectivoDescricao());
+					credito.setBorderoExterno(historicoCredito.getBorderoExterno());
+					if(historicoCredito.getMoeda()!=null)
+					credito.setMoeda(historicoCredito.getMoeda().getDesignacao());
+					creditos.add(credito);
+				}
 			}
 			
 		}//FINAL ELSE
-		
-		
-		
-		
 		
 		hCredito.setCreditos(creditos);
 		c.setResultado(hCredito);

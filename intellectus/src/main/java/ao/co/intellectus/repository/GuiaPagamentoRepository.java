@@ -2,7 +2,6 @@ package ao.co.intellectus.repository;
 
 import java.util.List;
 
-import ao.co.intellectus.DTO.GuiaPagamentoCodigo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -58,7 +57,7 @@ public interface GuiaPagamentoRepository extends CrudRepository<Guia, Integer>{
 	
 	@Query(value="SELECT * from T_GUIA_PAGAMENTO WHERE n_factura_recibo =:recibo", nativeQuery=true)
 	public Guia findFacturaRecibo(@Param("recibo") String recibo);
-
+	
 	@Query(value="SELECT * from V_NUMERO_FACTURA WHERE N_FACTURA_RECIBO =:documento", nativeQuery=true)
 	public Guia buscarDocumentoRecibo(@Param("documento") String documento);
 	
@@ -69,6 +68,10 @@ public interface GuiaPagamentoRepository extends CrudRepository<Guia, Integer>{
 	public List<Guia> BUSCAR_GUIA_SEM_PROFORMA_HASH();
 	
 	@Query(value="SELECT * FROM V_PROG_PROCESSAMENTO_FATURA_RECIBO", nativeQuery=true)
-	public List<GuiaPagamentoCodigo> BUSCAR_GUIA_SEM_FACTURA_RECIBO_HASH();
+	public List<Guia> BUSCAR_GUIA_SEM_FACTURA_RECIBO_HASH();
+	
+	@Query(value="SELECT * FROM T_GUIA_PAGAMENTO WHERE DATA_LIQUIDACAO BETWEEN :data1 AND :data2 AND LIQUIDADA = 1 AND TIPO_FACTURA = 'FACTURA_RECIBO'", nativeQuery=true)
+	public List<Guia> BUSCAR_NUMBER_OF_ENTRIES(@Param("data1") String data1, @Param("data2") String data2);
+	
 }
 

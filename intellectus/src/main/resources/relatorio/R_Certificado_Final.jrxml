@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Certificado_Final" pageWidth="595" pageHeight="842" columnWidth="545" leftMargin="25" rightMargin="25" topMargin="30" bottomMargin="30" isFloatColumnFooter="true" uuid="1a9393c7-bfd7-45c4-8a08-a36bcde105ba">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="122"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="QUALIDADE"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MeuPC"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="style1">
 		<box topPadding="30" leftPadding="25" bottomPadding="30" rightPadding="25"/>
@@ -36,41 +35,41 @@
 	<parameter name="data" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-    VCI.NUMERO V_CERTIFICADO_INTERMEDIO_numero, 
-    A.NOME t_aluno_nome, 
+    VCI.NUMERO V_CERTIFICADO_INTERMEDIO_numero,
+    A.NOME t_aluno_nome,
     A.SEXO t_aluno_sexo,
     A.NOME_DO_PAI t_aluno_nome_do_pai,
     A.NOME_DA_MAE t_aluno_nome_da_mae,
     A.DOCUMENTO_INDENTIFICACAO t_aluno_documento_indentificacao,
-    A.NUMERO_DOCUMENTO_IDENTIFICACAO t_aluno_numero_documento_identificacao, 
+    A.NUMERO_DOCUMENTO_IDENTIFICACAO t_aluno_numero_documento_identificacao,
     A.DATA_EMISSAO_IDENTIDADE t_aluno_data_emissao_identidade,
 	--daqui
 	A.DATA_NASCIMENTO t_aluno_data_nascimento,
 	A.arquivo_identificacao t_aluno_arquivo_identificacao,
 	VCI.nota_final nota_final,
     --ate aqui
-	P.DESCRICAO t_pais_descricao, 
-    PV.PROVINCIA t_provincia_provincia, 
+	P.DESCRICAO t_pais_descricao,
+    PV.PROVINCIA t_provincia_provincia,
     M.DESCRICAO t_municipio_descricao,
-    C.DESCRICAO t_curso_descricao, 
-    C.GRAU t_curso_grau, 
+    C.DESCRICAO t_curso_descricao,
+    C.GRAU t_curso_grau,
     D.ANO_CORRICULAR t_disciplina_ano_corricular,
     D.DESCRICAO t_disciplina_descricao,
     (SELECT ANO_LECTIVO FROM T_ANO_LECTIVO WHERE ID = VCI.ANO_LECTIVO) t_ano_lectivo_ano_lectivo,
-    VCI.PODE_EQUIVALENCIA V_CERTIFICADO_INTERMEDIO_pode_equivalencia, 
-    VCI.EQUIVALENCIA V_CERTIFICADO_INTERMEDIO_equivalencia, 
-    A.DATA_FIM_DO_CURSO t_aluno_data_fim_do_curso, 
-    A.MEDIA_FINAL t_aluno_media_final, 
-    I.CHEFE_SERVICOS_ACADEMICOS t_instituicao_chefe_servicos_academicos, 
-    I.SECRETARIO_GERAL t_instituicao_secretario_geral, 
+    VCI.PODE_EQUIVALENCIA V_CERTIFICADO_INTERMEDIO_pode_equivalencia,
+    VCI.EQUIVALENCIA V_CERTIFICADO_INTERMEDIO_equivalencia,
+    A.DATA_FIM_DO_CURSO t_aluno_data_fim_do_curso,
+    A.MEDIA_FINAL t_aluno_media_final,
+    I.CHEFE_SERVICOS_ACADEMICOS t_instituicao_chefe_servicos_academicos,
+    I.SECRETARIO_GERAL t_instituicao_secretario_geral,
     I.REITOR t_instituicao_reitor,
     (SELECT FOTO FROM T_LOGO_MARCA) t_logo_marca_foto
 
- 
 
- 
 
- 
+
+
+
 
 FROM
     T_ALUNO A
@@ -84,7 +83,7 @@ FROM
     INNER JOIN T_INSTITUICAO I ON (I.ID = A.CODIGO_INSTITUICAO)
 
 WHERE
-    VCI.NUMERO = $P{numero_matricula} 
+    VCI.NUMERO = $P{numero_matricula}
     AND VCI.VALIDACAO = 1
    AND A.FIM_CURSO = 1
     AND D.STATUS = 1
@@ -310,11 +309,13 @@ $F{t_disciplina_ano_corricular}==4:$F{t_disciplina_ano_corricular}==3]]></printW
 	<summary>
 		<band height="472">
 			<textField>
-				<reportElement isPrintRepeatedValues="false" x="35" y="0" width="486" height="55" printWhenGroupChanges="Historico" uuid="d639014c-2983-4fb6-9ce5-e2c8a20d5841"/>
+				<reportElement isPrintRepeatedValues="false" x="35" y="0" width="486" height="55" printWhenGroupChanges="Historico" uuid="d639014c-2983-4fb6-9ce5-e2c8a20d5841">
+					<printWhenExpression><![CDATA[$F{V_CERTIFICADO_INTERMEDIO_pode_equivalencia}==1]]></printWhenExpression>
+				</reportElement>
 				<textElement verticalAlignment="Top">
 					<font fontName="Serif" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{V_CERTIFICADO_INTERMEDIO_pode_equivalencia} ==  1 ? "a) Equivalência(s) atribuída(s) pela Universidade Gregório Semedo":""]]></textFieldExpression>
+				<textFieldExpression><![CDATA["a) Equivalência(s) atribuída(s) pela Universidade Gregório Semedo"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="34" y="99" width="389" height="20" printWhenGroupChanges="Historico" uuid="c9c62eb5-8ac2-4448-8720-11fa8783b9a9">
@@ -373,7 +374,7 @@ $F{t_disciplina_ano_corricular}==4:$F{t_disciplina_ano_corricular}==3]]></printW
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Serif"/>
 				</textElement>
-				<text><![CDATA[O Reitor]]></text>
+				<text><![CDATA[O Reitor Interino ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="156" y="191" width="242" height="20" printWhenGroupChanges="Historico" uuid="9be8ef15-fb4d-49d8-b836-cff88e325bde">

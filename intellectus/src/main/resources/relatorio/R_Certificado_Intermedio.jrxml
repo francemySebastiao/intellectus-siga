@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.1.final using JasperReports Library version 6.20.1-7584acb244139816654f64e2fd57a00d3e31921e  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="c.i.2021" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4e8b26a-e432-4115-9a86-38822121ef4c">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MeuPC"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -23,9 +23,11 @@
     C.GRAU t_curso_grau,
     C.DESCRICAO t_curso_descricao,
     I.SECRETARIO_GERAL t_instituicao_secretario_geral,
+    I.secretario_geral_adjunto Secretario_Adjunto,
     D.ANO_CORRICULAR t_disciplina_ano_corricular,
     D.DESCRICAO t_disciplina,
     VCI.nota_final nota_final,
+    F.titulo,
     A.numero_de_aluno,
     --VCI.PODE_EQUIVALENCIA V_CERTIFICADO_INTERMEDIO_pode_equivalencia,
      VCI.EQUIVALENCIA V_CERTIFICADO_INTERMEDIO_equivalencia,
@@ -34,6 +36,7 @@
    
     F.faculdade,
    F.id nome_do_decano,
+      F.responsavel DECANOOOO,
 	
     RD.NUMERO_DECLARACAO N_DECLARACAO
 FROM
@@ -94,6 +97,9 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 	<field name="t_instituicao_secretario_geral" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="t_instituicao_secretario_geral"/>
 	</field>
+	<field name="Secretario_Adjunto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Secretario_Adjunto"/>
+	</field>
 	<field name="t_disciplina_ano_corricular" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="t_disciplina_ano_corricular"/>
 	</field>
@@ -102,6 +108,9 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 	</field>
 	<field name="nota_final" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="nota_final"/>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
 	</field>
 	<field name="numero_de_aluno" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="numero_de_aluno"/>
@@ -120,6 +129,9 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 	</field>
 	<field name="nome_do_decano" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="nome_do_decano"/>
+	</field>
+	<field name="DECANOOOO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DECANOOOO"/>
 	</field>
 	<field name="N_DECLARACAO" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="N_DECLARACAO"/>
@@ -145,28 +157,19 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="216" splitType="Stretch">
+		<band height="253" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
-				<reportElement x="41" y="108" width="481" height="108" uuid="a9237f02-671f-4e14-8b9a-0039c73c41da">
+				<reportElement x="41" y="170" width="481" height="83" uuid="a9237f02-671f-4e14-8b9a-0039c73c41da">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
 					<font fontName="Serif" size="11"/>
 					<paragraph lineSpacing="Proportional" lineSpacingSize="1.02"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, instituída pelo Decreto Executivo n.º 23/07 de 07 de Maio, certifica-se que "+"<b>"+$F{t_aluno_nome}+"</b>"+", "+($F{t_aluno_sexo}.equals("F")? "filha": $F{t_aluno_sexo}.equals("M")? "filho": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "-sem informação-")+" de "+$F{t_aluno_nome_do_pai}+" e de "+$F{t_aluno_nome_da_mae}+", "+($F{t_aluno_sexo}.equals("F")? "portadora do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("M")? "portador do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "else SQL Query")+$F{t_aluno_numero_documento_identificacao}+", emitido aos "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_emissao_identidade})+" pelo arquivo de "+$F{t_municipio_descricao}+", "+($F{t_aluno_sexo}.equals("F")? "nascida a ": $F{t_aluno_sexo}.equals("M")? "nascido a ": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "-sem informação-")+" "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_nascimento})+", natural d"+$F{t_provincia_concordancia}+"  "+$F{t_provincia_provincia}+", obteve as seguintes classificações no curso de "+ ($F{t_curso_grau}.equals("LICENCIATURA")? "Licenciatura em ":"Mestrado em ")+"<b>"+($F{t_curso_descricao}.equals("Direito")?"Direito": $F{t_curso_descricao})+"<b>"+"."]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="62" y="112" width="479" height="17" uuid="0d6c0694-fb7e-497d-9b90-e836821e9f79"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font fontName="Serif" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
-    "CERTIFICADO DE HABILITAÇÕES INTERMÉDIO" :
-    $P{condicao}.equals("2") ?
-    "USO INTERNO - SEM VALOR LEGAL" : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Face aos arquivos existentes nesta Universidade, instituída pelo Decreto n.º 23/07, de 7 de Maio, certifica-se que "+"<b>"+$F{t_aluno_nome}+"</b>"+", "+($F{t_aluno_sexo}.equals("F")? "filha": $F{t_aluno_sexo}.equals("M")? "filho": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "-sem informação-")+" de "+$F{t_aluno_nome_do_pai}+" e de "+$F{t_aluno_nome_da_mae}+", "+($F{t_aluno_sexo}.equals("F")? "portadora do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("M")? "portador do Bilhete de Identidade n.º ": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "else SQL Query")+$F{t_aluno_numero_documento_identificacao}+", emitido aos "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_emissao_identidade})+" pelo arquivo de "+$F{t_municipio_descricao}+", "+($F{t_aluno_sexo}.equals("F")? "nascida a ": $F{t_aluno_sexo}.equals("M")? "nascido a ": $F{t_aluno_sexo}.equals("ANUAL")?"Anual": "-sem informação-")+" "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{t_aluno_data_nascimento})+", natural d"+$F{t_provincia_concordancia}+"  "+$F{t_provincia_provincia}+", obteve as seguintes classificações no curso de "+ ($F{t_curso_grau}.equals("LICENCIATURA")? "Licenciatura em ":"Mestrado em ")+"<b>"+($F{t_curso_descricao}.equals("Direito")?"Direito": $F{t_curso_descricao})+"<b>"+"."]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="337" y="40" width="235" height="20" uuid="76e04781-9eb0-4a8e-8405-16c5f560ddb8"/>
@@ -174,7 +177,7 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
-   $F{t_instituicao_secretario_geral} :
+   $F{Secretario_Adjunto} :
     $P{condicao}.equals("2") ?
     "" : "")]]></textFieldExpression>
 			</textField>
@@ -192,9 +195,19 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 					<font fontName="Serif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
-   "O Secretário geral Adjunto " :
+   "O Secretário Geral Adjunto" :
     $P{condicao}.equals("2") ?
     "" : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="159" width="479" height="17" uuid="324cced8-f760-437a-a9aa-39e06f5f5e06"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Serif" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
+    "CERTIFICADO DE HABILITAÇÕES INTERMÉDIO" :
+    $P{condicao}.equals("2") ?
+    "USO INTERNO - SEM VALOR LEGAL" : "")]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -277,12 +290,12 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="91">
+		<band height="87">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="387" splitType="Immediate">
+		<band height="482" splitType="Immediate">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<line>
 				<reportElement x="41" y="0" width="481" height="1" uuid="0c535c0c-6933-4937-8d43-ed210213bb18"/>
@@ -318,33 +331,6 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 				</textElement>
 				<text><![CDATA[USO INTERNO - SEM VALOR LEGAL]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="0" y="166" width="555" height="20" uuid="d5994523-2699-4162-8dc8-8423566b81ac">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Serif" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
-    $F{nome_do_decano} == 2?
-    "Mestre Dilson Hélder Bernardo" :$F{nome_do_decano} == 3?
-    "MSc Gilberto Canda João" :$F{nome_do_decano} == 4?
-    "MSc Eng. Carlos Alberto Messani" :
-    $F{nome_do_decano} == 7 ?
-    "Dr. Pedro José Mazissa Gomes" :
-    ""  :
-    $P{condicao}.equals("2") ?
-    "" : "")]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="179" y="166" width="218" height="1" uuid="75af6bc2-e227-45af-9bf4-36552eebe31a">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="0.6"/>
-				</graphicElement>
-			</line>
 			<staticText>
 				<reportElement x="41" y="231" width="191" height="20" uuid="62de2e07-77ae-4208-9244-921e63060ee3">
 					<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
@@ -363,18 +349,41 @@ ORDER BY VCI.ANO_CURRICULAR, VCI.DISCIPLINA]]>
 				</textElement>
 				<textFieldExpression><![CDATA["Declaração n.º "+$F{N_DECLARACAO}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="1" y="125" width="555" height="20" uuid="b1b4fcf0-11f1-477a-9d46-4aa1276fa0ca">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Serif" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
-  "O Decano"+" "+$F{faculdade}  :
+			<frame>
+				<reportElement x="41" y="130" width="482" height="62" uuid="72a740a8-1d3f-4ea9-8bb3-31e3984af0ec"/>
+				<textField>
+					<reportElement x="2" y="0" width="478" height="20" uuid="b1b4fcf0-11f1-477a-9d46-4aa1276fa0ca">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Serif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_do_decano} == 2 ? "A Decana da " + $F{faculdade} : "O Decano da " + $F{faculdade}
+]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="1" y="40" width="478" height="16" uuid="d5994523-2699-4162-8dc8-8423566b81ac">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Serif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{condicao}.equals("1") ?
+$F{titulo}+" "+$F{DECANOOOO} :
     $P{condicao}.equals("2") ?
     "" : "")]]></textFieldExpression>
-			</textField>
+				</textField>
+				<line>
+					<reportElement x="129" y="40" width="218" height="1" uuid="75af6bc2-e227-45af-9bf4-36552eebe31a">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<printWhenExpression><![CDATA[$P{condicao}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.6"/>
+					</graphicElement>
+				</line>
+			</frame>
 		</band>
 	</summary>
 </jasperReport>

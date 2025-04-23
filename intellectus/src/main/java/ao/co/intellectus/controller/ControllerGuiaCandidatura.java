@@ -23,6 +23,7 @@ import ao.co.intellectus.repository.AnoLectivoRepository;
 import ao.co.intellectus.repository.GuiaCandidaturaRepository;
 import ao.co.intellectus.servico.cafold.CandidatoServie;
 import ao.co.intellectus.servico.notificacoes.HttpResponse;
+import ao.co.intellectus.util.FormataData;
 
 @RestController
 @RequestMapping("/guiaCandidatura")
@@ -86,7 +87,7 @@ public class ControllerGuiaCandidatura {
 		    	detalhe.setDescricao("Guia de candidatura");
 		    }
 		    double valorGuia = 0;
-			detalhe.setMontante(guia.getValor());
+			detalhe.setMontante(FormataData.formatarValor(guia.getValor()));
 			// dados gerais
 			if (guia.getInstituicao() != null) {
 				cGuia.setNumeroContribuinte(guia.getInstituicao().getUnidadeOrganica());
@@ -104,7 +105,7 @@ public class ControllerGuiaCandidatura {
 				cGuia.setMontanteTotal(valorGuia);	
 			}
 			cGuia.setIdGuia(guia.getId());
-			cGuia.setMontanteTotal(guia.getValor());
+			cGuia.setMontanteTotal(FormataData.formatarValor(guia.getValor()));
 			cGuia.setDataVencimento(guia.getDataVencimento());
 			cGuia.setEmitidoPor("Ernesto Tadeu Tchiteculo Sambongo");
 			cGuia.setDetalhesPagamento(detalhe);

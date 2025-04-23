@@ -3,6 +3,8 @@ package ao.co.intellectus.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,16 +54,20 @@ import ao.co.intellectus.DTO.SpecialRegimesDTO;
 import ao.co.intellectus.DTO.TaxDTO;
 import ao.co.intellectus.DTO.TaxTableDTO;
 import ao.co.intellectus.DTO.TaxTableEntryDTO;
-import ao.co.intellectus.DTO.WorkDocumentDTO;
-import ao.co.intellectus.DTO.WorkDocumentsDTO;
 import ao.co.intellectus.model.BillingAddress;
 import ao.co.intellectus.model.CompanyAddress;
 import ao.co.intellectus.model.Customer;
 import ao.co.intellectus.model.DocumentStatus;
-import ao.co.intellectus.model.DocumentTotals;
+import ao.co.intellectus.model.Factura;
+import ao.co.intellectus.model.FacturaDetalhe;
+import ao.co.intellectus.model.Guia;
+import ao.co.intellectus.model.GuiaCandidatura;
+import ao.co.intellectus.model.GuiaCandidaturaHistorico;
+import ao.co.intellectus.model.GuiaPagamentoHistorico;
 import ao.co.intellectus.model.Header;
 import ao.co.intellectus.model.Invoice;
-import ao.co.intellectus.model.Line;
+import ao.co.intellectus.model.NotaCredito;
+import ao.co.intellectus.model.NotaCreditoDetalhe;
 import ao.co.intellectus.model.OrderReference;
 import ao.co.intellectus.model.Payment;
 import ao.co.intellectus.model.PaymentDocumentStatus;
@@ -70,27 +76,28 @@ import ao.co.intellectus.model.PaymentLine;
 import ao.co.intellectus.model.Payments;
 import ao.co.intellectus.model.Product;
 import ao.co.intellectus.model.Reference;
-import ao.co.intellectus.model.SalesInvoices;
 import ao.co.intellectus.model.SourceDocumentId;
 import ao.co.intellectus.model.SpecialRegimes;
-import ao.co.intellectus.model.Tax;
 import ao.co.intellectus.model.TaxTableEntry;
-import ao.co.intellectus.model.WorkDocument;
-import ao.co.intellectus.model.WorkDocumentsStatus;
-import ao.co.intellectus.model.WorkingDocumentTotals;
-import ao.co.intellectus.model.WorkingDocuments;
-import ao.co.intellectus.model.WorkingLine;
-import ao.co.intellectus.model.WorkingTax;
+import ao.co.intellectus.model.enumeracao.TipoDoc;
 import ao.co.intellectus.model.reponse.ResponseCliente;
 import ao.co.intellectus.repository.BillingAddressRepository;
 import ao.co.intellectus.repository.CompanyAddressRepository;
 import ao.co.intellectus.repository.CustomerRepository;
 import ao.co.intellectus.repository.DocumentStatusRepository;
 import ao.co.intellectus.repository.DocumentTotalsRepository;
+import ao.co.intellectus.repository.FacturaDetalheRepository;
+import ao.co.intellectus.repository.FacturaRepository;
+import ao.co.intellectus.repository.GuiaCandidaturaHistoricoRepository;
+import ao.co.intellectus.repository.GuiaCandidaturaRepository;
+import ao.co.intellectus.repository.GuiaPagamentoHistoricoRepository;
+import ao.co.intellectus.repository.GuiaPagamentoRepository;
 import ao.co.intellectus.repository.HeaderRepository;
 import ao.co.intellectus.repository.InvoiceRepository;
 import ao.co.intellectus.repository.LineRepository;
 import ao.co.intellectus.repository.LogSaftRepository;
+import ao.co.intellectus.repository.NotaCreditoDetalheRepository;
+import ao.co.intellectus.repository.NotaCreditoRepository;
 import ao.co.intellectus.repository.OrderReferencesRepository;
 import ao.co.intellectus.repository.PaymentDocumentStatusRepository;
 import ao.co.intellectus.repository.PaymentDocumentTotalRepository;
@@ -171,6 +178,22 @@ public class TesteSaf_T {
 	private PaymentDocumentTotalRepository paymentDocumentTotalRepo;
 	@Autowired
 	private LogSaftRepository logSaftRepo;
+	@Autowired
+	private GuiaPagamentoRepository guiaRepo;
+	@Autowired
+	private GuiaCandidaturaRepository guiaCandidaturaRepo;
+	@Autowired
+	private FacturaRepository facturaRepo;
+	@Autowired
+	private FacturaDetalheRepository facturaDetalheRepo;
+	@Autowired
+	private GuiaPagamentoHistoricoRepository guiaHistoricoRepo;
+	@Autowired
+	private GuiaCandidaturaHistoricoRepository guiaCandidaturaHistoricoRepo;
+	@Autowired
+	private NotaCreditoRepository notaCreditoRepo;
+	@Autowired
+	private NotaCreditoDetalheRepository notaCreditoDetalheRepo;
 
 	@RequestMapping(value = "/gerarSaFT", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -262,6 +285,8 @@ public class TesteSaf_T {
 
 		Set<String> addedCustomerIDs = new HashSet<>();
 		Set<String> addedProductCode = new HashSet<>();
+		Set<String> addedBilling = new HashSet<>();
+		
 		List<Customer> customerList = this.customerRepo.buscarCustomer(dataInicio, dataFim);
 		if (!customerList.isEmpty()) {
 
@@ -277,19 +302,21 @@ public class TesteSaf_T {
 					customerDTO.setCompanyName(cliente.getCompanyName());
 
 					List<BillingAddress> billingAddressList = billingAddressRepo
-							.buscarBillingAddress(cliente.getCustomerID(), dataInicio, dataFim);
+							.buscarBillingAddress(cliente.getCustomerID());
 					billingAddressDTOList = new ArrayList<BillingAddressDTO>();
 
-					for (BillingAddress b : billingAddressList) {
-						billingAddressDTO = new BillingAddressDTO();
-						billingAddressDTO.setCountry(b.getCountry());
-						billingAddressDTO.setCity(b.getCity());
-						billingAddressDTO.setStreetName(b.getStreetName());
-						billingAddressDTO.setAddressDetail(b.getAddressDetail());
-
-						billingAddressDTOList.add(billingAddressDTO);
-
-					}
+					BillingAddress b = billingAddressList.get(0);
+					if (!billingAddressList.isEmpty()) {
+		                billingAddressDTO = new BillingAddressDTO();
+		                billingAddressDTO.setCountry(b.getCountry());
+		                billingAddressDTO.setCity(b.getCity());
+		                billingAddressDTO.setStreetName(b.getStreetName());
+		                if(b.getAddressDetail() != null) {
+		                	billingAddressDTO.setAddressDetail(b.getAddressDetail());
+		                }
+		                billingAddressDTO.setAddressDetail("DESCONHECIDO");
+		                billingAddressDTOList.add(billingAddressDTO);
+		            }
 					customerDTO.setBillingAddress(billingAddressDTOList);
 					customerDTO.setSelfBillingIndicator(cliente.getSelfBillingInficator());
 					customerDTOList.add(customerDTO);
@@ -302,8 +329,6 @@ public class TesteSaf_T {
 			c.setMensagem("Product nulo");
 			return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
 		}
-		
-		System.err.println("Chegou aqui bem");
 
 		for (Product prod : product) {
 
@@ -319,8 +344,6 @@ public class TesteSaf_T {
 				productDTOList.add(productDTO);
 			}
 		}
-		
-		System.err.println("Chegou aqui também");
 
 		List<TaxTableEntry> taxTableEntry = this.taxTableEntryRepo.buscarTaxTableEntry();
 		if (taxTableEntry.isEmpty()) {
@@ -337,16 +360,12 @@ public class TesteSaf_T {
 
 			taxTableEntryDTOList.add(taxTableEntryDTO);
 		}
-		
-		System.err.println("Passou o TaxTableEntry");
 
 		taxTableDTO.setTaxTableEntry(taxTableEntryDTOList);
 
 		masterFile.setCustomer(customerDTOList);
 		masterFile.setProduct(productDTOList);
 		masterFile.setTaxTable(taxTableDTO);
-		
-		System.err.println("Preencheu o master");
 
 		SalesInvoiceDTO salesInvoiceDTO = new SalesInvoiceDTO();
 		InvoiceDTO invoiceDTO = new InvoiceDTO();
@@ -382,54 +401,49 @@ public class TesteSaf_T {
 		TaxDTO taxDTO = new TaxDTO();
 		List<TaxDTO> taxDTOList = new ArrayList<TaxDTO>();
 
-		TaxDTO workingTaxDTO = new TaxDTO();
-		List<TaxDTO> workingTaxDTOList = new ArrayList<TaxDTO>();
+		//TaxDTO workingTaxDTO = new TaxDTO();
+		//List<TaxDTO> workingTaxDTOList = new ArrayList<TaxDTO>();
 
 		DocumentTotalsDTO documentTotalDTO = new DocumentTotalsDTO();
 		List<DocumentTotalsDTO> documentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
 
-		DocumentTotalsDTO workingDocumentTotalDTO = new DocumentTotalsDTO();
-		List<DocumentTotalsDTO> workingDocumentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
+		//DocumentTotalsDTO workingDocumentTotalDTO = new DocumentTotalsDTO();
+		//List<DocumentTotalsDTO> workingDocumentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
 
 		DocumentTotalsDTO paymentDocumentTotalDTO = new DocumentTotalsDTO();
 		List<DocumentTotalsDTO> paymentDocumentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
-		
-		System.err.println("Vamos lá");
 
 		List<Invoice> invoiceList = this.invoiceRepo.buscarInvoice(dataInicio, dataFim);
 		if (invoiceList.isEmpty()) {
 			c.setMensagem("Invoice nulo");
 			return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
 		}
-		
-		System.err.println("Pesquisando o invoice");
 
+		int count = 0;
 		for (Invoice invoice : invoiceList) {
 			invoiceDTO = new InvoiceDTO();
 			invoiceDTO.setInvoiceNo(invoice.getInvoiceNo());
 
-			System.err.println("preenchendo o invoice");
-			
 			List<DocumentStatus> documentStatusList = this.documentStatusRepo
 					.buscarDocumentStatus(invoice.getInvoiceNo());
 			documentStatusDTOList = new ArrayList<DocumentStatusDTO>();
 
 			if (documentStatusList.isEmpty()) {
+				System.out.println(invoice.getInvoiceNo());
 				c.setMensagem("document status nulo");
 				return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
 			}
 
 			for (DocumentStatus documentStatus : documentStatusList) {
+				
 				documentStatusDTO = new DocumentStatusDTO();
 				documentStatusDTO.setInvoiceStatus(documentStatus.getInvoiceStatus());
-				documentStatusDTO.setInvoiceStatusDate(documentStatus.getInvoiceStatusDate());
+				documentStatusDTO.setInvoiceStatusDate(invoice.getSystemEntryDate());
 				documentStatusDTO.setSourceId(documentStatus.getSourceId());
 				documentStatusDTO.setSourceBilling(documentStatus.getSourceBilling());
 
 				documentStatusDTOList.add(documentStatusDTO);
 			}
-			
-			System.err.println("Pesquisando o documentStatusDTOList");
 
 			List<SpecialRegimes> specialRegimeList = this.specialRegimeRepo
 					.buscarSpecialRegimes(invoice.getInvoiceNo());
@@ -443,13 +457,419 @@ public class TesteSaf_T {
 
 				specialRegimeDTOList.add(specialRegimeDTO);
 			}
-			
-			System.err.println("Pesquisando o specialRegimeDTOList");
 
-			List<Line> LineList = this.lineRepo.buscarLine(invoice.getInvoiceNo());
 			lineDTOList = new ArrayList<LineDTO>();
+			
+			if(invoice.getInvoiceType().equals("FR")) {
+				System.out.println("ENTROU NO PRIMEIRO");
+				
+				Guia guia = this.guiaRepo.findFacturaRecibo(invoice.getInvoiceNo());
+				if(guia != null) {
+					List<GuiaPagamentoHistorico> listaGuiaHistorico = guiaHistoricoRepo.buscarIdGuia(guia.getId());
+					
+					for (int i = 0; i < listaGuiaHistorico.size(); i++) {
+					    GuiaPagamentoHistorico guiaPagamentoHist = listaGuiaHistorico.get(i);
+					    lineDTO = new LineDTO();
+					    
+					    
+				        System.out.println("AQUI VAMOS NOS");
+				        lineDTO.setQuantity(Integer.parseInt(guiaPagamentoHist.getQuantidade()));
+				        lineDTO.setUnitOfMeasure("UN");
+				        lineDTO.setUnitPrice(new BigDecimal(Double.toString(guiaPagamentoHist.getValorTotal())).setScale(2, RoundingMode.HALF_UP));
+				        lineDTO.setCreditAmount(new BigDecimal(Double.toString(guiaPagamentoHist.getValorTotal())).setScale(2, RoundingMode.HALF_UP));
+				        lineDTO.setTaxExemptionReason("Isento nos termos da alínea I) do nº1 do artigo 12.º do CIVA");
+				        lineDTO.setTaxExemptionCode(guiaPagamentoHist.getCodigoIva());
+				        System.out.println("AQUI VAMOS NOS 2");
+					    
+					    
+					    // Preenchendo o taxDTO com base no mesmo item de guiaPagamentoHist
+					    System.out.println("ENTREI");
+					    taxDTOList = new ArrayList<TaxDTO>();
+					    taxDTO = new TaxDTO();
+					    
+					    if(!guiaPagamentoHist.getPercentagemIva().equals(0)) {
+					        taxDTO.setTaxType("NS");
+					        taxDTO.setTaxCountryRegion("AO");
+					        taxDTO.setTaxCode("NS");
+					        taxDTO.setTaxPercentage(new BigDecimal(guiaPagamentoHist.getPercentagemIva()));
+					    } else {
+					        // REVER COM O ARISTEU
+					    }
+					    taxDTOList.add(taxDTO);
+					    
+					    System.out.println("BELEZA");
+					    
+					    lineDTO.setLineNumber(i + 1);
+					    lineDTO.setProductCode(guiaPagamentoHist.getEmolumento().getId().toString());
+					    lineDTO.setProductDescription(guiaPagamentoHist.getEmolumento().getEmolumento());
+					    lineDTO.setDescription(guiaPagamentoHist.getEmolumento().getEmolumento());
+					    lineDTO.setTaxPointDate(guia.getDataEmissaoFr().toString());
+					    lineDTO.setTax(taxDTOList);
+					    
+					    lineDTOList.add(lineDTO);
+					    
+					    double netTotal = 0.0;
+						double grossTotal = 0.0;
+						
 
-			for (Line line : LineList) {
+						for (GuiaPagamentoHistorico documentTotals : listaGuiaHistorico) {
+							System.out.println("Entrou aqui " + (documentTotals.getValor() - documentTotals.getDesconto()));
+
+							netTotal += documentTotals.getValor() - documentTotals.getDesconto();
+							grossTotal += documentTotals.getValorTotal();
+
+							documentTotalDTO = new DocumentTotalsDTO();
+							documentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
+							
+							//ANALISAR COM O ARISTEU
+							documentTotalDTO.setTaxPayable(documentTotals.getValorImposto());
+							documentTotalDTO.setNetTotal(FormataData.formatarValor(netTotal));
+							documentTotalDTO.setGrossTotal(FormataData.formatarValor(grossTotal));
+
+							documentTotalDTOList.add(documentTotalDTO);
+						}
+					    
+					    System.out.println("FIM");
+					}
+				}else {
+					
+					GuiaCandidatura guiaCandidatura = this.guiaCandidaturaRepo.buscarRecibo(invoice.getInvoiceNo());
+					List<GuiaCandidaturaHistorico> listaGuiaCandidaturaHistorico = guiaCandidaturaHistoricoRepo.buscarIdGuia(guiaCandidatura.getId());
+					
+					for (int i = 0; i < listaGuiaCandidaturaHistorico.size(); i++) {
+						GuiaCandidaturaHistorico guiaPagamentoHist = listaGuiaCandidaturaHistorico.get(i);
+					    lineDTO = new LineDTO();
+					    
+				        System.out.println("AQUI VAMOS NOS");
+				        lineDTO.setQuantity(Integer.parseInt(guiaPagamentoHist.getQuantidade()));
+				        lineDTO.setUnitOfMeasure("UN");
+				        lineDTO.setUnitPrice(new BigDecimal(Double.toString(guiaPagamentoHist.getValor())).setScale(2, RoundingMode.HALF_UP));
+				        lineDTO.setCreditAmount(new BigDecimal(Double.toString(guiaPagamentoHist.getValor())).setScale(2, RoundingMode.HALF_UP));
+				        lineDTO.setTaxExemptionReason("Isento nos termos da alínea I) do nº1 do artigo 12.º do CIVA");
+				        lineDTO.setTaxExemptionCode(guiaPagamentoHist.getCodigoIva());
+				        System.out.println("AQUI VAMOS NOS 2");
+					    
+					    
+					    // Preenchendo o taxDTO com base no mesmo item de guiaPagamentoHist
+					    System.out.println("ENTREI");
+					    taxDTOList = new ArrayList<TaxDTO>();
+					    taxDTO = new TaxDTO();
+					    
+					    if(!guiaPagamentoHist.getPercentagemIva().equals(0)) {
+					        taxDTO.setTaxType("NS");
+					        taxDTO.setTaxCountryRegion("AO");
+					        taxDTO.setTaxCode("NS");
+					        taxDTO.setTaxPercentage(new BigDecimal(guiaPagamentoHist.getPercentagemIva()));
+					    } else {
+					        // REVER COM O ARISTEU
+					    }
+					    taxDTOList.add(taxDTO);
+					    
+					    System.out.println("BELEZA");
+					    
+					    lineDTO.setLineNumber(i + 1);
+					    lineDTO.setProductCode(guiaPagamentoHist.getEmolumento().getId().toString());
+					    lineDTO.setProductDescription(guiaPagamentoHist.getEmolumento().getEmolumento());
+					    lineDTO.setDescription(guiaPagamentoHist.getEmolumento().getEmolumento());
+					    lineDTO.setTaxPointDate(guiaCandidatura.getDataEmissaoFr().toString());
+					    lineDTO.setTax(taxDTOList);
+					    
+					    lineDTOList.add(lineDTO);
+					    
+					    double netTotal = 0.0;
+						double grossTotal = 0.0;
+						
+
+						for (GuiaCandidaturaHistorico documentTotals : listaGuiaCandidaturaHistorico) {
+
+							netTotal += documentTotals.getValor();
+							grossTotal += documentTotals.getValor();
+
+							documentTotalDTO = new DocumentTotalsDTO();
+							documentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
+							
+							//ANALISAR COM O ARISTEU
+							documentTotalDTO.setTaxPayable(documentTotals.getValorImposto());
+							documentTotalDTO.setNetTotal(FormataData.formatarValor(netTotal));
+							documentTotalDTO.setGrossTotal(FormataData.formatarValor(grossTotal));
+
+							documentTotalDTOList.add(documentTotalDTO);
+						}
+					    
+					    System.out.println("FIM");
+					}
+					
+				}
+				
+			}else if (invoice.getInvoiceType().equals("FT")) {
+				
+				System.out.println("ENTROU NO SEGUNDO");
+				
+				Factura fatura = this.facturaRepo.buscarNumeroFactura(invoice.getInvoiceNo());
+				List<FacturaDetalhe> listaFactura = this.facturaDetalheRepo.buscarIdFactura(fatura.getId());
+				
+				for (int i = 0; i < listaFactura.size(); i++) {
+					FacturaDetalhe facturaDetalhe = listaFactura.get(i);
+				    lineDTO = new LineDTO();
+				    
+			        
+			        lineDTO.setQuantity(facturaDetalhe.getQuantidade());
+			        lineDTO.setUnitOfMeasure("UN");
+			        lineDTO.setUnitPrice(new BigDecimal(Double.toString(facturaDetalhe.getPrecoUnitario())).setScale(2, RoundingMode.HALF_UP));
+			        lineDTO.setCreditAmount(new BigDecimal(Double.toString(facturaDetalhe.getValorSemDesconto())).setScale(2, RoundingMode.HALF_UP));
+			        lineDTO.setTaxExemptionReason("Isento nos termos da alínea I) do nº1 do artigo 12.º do CIVA");
+			        lineDTO.setTaxExemptionCode(facturaDetalhe.getCodigoIva());
+			       
+				    
+				    
+				    taxDTOList = new ArrayList<TaxDTO>();
+				    taxDTO = new TaxDTO();
+				    
+				    if(!facturaDetalhe.getPercentagemIva().equals(0)) {
+				        taxDTO.setTaxType("NS");
+				        taxDTO.setTaxCountryRegion("AO");
+				        taxDTO.setTaxCode("NS");
+				        taxDTO.setTaxPercentage(new BigDecimal(facturaDetalhe.getPercentagemIva()));
+				    } else {
+				        // REVER COM O ARISTEU
+				    }
+				    taxDTOList.add(taxDTO);
+				    
+				    System.out.println("BELEZA");
+				    
+				    lineDTO.setLineNumber(i + 1);
+				    lineDTO.setProductCode(facturaDetalhe.getNumeroAluno().toString());
+				    lineDTO.setProductDescription(facturaDetalhe.getDescricao());
+				    lineDTO.setDescription(facturaDetalhe.getDescricao());
+				    lineDTO.setTaxPointDate(fatura.getDataEmissao().toString());
+				    lineDTO.setTax(taxDTOList);
+				    
+				    lineDTOList.add(lineDTO);
+				    
+				    double netTotal = 0.0;
+					double grossTotal = 0.0;
+				    
+				    for (FacturaDetalhe documentTotals : listaFactura) {
+						System.out.println("Entrou aqui " + (documentTotals.getPrecoUnitario() - documentTotals.getDesconto()));
+
+						netTotal += documentTotals.getValorSemDesconto() - documentTotals.getDesconto();
+						grossTotal += documentTotals.getValorTotal();
+
+						documentTotalDTO = new DocumentTotalsDTO();
+						documentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
+						
+						//ANALISAR COM O ARISTEU
+						documentTotalDTO.setTaxPayable(documentTotals.getValorImposto());
+						documentTotalDTO.setNetTotal(FormataData.formatarValor(netTotal));
+						documentTotalDTO.setGrossTotal(FormataData.formatarValor(grossTotal));
+
+						documentTotalDTOList.add(documentTotalDTO);
+					}
+				    
+				    System.out.println("FIM");
+				}
+			}else if(invoice.getInvoiceType().equals("NC")) {
+				
+				System.out.println("ENTROU NO TERCEIRO");
+				NotaCredito notaCredito = this.notaCreditoRepo.buscarNumeroNotaCredito(invoice.getInvoiceNo());
+				if(notaCredito.getTipoDoc() == TipoDoc.FACTURA_RECIBO) {
+					List<GuiaPagamentoHistorico> listaGuiaHistorico = guiaHistoricoRepo.buscarIdGuia(notaCredito.getIdGuia().getId());
+					
+					for (int i = 0; i < listaGuiaHistorico.size(); i++) {
+					    GuiaPagamentoHistorico guiaPagamentoHist = listaGuiaHistorico.get(i);
+					    lineDTO = new LineDTO();
+					    
+					    List<Reference> referencesList = this.referencesRepo.buscarReferences(invoice.getInvoiceNo());
+					    referencesDTOList = new ArrayList<ReferencesDTO>();
+					    System.out.println("referencesRepo");
+
+					    List<OrderReference> orderReferencesList = this.orderReferencesRepo
+					            .buscarOrderReference(invoice.getInvoiceNo());
+					    orderReferencesDTOList = new ArrayList<OrderReferenceDTO>();
+					    System.out.println("orderReferencesRepo");
+					    
+					    if (invoice.getInvoiceType().equals("NC")) {
+					        System.out.println("NC");
+					        for (Reference references : referencesList) {
+					            referencesDTO = new ReferencesDTO();
+					            referencesDTO.setReference(references.getReference());
+					            referencesDTOList.add(referencesDTO);
+					        }
+
+					        for (OrderReference orderReferences : orderReferencesList) {
+					            System.out.println("orderReferencesList");
+					            orderReferencesDTO = new OrderReferenceDTO();
+					            orderReferencesDTO.setOriginatingON(orderReferences.getOriginatingON());
+					            orderReferencesDTO.setOrderDate(orderReferences.getOrderDate());
+					            orderReferencesDTOList.add(orderReferencesDTO);
+					        }
+					        
+					        System.out.println("TERMINANDO A LINE");
+					        lineDTO.setQuantity(Integer.parseInt(guiaPagamentoHist.getQuantidade()));
+					        lineDTO.setUnitOfMeasure("UN");
+					        lineDTO.setUnitPrice(new BigDecimal(Double.toString(guiaPagamentoHist.getValor())).setScale(2, RoundingMode.HALF_UP));
+					        lineDTO.setOriginationOn(orderReferencesDTOList);
+					        lineDTO.setReference(referencesDTOList);
+					        lineDTO.setDebitAmount(new BigDecimal(Double.toString(guiaPagamentoHist.getValor())).setScale(2, RoundingMode.HALF_UP));
+					        lineDTO.setTaxExemptionReason("Isento nos termos da alínea I) do nº1 do artigo 12.º do CIVA");
+					        lineDTO.setTaxExemptionCode(guiaPagamentoHist.getCodigoIva());
+					    }
+					    
+					    // Preenchendo o taxDTO com base no mesmo item de guiaPagamentoHist
+					    System.out.println("ENTREI");
+					    taxDTOList = new ArrayList<TaxDTO>();
+					    taxDTO = new TaxDTO();
+					    
+					    if(!guiaPagamentoHist.getPercentagemIva().equals(0)) {
+					        taxDTO.setTaxType("NS");
+					        taxDTO.setTaxCountryRegion("AO");
+					        taxDTO.setTaxCode("NS");
+					        taxDTO.setTaxPercentage(new BigDecimal(guiaPagamentoHist.getPercentagemIva()));
+					    } else {
+					        // REVER COM O ARISTEU
+					    }
+					    taxDTOList.add(taxDTO);
+					    
+					    System.out.println("BELEZA");
+					    
+					    lineDTO.setLineNumber(i + 1);
+					    lineDTO.setProductCode(guiaPagamentoHist.getEmolumento().getId().toString());
+					    lineDTO.setProductDescription(guiaPagamentoHist.getEmolumento().getEmolumento());
+					    lineDTO.setDescription(guiaPagamentoHist.getEmolumento().getEmolumento());
+					    lineDTO.setTaxPointDate(notaCredito.getDataEmissao().toString());
+					    lineDTO.setTax(taxDTOList);
+					    
+					    lineDTOList.add(lineDTO);
+					    
+					    double netTotal = 0.0;
+						double grossTotal = 0.0;
+					    
+					    for (GuiaPagamentoHistorico documentTotals : listaGuiaHistorico) {
+							System.out.println("Entrou aqui " + (documentTotals.getValor() - documentTotals.getDesconto()));
+
+							netTotal += documentTotals.getValor() - documentTotals.getDesconto();
+							grossTotal += documentTotals.getValorTotal();
+
+							documentTotalDTO = new DocumentTotalsDTO();
+							documentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
+							
+							//ANALISAR COM O ARISTEU
+							documentTotalDTO.setTaxPayable(documentTotals.getValorImposto());
+							documentTotalDTO.setNetTotal(FormataData.formatarValor(netTotal));
+							documentTotalDTO.setGrossTotal(FormataData.formatarValor(grossTotal));
+
+							documentTotalDTOList.add(documentTotalDTO);
+						}
+					    
+					    System.out.println("FIM");
+					}
+				}else if(notaCredito.getTipoDoc() == TipoDoc.FACTURA) {
+					
+					List<FacturaDetalhe> listaFactura = this.facturaDetalheRepo.buscarIdFactura(notaCredito.getIdFactura().getId());
+					
+					for (int i = 0; i < listaFactura.size(); i++) {
+						FacturaDetalhe facturaDetalhe = listaFactura.get(i);
+					    lineDTO = new LineDTO();
+					    
+					    List<Reference> referencesList = this.referencesRepo.buscarReferences(invoice.getInvoiceNo());
+					    referencesDTOList = new ArrayList<ReferencesDTO>();
+					    System.out.println("referencesRepo");
+
+					    List<OrderReference> orderReferencesList = this.orderReferencesRepo
+					            .buscarOrderReference(invoice.getInvoiceNo());
+					    orderReferencesDTOList = new ArrayList<OrderReferenceDTO>();
+					    System.out.println("orderReferencesRepo");
+					    
+					    
+				        
+				        for (Reference references : referencesList) {
+				            referencesDTO = new ReferencesDTO();
+				            referencesDTO.setReference(references.getReference());
+				            referencesDTOList.add(referencesDTO);
+				        }
+
+				        for (OrderReference orderReferences : orderReferencesList) {
+				            System.out.println("orderReferencesList");
+				            orderReferencesDTO = new OrderReferenceDTO();
+				            orderReferencesDTO.setOriginatingON(orderReferences.getOriginatingON());
+				            orderReferencesDTO.setOrderDate(orderReferences.getOrderDate());
+				            orderReferencesDTOList.add(orderReferencesDTO);
+				        }
+					        
+				        System.out.println("TERMINANDO A LINE");
+				        lineDTO.setQuantity(facturaDetalhe.getQuantidade());
+				        lineDTO.setUnitOfMeasure("UN");
+				        lineDTO.setUnitPrice(new BigDecimal(Double.toString(facturaDetalhe.getPrecoUnitario())).setScale(2, RoundingMode.HALF_UP));
+				        lineDTO.setOriginationOn(orderReferencesDTOList);
+				        lineDTO.setReference(referencesDTOList);
+				        
+				        if(notaCredito.getIdFactura().isAlterada()) {
+				        	List<NotaCreditoDetalhe> notaDetalhe = this.notaCreditoDetalheRepo.buscarNumeroNotaCredito(notaCredito.getNumeroNotaCredito());
+				        	
+				        	for (NotaCreditoDetalhe notaDet : notaDetalhe) {
+				        		lineDTO.setDebitAmount(new BigDecimal(Double.toString(notaDet.getValorTotal())).setScale(2, RoundingMode.HALF_UP));
+							}
+				        }
+				        
+				        lineDTO.setDebitAmount(new BigDecimal(Double.toString(facturaDetalhe.getValorSemDesconto())).setScale(2, RoundingMode.HALF_UP));
+				        lineDTO.setTaxExemptionReason("Isento nos termos da alínea I) do nº1 do artigo 12.º do CIVA");
+				        lineDTO.setTaxExemptionCode(facturaDetalhe.getCodigoIva());
+					    
+					    
+					    // Preenchendo o taxDTO com base no mesmo item de guiaPagamentoHist
+					    System.out.println("ENTREI");
+					    taxDTOList = new ArrayList<TaxDTO>();
+					    taxDTO = new TaxDTO();
+					    
+					    if(!facturaDetalhe.getPercentagemIva().equals(0)) {
+					        taxDTO.setTaxType("NS");
+					        taxDTO.setTaxCountryRegion("AO");
+					        taxDTO.setTaxCode("NS");
+					        taxDTO.setTaxPercentage(new BigDecimal(facturaDetalhe.getPercentagemIva()));
+					    } else {
+					        // REVER COM O ARISTEU
+					    }
+					    taxDTOList.add(taxDTO);
+					    
+					    System.out.println("BELEZA");
+					    
+					    lineDTO.setLineNumber(i + 1);
+					    lineDTO.setProductCode(facturaDetalhe.getNumeroAluno().toString());
+					    lineDTO.setProductDescription(facturaDetalhe.getDescricao());
+					    lineDTO.setDescription(facturaDetalhe.getDescricao());
+					    lineDTO.setTaxPointDate(notaCredito.getDataEmissao().toString());
+					    lineDTO.setTax(taxDTOList);
+					    
+					    lineDTOList.add(lineDTO);
+					    
+					    double netTotal = 0.0;
+						double grossTotal = 0.0;
+					    
+					    for (FacturaDetalhe documentTotals : listaFactura) {
+
+							netTotal += documentTotals.getValorSemDesconto() - documentTotals.getDesconto();
+							grossTotal += documentTotals.getValorTotal();
+
+							documentTotalDTO = new DocumentTotalsDTO();
+							documentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
+							
+							//ANALISAR COM O ARISTEU
+							documentTotalDTO.setTaxPayable(documentTotals.getValorImposto());
+							documentTotalDTO.setNetTotal(FormataData.formatarValor(netTotal));
+							documentTotalDTO.setGrossTotal(FormataData.formatarValor(grossTotal));
+
+							documentTotalDTOList.add(documentTotalDTO);
+						}
+					    
+					    System.out.println("FIM");
+					}
+					
+				}
+			}
+
+				
+
+			/*for (Line line : LineList) {
 				lineDTO = new LineDTO();
 
 				List<Reference> referencesList = this.referencesRepo.buscarReferences(invoice.getInvoiceNo());
@@ -476,20 +896,20 @@ public class TesteSaf_T {
 						orderReferencesDTOList.add(orderReferencesDTO);
 					}
 
-					lineDTO.setQuantity(line.getQuantity());
+					//lineDTO.setQuantity(line.getQuantity());
 					lineDTO.setUnitOfMeasure(line.getUnitOfMeasure());
-					lineDTO.setUnitPrice(line.getUnitPrice());
+					lineDTO.setUnitPrice(line.getUnitPrice().setScale(2, RoundingMode.HALF_UP));
 					lineDTO.setOriginationOn(orderReferencesDTOList);
 					lineDTO.setReference(referencesDTOList);
-					lineDTO.setDebitAmount(line.getDebitAmount());
+					lineDTO.setDebitAmount(line.getDebitAmount().setScale(2, RoundingMode.HALF_UP));
 
 				} else {
 
 					lineDTO.setUnitOfMeasure(line.getUnitOfMeasure());
 
-					lineDTO.setQuantity(line.getQuantity());
-					lineDTO.setUnitPrice(line.getUnitPrice());
-					lineDTO.setCreditAmount(line.getCreditAmount());
+					//lineDTO.setQuantity(line.getQuantity());
+					lineDTO.setUnitPrice(line.getUnitPrice().setScale(2, RoundingMode.HALF_UP));
+					lineDTO.setCreditAmount(line.getCreditAmount().setScale(2, RoundingMode.HALF_UP));
 				}
 
 				List<Tax> taxList = this.taxRepo.buscarTax(invoice.getInvoiceNo(), line.getLineNumber());
@@ -518,33 +938,12 @@ public class TesteSaf_T {
 				lineDTO.setTaxPointDate(line.getTaxPointDate());
 
 				lineDTOList.add(lineDTO);
-			}
-			
-			System.out.println("Passou a Line");
+			}*/
 
-			List<DocumentTotals> documentTotalList = this.documentTotalsRepo
+			/*List<DocumentTotals> documentTotalList = this.documentTotalsRepo
 					.buscarDocumentTotals(invoice.getInvoiceNo());
-			documentTotalDTOList = new ArrayList<DocumentTotalsDTO>();
+			documentTotalDTOList = new ArrayList<DocumentTotalsDTO>();*/
 
-			System.out.println("Muito bom");
-			double netTotal = 0.0;
-			double grossTotal = 0.0;
-
-			for (DocumentTotals documentTotals : documentTotalList) {
-				System.out.println("Entrou aqui " + documentTotals.getNetTotal());
-
-				netTotal += documentTotals.getNetTotal();
-				grossTotal += documentTotals.getGrossTotal();
-
-				documentTotalDTO = new DocumentTotalsDTO();
-				documentTotalDTO.setTaxPayable(documentTotals.getTaxPayable());
-				documentTotalDTO.setNetTotal(FormataData.formatarValor(netTotal));
-				documentTotalDTO.setGrossTotal(FormataData.formatarValor(grossTotal));
-
-				documentTotalDTOList.add(documentTotalDTO);
-			}
-			
-			System.out.println("Passou a documentTotalDTOList");
 
 			invoiceDTO.setDocumentStatus(documentStatusDTOList);
 			invoiceDTO.setHash(invoice.getHash());
@@ -560,17 +959,40 @@ public class TesteSaf_T {
 			invoiceDTO.setDocumentTotals(documentTotalDTOList);
 
 			invoiceDTOList.add(invoiceDTO);
+			
+			System.out.println("Invoice " + count++);
 		}
 		
-		System.out.println("Passou a invoiceDTOList");
+		List<Guia> listNumberOfEntriesFR = this.guiaRepo.BUSCAR_NUMBER_OF_ENTRIES(dataInicio, dataFim);
+		List<GuiaCandidatura> listNumberOfEntriesCandidaturaFR = this.guiaCandidaturaRepo.BUSCAR_NUMBER_OF_ENTRIES(dataInicio, dataFim);
+		if (listNumberOfEntriesFR.isEmpty()) {
+			c.setMensagem("NumberOfEntries nulo");
+			//return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
+		}
+		
+		
+		List<Factura> listNumberOfEntriesFT = this.facturaRepo.BUSCAR_NUMBER_OF_ENTRIES(dataInicio, dataFim);
+		if (listNumberOfEntriesFT.isEmpty()) {
+			c.setMensagem("NumberOfEntries nulo");
+			//return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
+		}
+		
+		List<NotaCredito> listNumberOfEntriesNC = this.notaCreditoRepo.BUSCAR_NUMBER_OF_ENTRIES(dataInicio, dataFim);
+		if (listNumberOfEntriesNC.isEmpty()) {
+			c.setMensagem("NumberOfEntries nulo");
+			//return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
+		}
+		
+		/*Double listaDebit = this.notaCreditoRepo.buscarDebits(dataInicio, dataFim);
+		if(listaDebit != null) {
+			salesInvoiceDTO.setTotalDebit(FormataData.formatarValor(listaDebit));
+		}
 
 		List<SalesInvoices> salesInvoiceList = this.salesInvoiceRepo.buscarSalesInvoces(dataInicio, dataFim);
 		if (salesInvoiceList.isEmpty()) {
 			c.setMensagem("SalesInvoice nulo");
 			return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
 		}
-		
-		System.out.println("Passou a salesInvoiceList");
 
 		List<SalesInvoices> salesInvoiceDebitList = this.salesInvoiceRepo.buscarDebits(dataInicio, dataFim);
 		if (salesInvoiceList.isEmpty()) {
@@ -578,28 +1000,73 @@ public class TesteSaf_T {
 			// return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
 		}
 		
-		System.out.println("Passou a salesInvoiceDebitList");
+		List<SalesInvoices> salesInvoiceCreditList = this.salesInvoiceRepo.buscarCredit(dataInicio, dataFim);
+		if (salesInvoiceList.isEmpty()) {
+			c.setMensagem("SalesInvoiceDebit nulo");
+		}*/
 
 		int numberOfEntries = 0;
 		double totalDebit = 0.0;
 		double totalCredit = 0.0;
 
-		for (SalesInvoices salesInvoices : salesInvoiceList) {
+					// FACTURA RECIBO //
+		
+		for (GuiaCandidatura salesInvoices : listNumberOfEntriesCandidaturaFR) {
 
-			numberOfEntries += salesInvoices.getNumberOfEntries();
+			numberOfEntries++;
+		}
+		
+		for (GuiaCandidatura creditAmountFR : listNumberOfEntriesCandidaturaFR) {
+			List<GuiaCandidaturaHistorico> gHistorico = guiaCandidaturaHistoricoRepo.buscarIdGuia(creditAmountFR.getId());
+			for (GuiaCandidaturaHistorico historico : gHistorico) {
+				
+				totalCredit += historico.getValor();
+			}
+		}
+		
+		for (Guia salesInvoices : listNumberOfEntriesFR) {
+
+			numberOfEntries++;
+		}
+		
+		for (Guia creditAmountFR : listNumberOfEntriesFR) {
+			List<GuiaPagamentoHistorico> gHistorico = guiaHistoricoRepo.buscarIdGuia(creditAmountFR.getId());
+			for (GuiaPagamentoHistorico historico : gHistorico) {
+				
+				totalCredit += historico.getValorTotal();
+			}
+		}
+		
+						// FACTURA //
+		for (Factura salesInvoices : listNumberOfEntriesFT) {
+
+			numberOfEntries++;
+		}
+		
+		for (Factura factura : listNumberOfEntriesFT) {
+			totalCredit += factura.getValor();
+		}
+		
+		
+		for (NotaCredito salesInvoices : listNumberOfEntriesNC) {
+
+			numberOfEntries++;
+		}
+		
+		for (NotaCredito notaCredito : listNumberOfEntriesNC) {
+			totalDebit += notaCredito.getValor();
 		}
 
-		for (SalesInvoices salesInvoices : salesInvoiceDebitList) {
 
-			totalDebit += salesInvoices.getTotalDebit();
+		/*for (NotaCredito salesInvoices : listaDebit) {
+
+			totalDebit = totalDebit + salesInvoices.getTotalDebit();
+		}
+		
+		for (SalesInvoices salesInvoices : salesInvoiceCreditList) {
 
 			totalCredit = totalCredit + salesInvoices.getTotalCredit();
-			System.out.println("Sales Credit " + salesInvoices.getTotalCredit());
-			System.out.println("Total credito for " + totalCredit);
-		}
-
-		System.out.println("Total debito " + totalDebit);
-		System.out.println("Total credito " + totalCredit);
+		}*/
 
 		salesInvoiceDTO.setNumberOfEntries(numberOfEntries);
 		salesInvoiceDTO.setTotalDebit(FormataData.formatarValor(totalDebit));
@@ -608,9 +1075,9 @@ public class TesteSaf_T {
 
 		sourceDocuments.setSalesInvoices(salesInvoiceDTO);
 
-		WorkDocumentsDTO workDocumentsDTO = new WorkDocumentsDTO();
+		/*WorkDocumentsDTO workDocumentsDTO = new WorkDocumentsDTO();
 
-		/*WorkDocumentDTO workDocumentDTO = new WorkDocumentDTO();
+		WorkDocumentDTO workDocumentDTO = new WorkDocumentDTO();
 		List<WorkDocumentDTO> workDocumentDTOList = new ArrayList<WorkDocumentDTO>();
 
 		List<WorkDocument> workDocumentList = workDocumentRepo.buscarWorkDocument(dataInicio, dataFim);
@@ -895,6 +1362,7 @@ public class TesteSaf_T {
 			String xmlOutput = writer.toString();
 			System.out.println(xmlOutput);
 
+			System.out.println("NUMERO DE DOCUMETO " + numberOfEntries);
 			System.out.println("Arquivo XML gerado com sucesso!");
 		} catch (JAXBException e) {
 			e.printStackTrace();

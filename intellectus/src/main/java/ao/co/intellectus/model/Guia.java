@@ -48,7 +48,6 @@ public class Guia {
 	private Boolean liquidada;
 	private Boolean alterada;
 	private Boolean automaticamente;
-	@Column(name ="acordo")
 	private Boolean acordo;
 
 	@Temporal(TemporalType.DATE)

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="R_Requerimento_Mestrado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71848f44-ac78-48fb-baaa-6e10c2cfdb21">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Qualidade_UGS"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="numero_aluno" class="java.lang.String"/>
+	<parameter name="tipo_de_modelo" class="java.lang.String"/>
+	<parameter name="data" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from V_REQUERIMENTO_MESTRADO_LT
+where NUMERO_DE_ALUNO= $P{numero_aluno}]]>
+	</queryString>
+	<field name="NUMERO_DE_ALUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DE_ALUNO"/>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME"/>
+	</field>
+	<field name="NOME_DO_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DO_PAI"/>
+	</field>
+	<field name="NOME_DA_MAE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOME_DA_MAE"/>
+	</field>
+	<field name="NUMERO_DOCUMENTO_IDENTIFICACAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO_DOCUMENTO_IDENTIFICACAO"/>
+	</field>
+	<field name="EMITIDO_EM" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="EMITIDO_EM"/>
+	</field>
+	<field name="VALIDO" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="VALIDO"/>
+	</field>
+	<field name="CURSO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CURSO"/>
+	</field>
+	<field name="ESPECIALIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ESPECIALIDADE"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="170" splitType="Stretch">
+			<textField>
+				<reportElement x="44" y="112" width="482" height="33" uuid="5211b406-596d-489b-bd0e-f11f3507f2fe"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REQUERIMENTO"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="393" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement x="44" y="67" width="482" height="228" uuid="b59d739c-5bd7-4938-bf20-b11fff9a0e5d">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+					<font fontName="SansSerif" size="12" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Double" firstLineIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>"+$F{NOME}+"</b>"+", filho de "+"<b>"+$F{NOME_DO_PAI}+"</b>"+" e de "+"<b>"+$F{NOME_DA_MAE}+"</b>"+", portador do Bilhete de Identidade número "+"<b>"+$F{NUMERO_DOCUMENTO_IDENTIFICACAO}+"</b>"+", emitido em "+"<b>"+$F{EMITIDO_EM}+"</b>"+" e válido até "+"<b>"+$F{VALIDO}+"</b>"+", estudante número "+"<b>"+$F{NUMERO_DE_ALUNO}+"</b>"+" do Curso de Mestrado em "+"<b>"+$F{CURSO}+"</b>"+", vem requerer um certificado modelo "+"<b>"+$P{tipo_de_modelo}+"</b>"+", comprovativo de que é titular do grau de Mestre."]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="44" y="0" width="482" height="50" uuid="a0980452-2529-4949-be59-7d9d4d50033e">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+					<font fontName="Serif" size="12" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Double" firstLineIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Senhor(a) Director(a) da"+"<br>"+"Direcção de Investigação Científica e Pós-Graduação"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="40" y="370" width="290" height="1" uuid="d2787a99-6ae1-42ef-a95e-fb550579abd6"/>
+			</line>
+			<textField>
+				<reportElement x="44" y="294" width="482" height="30" uuid="1ebef500-6fe7-4f71-af5c-85d6b7ab5354"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Luanda, "+$P{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

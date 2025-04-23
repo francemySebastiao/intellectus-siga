@@ -1,5 +1,6 @@
 package ao.co.intellectus.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -95,6 +96,9 @@ public class Matricula {
 	private boolean inscritoOnline;
 	@Column(nullable = true)
 	private boolean verificado;
+	
+	@Column(name = "crescimento_propina")
+	private double crescimentoPropina;
 	
 	
 	//verificado,inscritoOnline
@@ -278,4 +282,11 @@ public class Matricula {
 	public void setVerificado(boolean verificado) {
 		this.verificado = verificado;
 	}
+	public double getCrescimentoPropina() {
+		return crescimentoPropina;
+	}
+	public void setCrescimentoPropina(double crescimentoPropina) {
+		this.crescimentoPropina = crescimentoPropina;
+	}
+	
 }

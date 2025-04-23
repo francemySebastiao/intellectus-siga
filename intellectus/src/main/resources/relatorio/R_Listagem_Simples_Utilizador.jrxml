@@ -13,21 +13,25 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT
-     T_GUIA_POR_UTILIZADOR."ANO_LECTIVO" AS T_GUIA_POR_UTILIZADOR_ANO_LECTIVO,
-     T_GUIA_POR_UTILIZADOR."NUMERO" AS T_GUIA_POR_UTILIZADOR_NUMERO,
-     T_GUIA_POR_UTILIZADOR."DATA" AS T_GUIA_POR_UTILIZADOR_DATA,
-     T_GUIA_POR_UTILIZADOR."NOME" AS T_GUIA_POR_UTILIZADOR_NOME,
-     T_GUIA_POR_UTILIZADOR."CURSO" AS T_GUIA_POR_UTILIZADOR_CURSO,
-     T_GUIA_POR_UTILIZADOR."FUNCIONARIO" AS T_GUIA_POR_UTILIZADOR_FUNCIONARIO,
-     T_GUIA_POR_UTILIZADOR."ID_FUNCIONARIO" AS T_GUIA_POR_UTILIZADOR_ID_FUNCIONARIO,
-     T_GUIA_POR_UTILIZADOR."VALOR" AS T_GUIA_POR_UTILIZADOR_VALOR
-FROM
-     "dbo"."T_GUIA_POR_UTILIZADOR" T_GUIA_POR_UTILIZADOR
+		<![CDATA[SELECT dbo."V_DOCUMENTOS_LIQUIDADOS"."DATA_LIQUIDACAO",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."ID_USUARIO_LIQUIDOU",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."UTILIZADOR_LIQUIDOU",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."N_DOCUMENTO",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."TIPO_FACTURA",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."DATA_LIQUIDADO",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."ID_USUARIO_USUARIO",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."NOME",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."VALOR",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."ANO_LECTIVO",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."CURSO",
+	dbo."V_DOCUMENTOS_LIQUIDADOS"."CURSO_ID"
+FROM dbo."V_DOCUMENTOS_LIQUIDADOS"
 
-where T_GUIA_POR_UTILIZADOR."DATA" BETWEEN $P{data1} AND $P{data2} AND
-T_GUIA_POR_UTILIZADOR."ID_FUNCIONARIO"=$P{codigo_utilizador}
-order by T_GUIA_POR_UTILIZADOR."CURSO"]]>
+where
+
+"V_DOCUMENTOS_LIQUIDADOS"."DATA_LIQUIDADO" between  $P{data1} and  $P{data2}
+and dbo."V_DOCUMENTOS_LIQUIDADOS"."ID_USUARIO_USUARIO"= $P{codigo_utilizador}
+]]>
 	</queryString>
 	<field name="T_GUIA_POR_UTILIZADOR_ANO_LECTIVO" class="java.lang.Integer"/>
 	<field name="T_GUIA_POR_UTILIZADOR_NUMERO" class="java.lang.String"/>
@@ -38,10 +42,10 @@ order by T_GUIA_POR_UTILIZADOR."CURSO"]]>
 	<field name="T_GUIA_POR_UTILIZADOR_ID_FUNCIONARIO" class="java.lang.Integer"/>
 	<field name="T_GUIA_POR_UTILIZADOR_VALOR" class="java.lang.Double"/>
 	<variable name="soma" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_VALOR}]]></variableExpression>
+		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
 	</variable>
 	<group name="Primeiro">
-		<groupExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_CURSO}]]></groupExpression>
+		<groupExpression><![CDATA[$F{CURSO}]]></groupExpression>
 		<groupHeader>
 			<band height="63">
 				<textField>
@@ -106,7 +110,7 @@ order by T_GUIA_POR_UTILIZADOR."CURSO"]]>
 				<textField>
 					<reportElement x="2" y="3" width="100" height="20" uuid="96522ad4-1eb3-43a0-b54b-64310e13e443"/>
 					<textElement verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_ANO_LECTIVO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ANO_LECTIVO}]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement x="2" y="40" width="469" height="1" uuid="a143e95f-bb8f-4e8e-b485-d0f357eae4e5"/>
@@ -203,22 +207,22 @@ order by T_GUIA_POR_UTILIZADOR."CURSO"]]>
 			<textField>
 				<reportElement x="2" y="0" width="79" height="20" isRemoveLineWhenBlank="true" uuid="f30197ca-d807-4820-bffd-324c5c2bc2c1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_NUMERO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{N_DOCUMENTO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="83" y="0" width="85" height="20" isRemoveLineWhenBlank="true" uuid="2f74e203-77cf-483b-b825-1bba8607d228"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_DATA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DATA_LIQUIDADO}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="179" y="0" width="266" height="20" isRemoveLineWhenBlank="true" uuid="cce98039-539a-4a34-b485-41d4d54f7d43"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_NOME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00 Akz">
 				<reportElement x="479" y="0" width="73" height="20" isRemoveLineWhenBlank="true" uuid="4df56588-74f6-4204-a202-122aaf4c3992"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{T_GUIA_POR_UTILIZADOR_VALOR}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VALOR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

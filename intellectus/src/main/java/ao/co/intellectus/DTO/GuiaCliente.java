@@ -10,6 +10,7 @@ public class GuiaCliente {
 	private String numero;
 	private String numeroProforma;
 	private String numeroFacturaRecibo;
+	private String numeroNotaCredito;
 	@Temporal(TemporalType.DATE)
 	private Date dataEmicao;
 	private double valor;
@@ -20,6 +21,7 @@ public class GuiaCliente {
 	@Temporal(TemporalType.DATE)
 	private Date dataVencimento;
 	private boolean liquidada;
+	private boolean liquidacaoCredito;
 	private boolean automaticamente;
 	private boolean acordo;
 	private Integer anoLectivo;
@@ -131,6 +133,12 @@ public class GuiaCliente {
 	public void setLiquidar(boolean liquidar) {
 		this.liquidar = liquidar;
 	}
+	public boolean isLiquidacaoCredito() {
+		return liquidacaoCredito;
+	}
+	public void setLiquidacaoCredito(boolean liquidacaoCredito) {
+		this.liquidacaoCredito = liquidacaoCredito;
+	}
 	public String getMotivoAnulacaoGuia() {
 		return motivoAnulacaoGuia;
 	}
@@ -196,6 +204,12 @@ public class GuiaCliente {
 	}
 	public void setNumeroProforma(String numeroProforma) {
 		this.numeroProforma = numeroProforma;
+	}
+	public String getNumeroNotaCredito() {
+		return numeroNotaCredito;
+	}
+	public void setNumeroNotaCredito(String numeroNotaCredito) {
+		this.numeroNotaCredito = numeroNotaCredito;
 	}
 	
 	
