@@ -2042,7 +2042,7 @@ public class ControllerGuia {
 			}
 			EmolumentoHistorico histEmolumento = this.emolumentoHistoricoRepository.findByEmolumentoAndCursoAndAnoLectivo(
 					emolumento, aluno.getCurso(), anoLectivo.get(0));
-
+			System.out.println("Emolumento: " + histEmolumento.getValor());
 			AlunoCreditoCliente acc = new AlunoCreditoCliente();
 			EmolumentoCliente emolumentoCliente = new EmolumentoCliente();
 
@@ -2971,7 +2971,9 @@ public class ControllerGuia {
 		
 		String numero = "";
 
-		NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(10);
+		NumeroGerado numeroGerado = this.numeroGeradoRepository.findOne(3);
+		System.out.println("Numero Gerado: " + numeroGerado);
+		System.out.println("Numero Gerado: " + numeroGerado.getProximoNumero());
 		Long proximoNumero = numeroGerado.getProximoNumero();
 
 		

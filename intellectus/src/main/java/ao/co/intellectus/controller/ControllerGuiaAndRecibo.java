@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ao.co.intellectus.DTO.DetalhePagamento;
 import ao.co.intellectus.DTO.GuiaPagamentoRelatorio;
+import ao.co.intellectus.model.AnoLectivo;
 import ao.co.intellectus.model.Contador;
 import ao.co.intellectus.model.Guia;
 import ao.co.intellectus.model.GuiaPagamentoHistorico;
@@ -36,6 +38,7 @@ import ao.co.intellectus.model.Matricula;
 import ao.co.intellectus.model.RegistroDocumentos;
 import ao.co.intellectus.model.reponse.ResponseCliente;
 import ao.co.intellectus.model.reponse.ResponseCode;
+import ao.co.intellectus.repository.AnoLectivoRepository;
 import ao.co.intellectus.repository.ContadorRepository;
 import ao.co.intellectus.repository.GuiaPagamentoRepository;
 import ao.co.intellectus.repository.HistoricoGuiaPagamentoRepository;
@@ -49,7 +52,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 
 @RestController
 @RequestMapping("/guiaAndRecibo")
-//guiaAndRecibo/ficha/candidatura
+// guiaAndRecibo/ficha/candidatura
 public class ControllerGuiaAndRecibo {
 	@Autowired
 	private GuiaPagamentoRepository guiaRepository;
@@ -61,6 +64,8 @@ public class ControllerGuiaAndRecibo {
 	private ContadorRepository contadorRepository;
 	@Autowired
 	private RegistroDocumentoRepository registroDocumentoRepo;
+	@Autowired
+	private AnoLectivoRepository anoLectivoRepository;
 	// @Autowired
 	// private CandidatoServie candidatoServie;
 	// @Autowired
@@ -174,11 +179,12 @@ public class ControllerGuiaAndRecibo {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
-	
+
 	@GetMapping("/requerimento/pagamento")
 	@ResponseBody
 	@CrossOrigin(origins = "*")
-	public ResponseEntity<byte[]> relatorioRequerimentoPagamento(@RequestParam String numeroGuia, Integer id_guia,  @RequestParam String userName) throws Exception {
+	public ResponseEntity<byte[]> relatorioRequerimentoPagamento(@RequestParam String numeroGuia, Integer id_guia,
+			@RequestParam String userName) throws Exception {
 
 		Guia guia = this.guiaRepository.findByNumeroGuia(numeroGuia);
 		List<Matricula> inscricoes = this.matriculaRepository.findByAluno(guia.getAluno());
@@ -197,48 +203,55 @@ public class ControllerGuiaAndRecibo {
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatrio);
 	}
 
-	public byte[] servicoRequerimentoPagamento(String numeroGuia,Integer id_guia, String userName, String turma, int ano)
+	public byte[] servicoRequerimentoPagamento(String numeroGuia, Integer id_guia, String userName, String turma,
+			int ano)
 			throws JRException {
-		
+
 		Date data = new Date();
 		Locale local = new Locale("pt", "BR");
-		
+
 		java.text.DateFormat formato = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", local);
 		String dataFormatada = formato.format(data);
-		
+
 		Map<String, Object> paramets = new HashMap<>();
 		paramets.put("numero_guia", numeroGuia);
 		paramets.put("id_guia", id_guia);
-		//paramets.put("condicao", condicao);
+		// paramets.put("condicao", condicao);
 		paramets.put("turma", turma);
 		paramets.put("ano", ano);
 		paramets.put("data", dataFormatada);
 
 		InputStream inputStream = null;
-		
+
 		RegistroDocumentos registroDocumento = this.registroDocumentoRepo.guiaPagamento(id_guia);
-		
-		if(registroDocumento.getTipoDeclaracao().getId() == 18) {
+
+		if (registroDocumento.getTipoDeclaracao().getId() == 18) {
 			System.out.println("Declaração matricula (SIMPLES)");
-			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Requerimento_Pedido_declaração_simples.jasper");
-		}else if(registroDocumento.getTipoDeclaracao().getId() == 19){
+			inputStream = this.getClass()
+					.getResourceAsStream("/relatorio/R_Requerimento_Pedido_declaração_simples.jasper");
+		} else if (registroDocumento.getTipoDeclaracao().getId() == 19) {
 			System.out.println("Certificado intermedio - 12500 ");
-			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Requerimento_certificado_declaracao_posgraduacao.jasper");
-		}else if(registroDocumento.getTipoDeclaracao().getId() == 20) {
+			inputStream = this.getClass()
+					.getResourceAsStream("/relatorio/R_Requerimento_certificado_declaracao_posgraduacao.jasper");
+		} else if (registroDocumento.getTipoDeclaracao().getId() == 20) {
 			System.out.println("Certificado intermedio 1º ano - 10000");
-			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Requerimento_certificado_intermedio_1ano.jasper");
-		}else if(registroDocumento.getTipoDeclaracao().getId() == 21) {
+			inputStream = this.getClass()
+					.getResourceAsStream("/relatorio/R_Requerimento_certificado_intermedio_1ano.jasper");
+		} else if (registroDocumento.getTipoDeclaracao().getId() == 21) {
 			System.out.println("Certificado provisório");
-			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Requerimento_certificado_provisorio.jasper");
-		}else if(registroDocumento.getTipoDeclaracao().getId() == 22) {
+			inputStream = this.getClass()
+					.getResourceAsStream("/relatorio/R_Requerimento_certificado_provisorio.jasper");
+		} else if (registroDocumento.getTipoDeclaracao().getId() == 22) {
 			System.out.println("Certificado Final");
 			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Requerimento_Certificado_Final.jasper");
-		}else if(registroDocumento.getTipoDeclaracao().getId() == 23) {
+		} else if (registroDocumento.getTipoDeclaracao().getId() == 23) {
 			System.out.println("Carta pesquisa");
-			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Requerimento_declaracao_carta_pesquisa.jasper");
-		}else if(registroDocumento.getTipoDeclaracao().getId() == 24) {
+			inputStream = this.getClass()
+					.getResourceAsStream("/relatorio/R_Requerimento_declaracao_carta_pesquisa.jasper");
+		} else if (registroDocumento.getTipoDeclaracao().getId() == 24) {
 			System.out.println("Entidade Pesquisa");
-			inputStream = this.getClass().getResourceAsStream("/relatorio/R_Requerimento_declaracao_entidade_pesquisa.jasper");
+			inputStream = this.getClass()
+					.getResourceAsStream("/relatorio/R_Requerimento_declaracao_entidade_pesquisa.jasper");
 		}
 
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
@@ -248,7 +261,8 @@ public class ControllerGuiaAndRecibo {
 	@GetMapping("/factura-recibo/candidato")
 	@ResponseBody
 	@CrossOrigin(origins = "*")
-	public ResponseEntity<byte[]> relatorioFacturaReciboCandidato(@RequestParam String n_faturaRecibo, @RequestParam String condicao) throws Exception {
+	public ResponseEntity<byte[]> relatorioFacturaReciboCandidato(@RequestParam String n_faturaRecibo,
+			@RequestParam String condicao) throws Exception {
 		byte[] relatrio = servicoFacturaReciboCandidato(n_faturaRecibo, condicao);
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatrio);
 	}
@@ -262,7 +276,7 @@ public class ControllerGuiaAndRecibo {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
-	
+
 	@GetMapping("/recibo/candidato")
 	@ResponseBody
 	@CrossOrigin(origins = "*")
@@ -299,11 +313,12 @@ public class ControllerGuiaAndRecibo {
 
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
-	
+
 	@GetMapping("/guia/pagamento/credito")
 	@ResponseBody
 	@CrossOrigin(origins = "*")
-	public ResponseEntity<byte[]> relatorioReciboPagamentoCredito(@RequestParam String codigoGuia, @RequestParam String userName) throws Exception {
+	public ResponseEntity<byte[]> relatorioReciboPagamentoCredito(@RequestParam String codigoGuia,
+			@RequestParam String userName) throws Exception {
 		byte[] relatrio = servicoReciboPagamentoCredito(codigoGuia, userName);
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatrio);
 	}
@@ -313,7 +328,7 @@ public class ControllerGuiaAndRecibo {
 		Map<String, Object> paramets = new HashMap<>();
 		paramets.put("numero_guia", codigoGuia);
 		paramets.put("nome", userName);
-		
+
 		InputStream inputStream = this.getClass().getResourceAsStream("/relatorio/R_Guia_Interno.jasper");
 
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
@@ -436,7 +451,6 @@ public class ControllerGuiaAndRecibo {
 
 	public byte[] servicoDocumentosAnulados(Date data1, Date dat2, String tipo) throws JRException {
 		Map<String, Object> paramets = new HashMap<>();
-		
 
 		InputStream inputStream = null;
 
@@ -632,11 +646,12 @@ public class ControllerGuiaAndRecibo {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, paramets, conectar());
 		return JasperExportManager.exportReportToPdf(jasperPrint);
 	}
-	
+
 	@GetMapping("/todos/utilizadores")
 	@ResponseBody
 	@CrossOrigin(origins = "*")
-	public ResponseEntity<byte[]> todosUtilizadoresLiquidados(@RequestParam String data1, @RequestParam String data2) throws Exception {
+	public ResponseEntity<byte[]> todosUtilizadoresLiquidados(@RequestParam String data1, @RequestParam String data2)
+			throws Exception {
 		SimpleDateFormat formatar = new SimpleDateFormat("dd-MM-yyyy");
 
 		Date dataF1 = formatar.parse(data1);
@@ -667,133 +682,94 @@ public class ControllerGuiaAndRecibo {
 		ResponseCliente c = new ResponseCliente();
 		double umaMulta = 0;
 
+		// Obtém a guia e os dados do contador
 		Guia guia = this.guiaRepository.findOne(numeroGuia);
-
 		Contador contador = this.contadorRepository.findOne(31);
-		boolean gerarMulta = true;
+		boolean gerarMulta = contador != null && contador.getProximoValor() != 0;
 
-		if (contador != null) {
-			if (contador.getProximoValor() == 0) {
-				gerarMulta = false;
-			}
-		}
-
+		// Obtém o histórico de pagamentos
 		List<GuiaPagamentoHistorico> historico = this.historicoGuiaRepository.findByGuia(guia);
+		AnoLectivo anoLectivo = anoLectivoRepository.findOne(guia.getAnoLectivo().getId());
 
+		// Formatação de datas
 		SimpleDateFormat formatar = new SimpleDateFormat("dd-MM-yyyy");
 		Date startDate = formatar.parse(startDateP);
 		Date endDate = formatar.parse(endDateP);
-
 		Calendar startCal = Calendar.getInstance();
 		startCal.setTime(startDate);
-
 		Calendar endCal = Calendar.getInstance();
 		endCal.setTime(endDate);
 
-		int workDays = 0;
-
-		// Return 0 if start and end are the same
-		if (startCal.getTimeInMillis() == endCal.getTimeInMillis()) {
-			c.setResultado(workDays);
+		// Verificação de datas válidas
+		if (startCal.getTimeInMillis() == endCal.getTimeInMillis()
+				|| startCal.getTimeInMillis() > endCal.getTimeInMillis()) {
+			c.setResultado(0);
 			c.setCodigo(ResponseCode.values()[0].getDescricao());
-			return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
+			return new ResponseEntity<>(c, HttpStatus.OK);
 		}
 
-		// RETORNA 0 SE A DA INICIAL FOR MAIOR QUE A DATA FINAL
-		if (startCal.getTimeInMillis() > endCal.getTimeInMillis()) {
-			// startCal.setTime(endDate);
-			// endCal.setTime(startDate);
-			c.setResultado(workDays);
-			c.setCodigo(ResponseCode.values()[0].getDescricao());
-			return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
-		}
-
-		int bb = 0;
-
-		DateFormat df = DateFormat.getDateInstance();
-		guia.getDataVencimento();
-
+		// Verifica o vencimento para multa
 		Calendar dtVencimento = Calendar.getInstance();
 		dtVencimento.setTime(guia.getDataVencimento());
-
 		Calendar dHoje = Calendar.getInstance();
-
 		if (dtVencimento.get(Calendar.DAY_OF_MONTH) > 10 && dtVencimento.get(Calendar.DAY_OF_MONTH) < 22) {
-
-			// dtVencimento.get(Calendar.DAY_OF_MONTH);
-			// dHoje.get(Calendar.DAY_OF_MONTH);
-
-			// dia hoje 5
-			// vencimento 15
-
-			dHoje.compareTo(dtVencimento);
-
-			// dtVencimento.setTime(null);
-			// dHoje.setTime(null);
-
-			// System.err.println("COMPARAÇÃO ENTRE DUAS
-			// DATAS...:"+dHoje.compareTo(dtVencimento));
-
-			if (dHoje.compareTo(dtVencimento) == 1) {
-				umaMulta = (guia.getValor() * 0.10);
-
+			if (dHoje.compareTo(dtVencimento) > 0) {
+				umaMulta = guia.getValor() * 0.10;
 				if (dHoje.get(Calendar.DAY_OF_MONTH) == dtVencimento.get(Calendar.DAY_OF_MONTH)) {
 					umaMulta = 0;
 				}
 			}
 		}
 
-		do {
-			// excluding start date
-			startCal.add(Calendar.DAY_OF_MONTH, 1);
+		// Verifica a qual semestre pertence a data de vencimento
+		Calendar datafimSemestre = Calendar.getInstance();
+		setSemestreData(anoLectivo, dtVencimento, datafimSemestre);
 
-			// boolean mensalidade = false;
-			if (startCal.get(Calendar.DAY_OF_MONTH) == 11 || startCal.get(Calendar.DAY_OF_MONTH) == 22) {
-
-				/*
-				 * for (GuiaPagamentoHistorico m : historico) { //m.getEmolumento().getId() >=
-				 * 52 && m.getEmolumento().getId() <= 67 if (m.getEmolumento().isPodeMulta()) {
-				 * mensalidade = true; } }
-				 */
-				if (gerarMulta) {
-					// PEGA A DATA EM QUESTÃO
-					Date time = startCal.getTime();
-					// PEGA O ANO EM STRING
-					// String dataFormatada = df.format(time).substring(6);
-
-					// ANO CALENDARIO
-					String anoCalendario = df.format(time).substring(6);
-
-					// ANO VENCIMENTO GUIA
-					String anoGuiaEfetivo = df.format(guia.getDataVencimento()).substring(6);
-
-					if (anoCalendario.equals(anoGuiaEfetivo)) {
-						umaMulta += (guia.getValor() * 0.10);
-						// System.err.println("ANO CORRENTE: "+anoCalendario+" ANO VENCIMENTO GUIA:
-						// "+anoGuiaEfetivo+" CONTA: "+ bb);
-						bb++;
-					}
+		// Calcula as multas por dias úteis
+		startCal.set(Calendar.DAY_OF_MONTH, 1);
+		double valorPorMulta = guia.getValor() * 0.10;
+		while ((startCal.before(endCal) || startCal.equals(endCal)) && !startCal.after(datafimSemestre)) {
+			for (int dia : new int[] { 11, 22 }) {
+				Calendar dataMulta = (Calendar) startCal.clone();
+				dataMulta.set(Calendar.DAY_OF_MONTH, dia);
+				if (dataMulta.after(startCal) && dataMulta.before(endCal)) {
+					umaMulta += valorPorMulta;
 				}
 			}
-		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); // excluding end date
-
-		boolean podeMulta = false;
-
-		for (GuiaPagamentoHistorico o : historico) {
-			if (o.getEmolumento().isPodeMulta()) {
-				podeMulta = true;
-			}
+			System.out.println("Data Multa: " + startCal.getTime() + " - Valor: " + umaMulta);
+			startCal.add(Calendar.MONTH, 1);
 		}
 
-		if (podeMulta) {
-			c.setResultado(umaMulta);
-		} else {
-			c.setResultado(0);
-		}
+		// Verifica se pode aplicar multa
+		boolean podeMulta = historico.stream()
+				.anyMatch(o -> o.getEmolumento().isPodeMulta());
 
-		// c.setResultado(umaMulta);
+		c.setResultado(podeMulta ? umaMulta : 0);
 		c.setCodigo(ResponseCode.values()[0].getDescricao());
-		return new ResponseEntity<ResponseCliente>(c, HttpStatus.OK);
+		return new ResponseEntity<>(c, HttpStatus.OK);
+	}
+
+	private void setSemestreData(AnoLectivo anoLectivo, Calendar dtVencimento, Calendar datafimSemestre) {
+		Calendar inicioPrimeiroSemestre = Calendar.getInstance();
+		inicioPrimeiroSemestre.setTime(anoLectivo.getInicioPrimeiroSemestre());
+		Calendar fimPrimeiroSemestre = Calendar.getInstance();
+		fimPrimeiroSemestre.setTime(anoLectivo.getFimPrimeiroSemestre());
+		Calendar inicioSegundoSemestre = Calendar.getInstance();
+		inicioSegundoSemestre.setTime(anoLectivo.getInicioSegundoSemestre());
+		Calendar fimSegundoSemestre = Calendar.getInstance();
+		fimSegundoSemestre.setTime(anoLectivo.getFimSegundoSemestre());
+
+		if (dtVencimento.compareTo(inicioPrimeiroSemestre) >= 0 &&
+				dtVencimento.compareTo(fimPrimeiroSemestre) <= 0) {
+			datafimSemestre.setTime(fimPrimeiroSemestre.getTime());
+			System.out.println("Primeiro semestre: " + datafimSemestre.getTime());
+		} else if (dtVencimento.compareTo(inicioSegundoSemestre) >= 0 &&
+				dtVencimento.compareTo(fimSegundoSemestre) <= 0) {
+			datafimSemestre.setTime(fimSegundoSemestre.getTime());
+			System.out.println("Segundo semestre: " + datafimSemestre.getTime());
+		} else {
+			throw new IllegalArgumentException("Data de vencimento fora dos semestres definidos!");
+		}
 	}
 
 	// DESCONTINUADO POR ORDM DE PENSAMENTO UNIFORMIZADO (ERNESTO & SEVERINO EMILIO
